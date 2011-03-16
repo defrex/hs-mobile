@@ -1,0 +1,245 @@
+
+$green: #289289;
+$white: #F9FFE8;
+$black: #222;
+$grey: #666;
+$blue: #2671A8;
+
+$ab_height:50px;
+
+@import "generic";
+@import "mixins";
+
+
+#actionbar{
+    position:fixed;
+    top:0;left:0;
+    z-index:100;
+    width:100%;height:$ab_height;
+    background-color:#289289;
+    background-image:url(../img/actionbar.png);
+    background-repeat:repeat-x;
+    color:#222;
+    text-align:center;
+    
+    #ab_logo{
+        position:absolute;
+        height:39px;width:147px;
+        top:50%;
+        margin:-19px 0 0 10px;;
+    }
+    .back #ab_logo{left:50%;margin-left:-73px;}
+}
+
+#main{
+    margin:$ab_height 0 0;
+    
+    h1{
+        margin:0;
+        padding:10px;
+        border-bottom:1px solid $black;
+        font-size:24px;
+    }
+
+    .dashboard{
+        a.dash-item{
+            display:block;
+            float:left;
+            margin:10px 0;
+            width:50%;
+            text-align:center;
+            font-weight:bold;
+            color:#222;
+        }
+    }
+
+    .auth_logo{width:300px;height:100px;}
+    .auth{
+        text-align:center;
+        form{
+            $width: 250px;
+            @include hor-center($width);
+            width:$width;
+            text-align:right;
+            input[type=text], input[type=password]{
+                width:100%;
+            }
+        }
+    }
+    
+    .plan-list{
+        li{
+            padding:10px 10px 10px 70px;
+            border-bottom:1px solid $grey;
+            position:relative;
+            min-height:50px;
+            
+            .avatar{
+                position:absolute;
+                top:0;left:0;
+            }
+            
+            a{
+                display:block;
+                font-weight:bold;
+            }
+            .created{
+                color:$grey;
+                font-size:14px;
+            }
+        }
+    }
+    
+    .plan-view{
+        .user{border-bottom: 1px solid $black;}
+        .plan-body{
+            padding:10px;
+            .what{
+                font-size: 20px;
+                margin-bottom:10px;
+            }
+            .created{
+                color:$grey;
+                font-size:16px;
+            }
+            border-bottom:1px solid $grey;
+        }
+    }
+    
+    .plan-new{
+        .item{
+            width:96%;
+            padding: 10px 2%;
+            font-size:16px;
+            border: none;
+            border-bottom:1px solid $grey;
+        }
+        .wh{
+            @extend .item;
+            display:block;
+            margin:0;
+        }
+        input[type=text]{
+            @extend .wh;
+        }
+        textarea{
+            @extend .wh;
+            font-family: 'Nobile', arial, serif;
+            background-color:#efefef;
+            height:75px;
+            vertical-align:text-top;
+        }
+        input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{
+            color:$grey;
+        }
+        #private{
+            @extend .item;
+            color:$grey;
+            label{
+                width:50%;
+                padding:0;
+                margin:0;
+                text-align:center;
+            }
+            label:first-child{float:left;}
+            label:last-child{float:right;}
+        }
+        #private:after {@include clearfix();}
+        .list-button{
+            @extend .item;
+            color:$grey;
+            cursor:pointer;
+        }
+        #button-bar{
+            @extend .item;
+            input{
+                float:right;
+            }
+        }
+        #button-bar:after {@include clearfix();}
+    }
+}
+
+
+/** UI **/
+
+.dialog{
+    $width:250px;
+    
+    @include rounded();
+    position:absolute;
+    width:$width;
+    border:2px solid $green;
+    background-color:$white;
+    
+    .body{
+        padding:10px;
+    }
+    
+    .buttons{
+        border-top:2px solid $black;
+        background-color:$green;
+        padding:5px 5px 10px;
+        
+        .button{
+            display:inline;
+            margin-right:10px;
+            &:last{
+                margin-right:0;
+            }
+        }
+    }
+    
+    &.msg{
+        padding:10px;
+        background-color:$black;
+        color:$white;
+        opacity:.9;
+    }
+    &.wait{
+        @extend .msg;
+        @include hor-center($width);
+        top:50px;
+    }
+    &.toast{
+        @extend .msg;
+        position:absolute;
+        text-align:center;
+    }
+}
+
+.widget{
+    
+    &.datetime{
+        
+        h1{
+            font-size: 16px;
+            margin: 10px 0 5px;
+        }
+        
+        .button-row{
+            padding: 3px 0;
+            div{
+                width: 50px;
+                float:left;
+            }
+        }
+        .button-row.toggle div{width:120px;}
+        .button-row.toggle div:first{padding-right:0;}
+        .button-row:after {@include clearfix();}
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

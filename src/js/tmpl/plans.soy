@@ -1,0 +1,92 @@
+{namespace consy.tmpl.plans}
+
+/**
+* Plan List
+*/
+{template .PlanList}
+<div class="plan-list">
+    <h1>Plans</h1>
+    <ul></ul>
+</div>
+{/template}
+
+/**
+* Plan List Item
+* @param plan
+* @param creator
+*/
+{template .PlanListItem}
+    <img src="{$creator.avatar}" class="avatar" />
+    <a class="username" href="#{$creator.link}">{$plan.creator}</a>
+    {$plan.what}
+    <div class="created">Created {$plan.createdDisplay}</div>
+{/template}
+
+/**
+* Plan page
+* @param plan
+* @param creator
+*/
+{template .PlanView}
+<div class="plan-view">
+    <div class="user" />
+        <img src="{$creator.avatar}" class="avatar" />
+        <a class="username" href="#{$creator.link}">
+            {$plan.creator}
+        </a>
+    </div>
+    <div class="plan-body">
+        <div class="what">{$plan.what}</div>
+        {if $plan.where}<div class="where">Where: {$plan.where}</div>{/if}
+        {if $plan.when}<div class="when">When: {$plan.when}</div>{/if}
+        <div class="created">Created {$plan.createdDisplay}</div>
+    </div>
+    <div class="list-button comments">Comments</div>
+    <div class="list-button who">Who's In</div>
+</div>
+{/template}
+
+
+/**
+* Plan creation page
+*/
+{template .PlanNew}
+<div class="plan-new">
+    <form>
+        <textarea name="what" placeholder="What are you doing later?"></textarea>
+        <input type="text" name="where" placeholder="Where (optional)" />
+        <div class="list-button" id="when">
+            When (optional)
+        </div>
+        <div id="private">
+            <label> Public
+                <input type="radio" name="private" value="public" />
+            </label>
+            <label> Private
+                <input type="radio" name="private" value="private" />
+            </label>
+        </div>
+        <div class="list-button" id="sms">
+            Invite with SMS
+        </div>
+        <div id="button-bar">
+            <input type="submit" value="Share"/>
+        </div>
+    </form>
+</div>
+{/template}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

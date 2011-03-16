@@ -1,0 +1,15 @@
+Thanks for installing PhoneGapLib!
+
+To get started creating PhoneGap projects, launch Xcode, then under the File menu, select "New Project...".
+
+Navigate to the "User Templates" section, select PhoneGap, then in the right pane, select "PhoneGap-based Application"
+
+Select the "Choose..." button, name your project and choose the location where you want the new project to be.
+
+That's it! Modify the contents of the "www" directory to add your HTML, CSS and Javascript.
+
+iPad:
+Go to your project folder and launch the "[projectname]-iPad" Xcode project. You will need the 3.2 iPhone OS SDK.
+
+http://www.phonegap.com
+http://github.com/phonegap

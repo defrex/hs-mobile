@@ -1,0 +1,43 @@
+{namespace consy.tmpl.auth}
+
+/** Login template
+*/
+{template .Login}
+<div class="auth login">
+    <img src="img/auth_logo.png" alt="Connectsy" class="auth_logo"/>
+    <form class="login">
+        <ul>
+            <li><input type="text" name="username" placeholder="username"/></li>
+            <li><input type="password" name="password" placeholder="password"/></li>
+            <li>
+                <a href="#/signup/">Sign Up</a>
+                {sp}or{sp}
+                <input type="button" name="submit" value="Login"/>
+            </li>
+        </ul>
+    </form>
+</div>
+{/template}
+
+/** SignUp template
+*/
+{template .SignUp}
+<div class="auth signup">
+    <img src="img/auth_logo.png" alt="Connectsy" class="auth_logo"/>
+    <form class="signup">
+        <ul>
+            <li><input type="text" name="username" placeholder="username"/></li>
+            <li><input type="password" name="password" placeholder="password"/></li>
+            <li><input type="password" name="password2" 
+                    placeholder="password  (again)"/></li>
+            <li>
+                <a href="#/login/">Log In</a>
+                {sp}or{sp}
+                <input type="button" name="submit" value="Sign Up"/>
+            </li>
+        </ul>
+    </form>
+</div>
+{/template}
+
+
