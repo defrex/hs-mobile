@@ -1,8 +1,8 @@
 //depends: frame/main.js, frame/store.js
 
-goog.provide('consy.frame.apiRequest');
+goog.provide('frame.apiRequest');
 
-goog.require('consy.frame.store');
+goog.require('frame.store');
 
 /**
 * Issue a request to the API server.
@@ -18,7 +18,7 @@ goog.require('consy.frame.store');
 * @param {function(Object, number)} clbk optional. request complete callback,
 *     should take a json response body, and a status code.
 **/
-consy.frame.apiRequest = function(o, clbk) {
+frame.apiRequest = function(o, clbk) {
     if (typeof o == 'undefined')
         throw ('no arguments passed to apiRequest');
     else if (typeof o == 'string')
@@ -30,18 +30,18 @@ consy.frame.apiRequest = function(o, clbk) {
     o.method = o.method || 'GET';
     o.method = o.method.toUpperCase();
     if (o.method == 'GET' && (typeof o.cache == 'undefined' || o.cache)
-            && clbk && consy.frame.store.has(o.path)) {
-        clbk(consy.frame.store.get(o.path));
+            && clbk && frame.store.has(o.path)) {
+        clbk(frame.store.get(o.path));
         return;
     }
 
     if (typeof o.body == 'object')
         o.body = JSON.stringify(o.body);
 
-    o.path = consy.API_SERVER + o.path;
+    o.path = frame.API_SERVER + o.path;
 
-    if (o.auth && !consy.frame.store.has('token')) {
-        consy.controller.authReset();
+    if (o.auth && !frame.store.has('token')) {
+        frame.controller.authReset();
         if (clbk) clbk();
         return;
     }
@@ -51,7 +51,7 @@ consy.frame.apiRequest = function(o, clbk) {
 
     if (o.auth)
         req.setRequestHeader('Authenticate',
-                'Token auth=' + consy.frame.store.get('token'));
+                'Token auth=' + frame.store.get('token'));
 
     if (clbk) req.onreadystatechange = function() {
         if (req.readyState == 4) {

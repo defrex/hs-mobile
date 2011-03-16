@@ -1,14 +1,14 @@
 
-goog.provide('consy.frame.store');
+goog.provide('frame.store');
 
-goog.require('consy.frame.storeBack.LocalStore');
-goog.require('consy.frame.storeBack.Mem');
+goog.require('frame.storeBack.LocalStore');
+goog.require('frame.storeBack.Mem');
 
-consy.frame.store = (function() {
+frame.store = (function() {
     /** prioritised list of backends **/
     var backends = [
-        consy.frame.storeBack.LocalStore,
-        consy.frame.storeBack.Mem
+        frame.storeBack.LocalStore,
+        frame.storeBack.Mem
     ];
     var backend;
     var getBackend = function() {

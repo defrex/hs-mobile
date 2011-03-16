@@ -1,26 +1,26 @@
 
-goog.provide('consy.frame.form.fields.Field');
+goog.provide('frame.form.fields.Field');
 
 /**
 * The base class for Form Fields
 * @constructor
 **/
-consy.frame.form.fields.Field = function(kwargs) {
+frame.form.fields.Field = function(kwargs) {
     if (typeof kwargs == 'string')
         this.kwargs = {q: kwargs};
     this.kwargs = kwargs;
-    
+
     /**
     * DOMinator.
-    * @type {consy.frame.dom.Node}
+    * @type {frame.dom.Node}
     **/
-    this.doc = new consy.frame.dom.Node(document);
+    this.doc = new frame.dom.Node(document);
 };
 
 /**
 * get this field element
 **/
-consy.frame.form.fields.Field.prototype.getElem = function() {
+frame.form.fields.Field.prototype.getElem = function() {
     if (!this.elem)
         this.elem = this.doc.q(this.kwargs.q);
     return this.elem;
@@ -31,7 +31,7 @@ consy.frame.form.fields.Field.prototype.getElem = function() {
 * @param {function(boolean, string)} clbk callback, passed a success
 *     boolean and an error message.
 **/
-consy.frame.form.fields.Field.prototype.validate = function(clbk, that) {
+frame.form.fields.Field.prototype.validate = function(clbk, that) {
     that = that || this;
     var field = this;
     function d(valid, error) {
@@ -49,12 +49,12 @@ consy.frame.form.fields.Field.prototype.validate = function(clbk, that) {
 
 /**
 * display the error message, in a default way
-* @param {function(consy.frame.dom.Node, string)} renderError
+* @param {function(frame.dom.Node, string)} renderError
 *         called with an error for display.
 * @param {function()} clbk callback called when the operation is complete.
 * @param {Object} that this for the callback.
 **/
-consy.frame.form.fields.Field.prototype.displayError = function(renderError, clbk, that) {
+frame.form.fields.Field.prototype.displayError = function(renderError, clbk, that) {
     that = that || this;
     if (this.valid === false)
         renderError.call(that, this.getElem(), this.error, clbk, that);
@@ -65,23 +65,9 @@ consy.frame.form.fields.Field.prototype.displayError = function(renderError, clb
 /**
 * get the value of the field
 **/
-consy.frame.form.fields.Field.prototype.val = function() {
+frame.form.fields.Field.prototype.val = function() {
     var val = this.getElem().val();
     if (val !== null && val != '')
         return val;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

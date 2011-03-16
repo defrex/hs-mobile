@@ -1,20 +1,25 @@
 
-goog.provide('consy.frame.Controller');
+goog.provide('frame.Controller');
+goog.provide('frame.start');
 
 goog.require('goog.dom');
 goog.require('goog.testing.stacktrace');
-goog.require('consy.frame.Class');
-goog.require('consy.frame.route');
-goog.require('consy.tmpl');
+goog.require('frame.route');
+goog.require('frame.init');
+goog.require('frame.dom.Node');
 
 /**
 * One Class to rule them all. Or at lease rule all the Views.
 * @constructor
 **/
-consy.frame.Controller = function() {
+frame.Controller = function(urls) {
+    /**
+    * @type {Array}
+    **/
+    this.urls = urls;
 
     /**
-    * @type {Array.<consy.frame.View>}
+    * @type {Array.<frame.View>}
     **/
     this.viewStack = new Array();
 
@@ -23,23 +28,22 @@ consy.frame.Controller = function() {
     * @type {goog.dom.DomHelper}
     **/
     this.dom_ = goog.dom.getDomHelper();
-    
+
     /**
     * DOMinator.
-    * @type {consy.frame.dom.Node}
+    * @type {frame.dom.Node}
     **/
-    this.doc = new consy.frame.dom.Node(document, this.dom_);
-    
-    this.doc.q('body').append(consy.tmpl.Main());
+    this.doc = new frame.dom.Node(document, this.dom_);
 };
 
 /** Kicks off the hash change monitoring. **/
-consy.frame.Controller.prototype.startHashChange = function() {
+frame.Controller.prototype.startHashChange = function() {
+    var that = this;
     var hashChange = function() {
         var h = window.location.hash;
         h = h == '' ? '/' : h.slice(1);
-        consy.log('loading view for url: ' + h);
-        consy.frame.route(h);
+        frame.log('loading view for url: '+h);
+        frame.route(h, null, that.urls);
     }
 
     if (window.onHashChange != undefined) {
@@ -57,16 +61,16 @@ consy.frame.Controller.prototype.startHashChange = function() {
 };
 
 /** Render the top view **/
-consy.frame.Controller.prototype.renderTop = function() {
+frame.Controller.prototype.renderTop = function() {
     this.viewStack[this.viewStack.length - 1].render(this.doc.q('#main').html('')[0]);
 };
 
 /**
-* @param {consy.frame.View} view View subclass.
+* @param {frame.View} view View subclass.
 * @param {Array.<string>} args extracted data from catpture groups in the url.
 **/
-consy.frame.Controller.prototype.push = function(view, args) {
-    if (!(view instanceof consy.frame.View)) {
+frame.Controller.prototype.push = function(view, args) {
+    if (!(view instanceof frame.View)) {
         if (!(args[args.length-1] instanceof goog.dom.DomHelper))
             args.push(this.dom_);
         // this little hack-fest here lets us instantiate the view with apply
@@ -76,8 +80,8 @@ consy.frame.Controller.prototype.push = function(view, args) {
             view = new V();
         }catch (e) {
             if (e == '403') this.authReset();
-            else if (consy.DEBUG)
-                consy.log('view init error', goog.testing.stacktrace.get());
+            else if (frame.DEBUG)
+                frame.log('view init error', goog.testing.stacktrace.get());
             return;
         }
     }
@@ -86,21 +90,21 @@ consy.frame.Controller.prototype.push = function(view, args) {
 };
 
 /** Remove view from stack **/
-consy.frame.Controller.prototype.pop = function() {
+frame.Controller.prototype.pop = function() {
     this.viewStack.pop().dispose();
     this.renderTop();
 };
 
 /** clear view stack **/
-consy.frame.Controller.prototype.clear = function() {
+frame.Controller.prototype.clear = function() {
     this.viewStack = new Array();
 };
 
-/** 
-* fetch a URL, kinda 
+/**
+* fetch a URL, kinda
 * @param {string} path Path to go to.
 **/
-consy.frame.Controller.prototype.goTo = function(path) {
+frame.Controller.prototype.goTo = function(path) {
     document.location.hash = '#' + path;
 };
 
@@ -108,9 +112,16 @@ consy.frame.Controller.prototype.goTo = function(path) {
 * Triggers when there is an auth error. It clears the view stack
 *  and loads /login/
 **/
-consy.frame.Controller.prototype.authReset = function() {
+frame.Controller.prototype.authReset = function() {
     this.clear();
     document.location.hash = '#/login/';
 };
 
 
+frame.start = function(urls, clbk, that) {
+    frame.init(function(){
+        frame.controller = new frame.Controller(urls);
+        frame.controller.startHashChange();
+        if (clbk) clbk.call(that);
+    });
+};

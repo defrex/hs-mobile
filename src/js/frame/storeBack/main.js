@@ -1,15 +1,13 @@
 
-goog.provide('consy.frame.storeBack');
-
-goog.require('consy.frame.Class');
+goog.provide('frame.storeBack');
 
 /** @constructor **/
-consy.frame.storeBack = function(){};
-consy.frame.storeBack.prototype.has = function(key) {throw ('unimplimented')};
-consy.frame.storeBack.prototype.get = function(key) {throw ('unimplimented')};
-consy.frame.storeBack.prototype.put = function(key, value) {throw ('unimplimented')};
-consy.frame.storeBack.prototype.del = function(key) {throw ('unimplimented')};
-consy.frame.storeBack.prototype.clear = function() {throw ('unimplimented')};
-consy.frame.storeBack.isAvailable = function() {throw ('unimplimented')};
+frame.storeBack = function(){};
+frame.storeBack.prototype.has = function(key) {throw ('unimplimented')};
+frame.storeBack.prototype.get = function(key) {throw ('unimplimented')};
+frame.storeBack.prototype.put = function(key, value) {throw ('unimplimented')};
+frame.storeBack.prototype.del = function(key) {throw ('unimplimented')};
+frame.storeBack.prototype.clear = function() {throw ('unimplimented')};
+frame.storeBack.isAvailable = function() {throw ('unimplimented')};
 
 

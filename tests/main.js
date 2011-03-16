@@ -1,6 +1,6 @@
 //depends: main.js
 
-test('consy', function(){
-    equals(typeof consy, "object", "consy exists");
+test('frame', function(){
+    equals(typeof frame, "object", "frame exists");
 });
 

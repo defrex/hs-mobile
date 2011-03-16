@@ -1,12 +1,12 @@
 
-goog.provide('consy.utils');
+goog.provide('frame.utils');
 
 /**
 * formats a date
 * @param {Date|number=} date Default to now.
 * @return {string} Formatted date.
 **/
-consy.utils.formatDate = function(date) {
+frame.utils.formatDate = function(date) {
     var days = new Array('Sunday', 'Monday', 'Tuesday',
             'Wednesday', 'Thursday', 'Friday', 'Saturday');
 

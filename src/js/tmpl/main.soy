@@ -1,4 +1,4 @@
-{namespace consy.tmpl}
+{namespace hs.tmpl}
 
 /**
 * Renders the Action Bar
@@ -17,30 +17,5 @@
 {template .Main}
     {call .ActionBar data="all"/}
     <div id="main"></div>
-{/template}
-
-
-/**
-* The Dashboard
-*/
-{template .Dashboard}
-<div class="dashboard">
-    <a class="dash-item" href="#/plans/">
-        <img src="img/dashboard_plans.png" alt="Plans" /><br>
-        Plans
-    </a>
-    <a class="dash-item" href="#/plans/new/">
-        <img src="img/dashboard_share_plan.png" alt="Share Plan" /><br>
-        Share Plan
-    </a>
-    <a class="dash-item" href="#/users/search/">
-        <img src="img/dashboard_search.png" alt="Search" /><br>
-        Search
-    </a>
-    <a class="dash-item" href="#/users/<%= user.username %>/">
-        <img src="img/dashboard_profile.png" alt="Profile" /><br>
-        Profile
-    </a>
-</div>
 {/template}
 

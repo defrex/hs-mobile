@@ -1,23 +1,22 @@
 
-goog.provide('consy.frame.Form');
+goog.provide('frame.Form');
 
-goog.require('consy.frame.Class');
-goog.require('consy.frame.dom.Node');
-goog.require('consy.frame.form.fields.Field');
+goog.require('frame.dom.Node');
+goog.require('frame.form.fields.Field');
 goog.require('goog.object');
 
 /**
 * base Form class. extend this for new forms
 * @constructor
 **/
-consy.frame.Form = function(elem) {
+frame.Form = function(elem) {
     /**
     * DOMinator.
-    * @type {consy.frame.dom.Node}
+    * @type {frame.dom.Node}
     **/
-    this.doc = new consy.frame.dom.Node(document);
-    
-    this.elem = elem instanceof consy.frame.dom.Node ? elem :
+    this.doc = new frame.dom.Node(document);
+
+    this.elem = elem instanceof frame.dom.Node ? elem :
            typeof elem == 'string' ? this.doc.q(elem) :
            typeof this.q == 'string' ? this.doc.q(this.q) :
            null;
@@ -27,7 +26,7 @@ consy.frame.Form = function(elem) {
 /**
 * Validate the form
 **/
-consy.frame.Form.prototype.validate = function(clbk, that) {
+frame.Form.prototype.validate = function(clbk, that) {
     that = that || this;
     this.errors = {};
     this.valid = true;
@@ -46,7 +45,7 @@ consy.frame.Form.prototype.validate = function(clbk, that) {
 /**
 * Display form errors
 **/
-consy.frame.Form.prototype.displayErrors = function(clbk, that) {
+frame.Form.prototype.displayErrors = function(clbk, that) {
     that = that || this;
     var num = goog.object.getCount(this.fields);
     goog.object.forEach(this.fields, function(field, field_name) {
@@ -56,13 +55,8 @@ consy.frame.Form.prototype.displayErrors = function(clbk, that) {
     }, this);
 };
 
-consy.frame.Form.prototype.renderError = function(elem, error, clbk, that) {
+frame.Form.prototype.renderError = function(elem, error, clbk, that) {
     that = that || this;
     elem.before(error, clbk, that);
 };
-
-
-
-
-
 

@@ -1,15 +1,15 @@
 
 
-goog.provide('consy.frame.form.fields.DateTimeField');
+goog.provide('frame.form.fields.DateTimeField');
 
-goog.require('consy.frame.form.fields.Field');
+goog.require('frame.form.fields.Field');
 
 /**
 * field class for a date and time
 * @constructor
-* @extends consy.frame.form.fields.Field
+* @extends frame.form.fields.Field
 **/
-consy.frame.form.fields.DateTimeField = function() {
-    consy.frame.form.fields.Field.apply(this, arguments);
+frame.form.fields.DateTimeField = function() {
+    frame.form.fields.Field.apply(this, arguments);
 };
 

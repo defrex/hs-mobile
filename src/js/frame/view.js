@@ -1,7 +1,6 @@
 
-goog.provide('consy.frame.View');
+goog.provide('frame.View');
 
-goog.require('consy.apps.users.User');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.Error');
 
@@ -10,44 +9,44 @@ goog.require('goog.ui.Component.Error');
 * create a "page".
 * @constructor
 **/
-consy.frame.View = function() {
+frame.View = function() {
     goog.ui.Component.call(this, Array.prototype.pop.call(arguments));
-    
+
     if (this.requireAuth) {
-        if (!consy.frame.store.has('username')) throw ('403');
-        this.username = consy.frame.store.get('username');
+        if (!frame.store.has('username')) throw ('403');
+        this.username = frame.store.get('username');
     }
-    
+
     this.args = Array.prototype.slice.call(arguments);
-    
-    this.doc = new consy.frame.dom.Node(document, this.dom_);
+
+    this.doc = new frame.dom.Node(document, this.dom_);
 };
-goog.inherits(consy.frame.View, goog.ui.Component);
+goog.inherits(frame.View, goog.ui.Component);
 
 /**
 * only allow authed users to see this view
 * @type {boolean}
 **/
-consy.frame.View.prototype.requireAuth = true;
+frame.View.prototype.requireAuth = true;
 
 /**
 * display Action Bar
 * @type {boolean}
 **/
-consy.frame.View.prototype.actionBar = true;
+frame.View.prototype.actionBar = true;
 
 /**
 * The view's template
 * @type {function()}
 **/
-consy.frame.View.prototype.template = null;
+frame.View.prototype.template = null;
 
 /**
 * @param {function(Object)} clbk required. called after render.
 * @param {Object} that clbk's this.
 **/
-consy.frame.View.prototype.createDom = function(clbk, that) {
-    consy.frame.View.superClass_.createDom.call(this);
+frame.View.prototype.createDom = function(clbk, that) {
+    frame.View.superClass_.createDom.call(this);
     that = that || this;
 
     if (this.template === null) throw ('no template for view');
@@ -57,13 +56,7 @@ consy.frame.View.prototype.createDom = function(clbk, that) {
     else if (this.actionBar && !this.doc.q('#actionbar').visible())
         this.doc.q('#actionbar').show();
 
-    if (this.username)
-        consy.apps.users.User.get(this.username, function(user) {
-            this.user = user;
-            finish.call(this);
-        }, this);
-    else
-        finish.call(this);
+    finish.call(this);
 
     function finish() {
         this.prepContext(function() {
@@ -79,7 +72,7 @@ consy.frame.View.prototype.createDom = function(clbk, that) {
 * @param {function(Object)} clbk required. called after render.
 * @param {Object} that clbk's this.
 **/
-consy.frame.View.prototype.render = function(opt_parent, clbk, that) {
+frame.View.prototype.render = function(opt_parent, clbk, that) {
     if (this.inDocument_)
         throw Error(goog.ui.Component.Error.ALREADY_RENDERED);
 
@@ -116,7 +109,7 @@ consy.frame.View.prototype.render = function(opt_parent, clbk, that) {
 * @param {function(Object)} clbk required. called after render.
 * @param {Object} that clbk's this.
 **/
-consy.frame.View.prototype.prepContext = function(clbk, that) {
+frame.View.prototype.prepContext = function(clbk, that) {
     if (clbk) clbk.call(that || this);
 };
 

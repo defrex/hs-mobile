@@ -1,28 +1,28 @@
 
 
-goog.provide('consy.frame.form.fields.TextField');
+goog.provide('frame.form.fields.TextField');
 
-goog.require('consy.frame.form.fields.Field');
+goog.require('frame.form.fields.Field');
 
 /**
 * field class for a text field
 * @constructor
-* @extends consy.frame.form.fields.Field
+* @extends frame.form.fields.Field
 **/
-consy.frame.form.fields.TextField = function() {
-    consy.frame.form.fields.Field.apply(this, arguments);
+frame.form.fields.TextField = function() {
+    frame.form.fields.Field.apply(this, arguments);
 };
-goog.inherits(consy.frame.form.fields.TextField, consy.frame.form.fields.Field);
+goog.inherits(frame.form.fields.TextField, frame.form.fields.Field);
 
 /**
 * validate this form field
-* @this {consy.frame.Form.fields.Field}
+* @this {frame.Form.fields.Field}
 * @param {function(boolean, string)} clbk callback, passed a success
 *     boolean and an error message.
 **/
-consy.frame.form.fields.TextField.prototype.validate = function(clbk, that) {
+frame.form.fields.TextField.prototype.validate = function(clbk, that) {
     that = that || this;
-    consy.frame.form.fields.TextField.superClass_.validate.call(this, function() {
+    frame.form.fields.TextField.superClass_.validate.call(this, function() {
         var done = function() {clbk.call(that, this.valid, this.error);}
 
         if (!this.valid) done();

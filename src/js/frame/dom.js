@@ -1,8 +1,7 @@
 
-goog.provide('consy.frame.dom.Node');
-goog.provide('doc');
+goog.provide('frame.dom.Node');
 
-goog.require('consy.ArrayClass');
+goog.require('frame.ArrayClass');
 goog.require('goog.dom');
 goog.require('goog.dom.classes');
 goog.require('goog.events');
@@ -13,10 +12,10 @@ goog.require('goog.events');
 * @constructor
 * @param {Array.Object|Object} nds This should be one or more DOM nodes.
 **/
-consy.frame.dom.Node = function(nds, opt_domHelper) {
-    consy.ArrayClass.call(this);
+frame.dom.Node = function(nds, opt_domHelper) {
+    frame.ArrayClass.call(this);
     this.dom_ = opt_domHelper || goog.dom.getDomHelper();
-    
+
     if (nds !== null && typeof nds != 'undefined'
             && typeof nds.length == 'undefined') {
         this.push(nds);
@@ -28,7 +27,7 @@ consy.frame.dom.Node = function(nds, opt_domHelper) {
         this.pop();
     }
 };
-goog.inherits(consy.frame.dom.Node, consy.ArrayClass);
+goog.inherits(frame.dom.Node, frame.ArrayClass);
 
 /**
 * loop over the set, calling the function on each
@@ -36,57 +35,57 @@ goog.inherits(consy.frame.dom.Node, consy.ArrayClass);
 * @param {function()} clbk called when all iterations are complete.
 * @param {Object} that context for the callbacks.
 **/
-consy.frame.dom.Node.prototype.each = function(fn, clbk, that) {
+frame.dom.Node.prototype.each = function(fn, clbk, that) {
     that = typeof clbk == 'object' ? clbk : that || this;
     for (var i = 0; i < this.length; i++) fn.call(that, this[i]);
     if (clbk) clbk.call(that);
     return this;
 };
 
-consy.frame.dom.Node.prototype.q = function(q) {
+frame.dom.Node.prototype.q = function(q) {
     if (/^#\w+$/.test(q)) {
-        return new consy.frame.dom.Node(this[0].getElementById(q.slice(1)), this.dom_);
+        return new frame.dom.Node(this[0].getElementById(q.slice(1)), this.dom_);
     }else if (/^\w+$/.test(q)) {
-        return new consy.frame.dom.Node(this[0].getElementsByTagName(q), this.dom_);
+        return new frame.dom.Node(this[0].getElementsByTagName(q), this.dom_);
     }else {
-        return new consy.frame.dom.Node(this[0].querySelectorAll(q), this.dom_);
+        return new frame.dom.Node(this[0].querySelectorAll(q), this.dom_);
     }
 };
 
-consy.frame.dom.Node.prototype.on = function(type, fn, that) {
+frame.dom.Node.prototype.on = function(type, fn, that) {
     this.each(function(n) {
         goog.events.listen(n, type, fn, false,
-                that || new consy.frame.dom.Node(n));
+                that || new frame.dom.Node(n));
     });
 };
 
-consy.frame.dom.Node.prototype.un = function(type, fn) {
+frame.dom.Node.prototype.un = function(type, fn) {
     this.each(function(n) {
         goog.events.unlisten(n, type, fn, false);
     });
     return this;
 };
 
-consy.frame.dom.Node.prototype.html = function(html) {
+frame.dom.Node.prototype.html = function(html) {
     if (typeof html == 'undefined')
         return this[0].innerHTML;
     this.each(function(n) {n.innerHTML = html});
     return this;
 };
 
-consy.frame.dom.Node.prototype.append = function(html) {
+frame.dom.Node.prototype.append = function(html) {
     if (typeof html == 'undefined') throw ('html required');
     this.each(function(n) {n.innerHTML = n.innerHTML + html});
     return this;
 };
 
-consy.frame.dom.Node.prototype.prepend = function(html) {
+frame.dom.Node.prototype.prepend = function(html) {
     if (typeof html == 'undefined') throw ('html required');
     this.each(function(n) {n.innerHTML = html + n.innerHTML});
     return this;
 };
 
-consy.frame.dom.Node.prototype.before = function(html, clbk, that) {
+frame.dom.Node.prototype.before = function(html, clbk, that) {
     if (typeof html == 'function') {
         that = clbk || this;
         clbk = html;
@@ -100,7 +99,7 @@ consy.frame.dom.Node.prototype.before = function(html, clbk, that) {
     return this;
 };
 
-consy.frame.dom.Node.prototype.hide = function() {
+frame.dom.Node.prototype.hide = function() {
     this.each(function(n) {
         n.oldDisplay = n.style.display;
         n.style.display = 'none';
@@ -108,13 +107,13 @@ consy.frame.dom.Node.prototype.hide = function() {
     return this;
 };
 
-consy.frame.dom.Node.prototype.show = function() {
+frame.dom.Node.prototype.show = function() {
     this.each(function(n) {
         n.style.display = n.oldDisplay || 'block';
     });
 };
 
-consy.frame.dom.Node.prototype.visible = function() {
+frame.dom.Node.prototype.visible = function() {
     var v = true;
     this.each(function(n) {
         v = v && n.style.display != 'none';
@@ -122,14 +121,14 @@ consy.frame.dom.Node.prototype.visible = function() {
     return v;
 };
 
-consy.frame.dom.Node.prototype.remove = function() {
+frame.dom.Node.prototype.remove = function() {
     this.each(function(n) {
         n.parentNode.removeChild(n);
     });
     return this;
 };
 
-consy.frame.dom.Node.prototype.style = function(prop, val) {
+frame.dom.Node.prototype.style = function(prop, val) {
     if (typeof val == 'undefined')
         return this[0].style[prop] = val;
     else {
@@ -140,7 +139,7 @@ consy.frame.dom.Node.prototype.style = function(prop, val) {
     }
 };
 
-consy.frame.dom.Node.prototype.val = function(val) {
+frame.dom.Node.prototype.val = function(val) {
     if (typeof val == 'undefined')
         return this[0].value;
     else {
@@ -151,7 +150,7 @@ consy.frame.dom.Node.prototype.val = function(val) {
     }
 };
 
-consy.frame.dom.Node.prototype.attr = function(attr, val) {
+frame.dom.Node.prototype.attr = function(attr, val) {
     if (typeof val == 'undefined')
         return this[0].getAttribute('id');
     else {
@@ -162,26 +161,18 @@ consy.frame.dom.Node.prototype.attr = function(attr, val) {
     }
 };
 
-consy.frame.dom.Node.prototype.addClass = function(cls) {
+frame.dom.Node.prototype.addClass = function(cls) {
     this.each(function(n) {
         goog.dom.classes.add(n, cls);
     });
     return this;
 };
 
-consy.frame.dom.Node.prototype.removeClass = function(cls) {
+frame.dom.Node.prototype.removeClass = function(cls) {
     this.each(function(n) {
         goog.dom.classes.remove(n, cls);
     });
     return this;
-};
-
-/** @deprecated use View's this.doc instead **/
-doc = new consy.frame.dom.Node(document);
-doc.query = doc.q;
-doc.q = function(){
-    consy.warn('global doc object depricated. Use View\'s this.doc instead.');
-    return doc.query.apply(this, arguments);
 };
 
 

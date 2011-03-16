@@ -1,9 +1,9 @@
 
-goog.require('consy.frame.Controller');
-goog.require('consy.init');
+goog.require('frame.start');
+goog.require('hs.urls');
+goog.require('hs.tmpl');
 
-consy.init(function() {
-    consy.controller = new consy.frame.Controller();
-    consy.controller.startHashChange();
+frame.start(hs.urls, function(){
+    frame.controller.doc.q('body').append(hs.tmpl.Main());
 });
 
