@@ -1,4 +1,6 @@
 
+goog.provide('hs.init');
+
 goog.require('frame.start');
 goog.require('hs.urls');
 goog.require('hs.tmpl');

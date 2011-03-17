@@ -2,7 +2,7 @@
 goog.provide('frame.route');
 
 frame.route = function(url, passed_args, urls) {
-    for (var i = 0; i < urls.length; i++) {
+    for (var i=0, len=urls.length; i<len; i++) {
         var reg = typeof urls[i][0] == 'string' ? new RegExp(urls[i][0]) : urls[i][0];
         var args = reg.exec(url);
         if (args !== null) {

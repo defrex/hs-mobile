@@ -41,5 +41,18 @@ var testController = function(){
     });
 }
 
+// var testControllerUrlLoopup = function(){
+//     var TestView = function(){};
+//     var testUrl = '^/awesome_url/$';
+
+//     asyncTestCase.waitForAsync();
+//     frame.start({urls: [
+//         [testUrl, TestView]
+//     ]}, function(){
+//         assertEquals(frame.controller.lookupUrl(testUrl), TestView);
+//         asyncTestCase.continueTesting();
+//     });
+// };
+
 var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall();
 

@@ -3,6 +3,7 @@
 goog.provide('frame.apiRequest');
 
 goog.require('frame.store');
+goog.require('frame.Controller');
 
 /**
 * Issue a request to the API server.
@@ -38,7 +39,7 @@ frame.apiRequest = function(o, clbk) {
     if (typeof o.body == 'object')
         o.body = JSON.stringify(o.body);
 
-    o.path = frame.API_SERVER + o.path;
+    o.path = 'http://'+frame.controller.settings.apiServer + o.path;
 
     if (o.auth && !frame.store.has('token')) {
         frame.controller.authReset();

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from lib import js
-import argparse
 import os
 import shutil
 from shutil import rmtree, copy, ignore_patterns, copytree
@@ -9,22 +8,6 @@ import fileinput
 from subprocess import Popen, PIPE
 import fnmatch
 import json
-
-parser = argparse.ArgumentParser(description='Compile Connectsy\'s js')
-parser.add_argument('-v', '--verbose', default=False, dest='v',
-                    action='store_true', help='verbose output')
-parser.add_argument('-m', '--map', default=False, dest='map',
-                    action='store_true', help='Create source map from the compiler')
-parser.add_argument('-t', '--test', default=False, dest='test',
-                    action='store_true', help='compile the test environment')
-parser.add_argument('-d', '--debug', default=False, dest='debug',
-                    action='store_true', help='Don\'t concat or minify the js')
-parser.add_argument('-c', '--compiled', default=False, action='store_true',
-                    help='Compile the JS with debug true')
-parser.add_argument('-p', '--platform', default="mobile-web",
-                    help='The platform the js should be compiled for.')
-args = parser.parse_args()
-if args.test: args.debug = True
 
 CURPATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -46,149 +29,171 @@ DEBUG_CLOSURE_LOCATION = os.path.join(APP_LOCATION, 'closure/')
 APP_CSS_LOCATION = os.path.join(APP_LOCATION, 'css/')
 APP_IMG_LOCATION = os.path.join(APP_LOCATION, 'img/')
 
-print 'Removing old files...'
-if os.path.isdir(APP_LOCATION):
-    rmtree(APP_LOCATION)
-os.mkdir(APP_LOCATION)
+def main(args):
 
-include = ''
+    print 'Removing old files...'
+    if os.path.isdir(APP_LOCATION):
+        rmtree(APP_LOCATION)
+    os.mkdir(APP_LOCATION)
 
-print 'Copyimg images...'
-copytree(IMG_LOCATION, APP_IMG_LOCATION)
+    include = ''
 
-print 'Compiling css...'
-os.mkdir(APP_CSS_LOCATION)
-for item in os.listdir(CSS_LOCATION):
-    if item[0] == '_': continue
-    newcss = os.path.join(APP_CSS_LOCATION, item.split('.')[0]+'.css')
-    if args.debug: t = 'expanded'
-    else: t = 'compressed'
-    command = 'sass -t %s %s:%s' % (
-            t, os.path.join(CSS_LOCATION, item), newcss)
+    print 'Copyimg images...'
+    copytree(IMG_LOCATION, APP_IMG_LOCATION)
+
+    print 'Compiling css...'
+    os.mkdir(APP_CSS_LOCATION)
+    for item in os.listdir(CSS_LOCATION):
+        if item[0] == '_': continue
+        newcss = os.path.join(APP_CSS_LOCATION, item.split('.')[0]+'.css')
+        if args.debug: t = 'expanded'
+        else: t = 'compressed'
+        command = 'sass -t %s %s:%s' % (
+                t, os.path.join(CSS_LOCATION, item), newcss)
+        Popen(command, shell=True).wait()
+        include += '<link rel="stylesheet" type="text/css" href="%s"/>' % (
+                newcss.split(APP_LOCATION)[-1])
+    #if args.test: copy(os.path.join(CURPATH, 'lib/qunit/qunit.css'), APP_CSS_LOCATION)
+
+
+    print 'Compiling templates...'
+    command = ('java -jar lib/SoyToJsSrcCompiler.jar'
+               ' --outputPathFormat %(op_path)s/{INPUT_FILE_NAME_NO_EXT}.js'
+               ' --shouldGenerateJsdoc'
+               ' --shouldProvideRequireSoyNamespaces') % {
+                'op_path': os.path.join(JS_LOCATION, 'tmpl')}
+    for root, dirnames, filenames in os.walk(JS_LOCATION):
+        for filename in fnmatch.filter(filenames, '*.soy'):
+            command += ' '+os.path.join(root, filename)
+    if args.v: print 'Soy Command:\n', command
     Popen(command, shell=True).wait()
-    include += '<link rel="stylesheet" type="text/css" href="%s"/>' % (
-            newcss.split(APP_LOCATION)[-1])
-#if args.test: copy(os.path.join(CURPATH, 'lib/qunit/qunit.css'), APP_CSS_LOCATION)
 
+    calcdeps = [os.path.join(CURPATH, 'lib/closure/bin/calcdeps.py'),
+                '-p', JS_LOCATION,
+                '-p', CLOSURE_LOCATION]
 
-print 'Compiling templates...'
-command = ('java -jar lib/SoyToJsSrcCompiler.jar'
-           ' --outputPathFormat {INPUT_DIRECTORY}/{INPUT_FILE_NAME_NO_EXT}.js'
-           ' --shouldGenerateJsdoc'
-           ' --shouldProvideRequireSoyNamespaces')
-for root, dirnames, filenames in os.walk(JS_LOCATION):
-    for filename in fnmatch.filter(filenames, '*.soy'):
-        command += ' '+os.path.join(root, filename)
-if args.v: print 'Soy Command:\n', command
-Popen(command, shell=True).wait()
+    calcdeps += ['-i', os.path.join(JS_LOCATION, 'init.js')]
 
-calcdeps = [os.path.join(CURPATH, 'lib/closure/bin/calcdeps.py'),
-            '-p', JS_LOCATION,
-            '-p', CLOSURE_LOCATION]
+    if args.debug and not args.compiled:
+        print 'Copying debug JS...'
+        if args.test:
+            ignore = ignore_patterns('*.soy')
+        else:
+            ignore = ignore_patterns('*.soy', '*_test.js')
 
-calcdeps += ['-i', os.path.join(JS_LOCATION, 'init.js')]
-# if not args.test:
-#     calcdeps += ['-i', os.path.join(JS_LOCATION, 'init.js')]
-# else:
-#     for root, dirnames, filenames in os.walk(JS_LOCATION):
-#         for filename in fnmatch.filter(filenames, '*_test.js'):
-#             calcdeps += ['-i', os.path.join(root, filename)]
+        copytree(JS_LOCATION, DEBUG_JS_LOCATION, ignore=ignore)
+        copytree(CLOSURE_LOCATION, DEBUG_CLOSURE_LOCATION)
 
-if args.debug and not args.compiled:
-    print 'Copying debug JS...'
-    if args.test:
-        ignore = ignore_patterns('*.soy')
+        calcdeps += ['-o', 'list']
+        if args.v: print 'calcdeps command:\n', ' '.join(calcdeps)
+        proc = Popen(calcdeps, stdout=PIPE)
+        proc.wait()
+        deps = proc.stdout.read().split('\n')
+        if args.v: print 'calculated dependancies:\n', deps
+
+        def get_scripts(deps, root=''):
+            ret = ''
+            for js in deps:
+                if JS_LOCATION in js:
+                    filename = 'js/'+js.split(JS_LOCATION)[-1]
+                elif CLOSURE_LOCATION in js:
+                    filename = 'closure/'+js.split(CLOSURE_LOCATION)[-1]
+                else:
+                    continue
+                ret += '<script src="%s"></script>\n' % os.path.join(root, filename)
+            return ret
+
+        include += get_scripts(deps)
+
+        if args.test:
+            all_tests = []
+            for root, dirnames, filenames in os.walk(JS_LOCATION):
+                for filename in fnmatch.filter(filenames, '*_test.js'):
+                    print filename
+                    fullname = os.path.join(root, filename)
+                    testdeps = [os.path.join(CURPATH, 'lib/closure/bin/calcdeps.py'),
+                                '-p', JS_LOCATION,
+                                '-p', CLOSURE_LOCATION,
+                                '-i', fullname]
+                    proc = Popen(testdeps, stdout=PIPE)
+                    proc.wait()
+                    testdeps_results = proc.stdout.read().split('\n')
+
+                    rel_path = '/'.join(['..' for d in fullname.split(JS_LOCATION)[-1].split('/') if d != ''])
+                    test_include = get_scripts(testdeps_results, root=rel_path)
+
+                    with open(TEST_HTML_TMPL, 'r') as f: html = f.read()
+                    html = html.replace('<!--{{ include_body }}-->', test_include)
+                    to_rel = fullname.replace('.js', '.html').split(JS_LOCATION)[-1]
+                    to = os.path.join(DEBUG_JS_LOCATION, to_rel)
+                    with open(to, 'w') as f: f.write(html)
+
+                    all_tests.append('js/'+to_rel)
+
+            with open(os.path.join(APP_LOCATION, 'alltests.js'), 'w') as f:
+                f.write('var _allTests = '+json.dumps(all_tests)+';')
+
+        # if args.test:
+        #     copy(os.path.join(CURPATH, 'lib/qunit/qunit.js'), APP_LOCATION)
+        #     include += '<script src="qunit.js"></script>'
+        #     copytree(TEST_JS_LOCATION, DEBUG_TEST_JS_LOCATION)
+        #     for root, dirnames, filenames in os.walk(DEBUG_TEST_JS_LOCATION):
+        #         for filename in fnmatch.filter(filenames, '*.js'):
+        #             t = os.path.join(root, filename).split(APP_LOCATION)[-1]
+        #             include += '<script src="%s"></script>' % t
     else:
-        ignore = ignore_patterns('*.soy', '*_test.js')
+        if args.compiled: d = 'true'
+        else: d = 'false'
+        calcdeps += ['-o', 'compiled',
+                     '-c', os.path.join(CURPATH, 'lib/compiler.jar'),
+                     '-f', '--compilation_level', '-f', 'ADVANCED_OPTIMIZATIONS',
+                     '-f', '--js_output_file', '-f', COMPILED_FILE,
+                     '-f', '--define="frame.PLATFORM=\'%s\'"' % args.platform,
+                     '-f', '--define="frame.DEBUG=%s"' % d]
+        if args.map:
+            calcdeps.append('-f')
+            calcdeps.append('--create_name_map_files=true')
+        print 'Compiling JS...'
+        if args.v: print 'calcdeps command:\n', ' '.join(calcdeps)
+        Popen(' '.join(calcdeps), shell=True).wait()
 
-    copytree(JS_LOCATION, DEBUG_JS_LOCATION, ignore=ignore)
-    copytree(CLOSURE_LOCATION, DEBUG_CLOSURE_LOCATION)
+        include += '<script src="%s"></script>' % COMPILED_FILE.split(APP_LOCATION)[-1]
 
-    calcdeps += ['-o', 'list']
-    if args.v: print 'calcdeps command:\n', ' '.join(calcdeps)
-    proc = Popen(calcdeps, stdout=PIPE)
-    proc.wait()
-    deps = proc.stdout.read().split('\n')
-    if args.v: print 'calculated dependancies:\n', deps
+    tmpl = HTML_TMPL if not args.test else TEST_ALL_HTML_TMPL
 
-    def get_scripts(deps, root=''):
-        ret = ''
-        for js in deps:
-            if JS_LOCATION in js:
-                filename = 'js/'+js.split(JS_LOCATION)[-1]
-            elif CLOSURE_LOCATION in js:
-                filename = 'closure/'+js.split(CLOSURE_LOCATION)[-1]
-            else:
-                continue
-            ret += '<script src="%s"></script>\n' % os.path.join(root, filename)
-        return ret
+    with open(tmpl, 'r') as f: html = f.read()
 
-    include += get_scripts(deps)
+    html = html.replace('<!--{{ include }}-->', include)
 
-    if args.test:
-        all_tests = []
-        for root, dirnames, filenames in os.walk(JS_LOCATION):
-            for filename in fnmatch.filter(filenames, '*_test.js'):
-                print filename
-                fullname = os.path.join(root, filename)
-                testdeps = [os.path.join(CURPATH, 'lib/closure/bin/calcdeps.py'),
-                            '-p', JS_LOCATION,
-                            '-p', CLOSURE_LOCATION,
-                            '-i', fullname]
-                proc = Popen(testdeps, stdout=PIPE)
-                proc.wait()
-                testdeps_results = proc.stdout.read().split('\n')
+    print 'Writing HTML...'
+    with open(HTML_FILE, 'w') as f:
+        f.write(html)
 
-                rel_path = '/'.join(['..' for d in fullname.split(JS_LOCATION)[-1].split('/') if d != ''])
-                test_include = get_scripts(testdeps_results, root=rel_path)
+    print 'Done.'
 
-                with open(TEST_HTML_TMPL, 'r') as f: html = f.read()
-                html = html.replace('<!--{{ include_body }}-->', test_include)
-                to_rel = fullname.replace('.js', '.html').split(JS_LOCATION)[-1]
-                to = os.path.join(DEBUG_JS_LOCATION, to_rel)
-                with open(to, 'w') as f: f.write(html)
 
-                all_tests.append('js/'+to_rel)
+def parse_args():
+    import argparse
 
-        with open(os.path.join(APP_LOCATION, 'alltests.js'), 'w') as f:
-            f.write('var _allTests = '+json.dumps(all_tests)+';')
+    parser = argparse.ArgumentParser(description='Compile Connectsy\'s js')
+    parser.add_argument('-v', '--verbose', default=False, dest='v',
+                        action='store_true', help='verbose output')
+    parser.add_argument('-m', '--map', default=False, dest='map',
+                        action='store_true', help='Create source map from the compiler')
+    parser.add_argument('-t', '--test', default=False, dest='test',
+                        action='store_true', help='compile the test environment')
+    parser.add_argument('-d', '--debug', default=False, dest='debug',
+                        action='store_true', help='Don\'t concat or minify the js')
+    parser.add_argument('-c', '--compiled', default=False, action='store_true',
+                        help='Compile the JS with debug true')
+    parser.add_argument('-p', '--platform', default="mobile-web",
+                        help='The platform the js should be compiled for.')
+    args = parser.parse_args()
+    if args.test: args.debug = True
 
-    # if args.test:
-    #     copy(os.path.join(CURPATH, 'lib/qunit/qunit.js'), APP_LOCATION)
-    #     include += '<script src="qunit.js"></script>'
-    #     copytree(TEST_JS_LOCATION, DEBUG_TEST_JS_LOCATION)
-    #     for root, dirnames, filenames in os.walk(DEBUG_TEST_JS_LOCATION):
-    #         for filename in fnmatch.filter(filenames, '*.js'):
-    #             t = os.path.join(root, filename).split(APP_LOCATION)[-1]
-    #             include += '<script src="%s"></script>' % t
-else:
-    if args.compiled: d = 'true'
-    else: d = 'false'
-    calcdeps += ['-o', 'compiled',
-                 '-c', os.path.join(CURPATH, 'lib/compiler.jar'),
-                 '-f', '--compilation_level', '-f', 'ADVANCED_OPTIMIZATIONS',
-                 '-f', '--js_output_file', '-f', COMPILED_FILE,
-                 '-f', '--define="frame.PLATFORM=\'%s\'"' % args.platform,
-                 '-f', '--define="frame.DEBUG=%s"' % d]
-    if args.map:
-        calcdeps.append('-f')
-        calcdeps.append('--create_name_map_files=true')
-    print 'Compiling JS...'
-    if args.v: print 'calcdeps command:\n', ' '.join(calcdeps)
-    Popen(' '.join(calcdeps), shell=True).wait()
+    return args
 
-    include += '<script src="%s"></script>' % COMPILED_FILE.split(APP_LOCATION)[-1]
 
-tmpl = HTML_TMPL if not args.test else TEST_ALL_HTML_TMPL
-
-with open(tmpl, 'r') as f: html = f.read()
-
-html = html.replace('<!--{{ include }}-->', include)
-
-print 'Writing HTML...'
-with open(HTML_FILE, 'w') as f:
-    f.write(html)
-
-print 'Done.'
-
+if __name__ == '__main__':
+    main(parse_args())
 
