@@ -8,6 +8,7 @@ from shutil import rmtree, copy, ignore_patterns, copytree
 import fileinput
 from subprocess import Popen, PIPE
 import fnmatch
+import json
 
 parser = argparse.ArgumentParser(description='Compile Connectsy\'s js')
 parser.add_argument('-v', '--verbose', default=False, dest='v',
@@ -35,6 +36,7 @@ CLOSURE_LOCATION = os.path.join(CURPATH, 'lib/closure/')
 IMG_LOCATION = os.path.join(CURPATH, 'src/img/')
 
 TEST_HTML_TMPL = os.path.join(CURPATH, 'src/html/test.html')
+TEST_ALL_HTML_TMPL = os.path.join(CURPATH, 'src/html/all_tests.html')
 HTML_TMPL = os.path.join(CURPATH, 'src/html/index.html')
 HTML_FILE = os.path.join(APP_LOCATION, 'index.html')
 COMPILED_FILE = os.path.join(APP_LOCATION, 'compiled.js')
@@ -124,8 +126,10 @@ if args.debug and not args.compiled:
     include += get_scripts(deps)
 
     if args.test:
+        all_tests = []
         for root, dirnames, filenames in os.walk(JS_LOCATION):
             for filename in fnmatch.filter(filenames, '*_test.js'):
+                print filename
                 fullname = os.path.join(root, filename)
                 testdeps = [os.path.join(CURPATH, 'lib/closure/bin/calcdeps.py'),
                             '-p', JS_LOCATION,
@@ -135,14 +139,19 @@ if args.debug and not args.compiled:
                 proc.wait()
                 testdeps_results = proc.stdout.read().split('\n')
 
-                root = '/'.join(['..' for d in fullname.split(JS_LOCATION)[-1].split('/') if d != ''])
-                test_include = get_scripts(testdeps_results, root=root)
+                rel_path = '/'.join(['..' for d in fullname.split(JS_LOCATION)[-1].split('/') if d != ''])
+                test_include = get_scripts(testdeps_results, root=rel_path)
 
                 with open(TEST_HTML_TMPL, 'r') as f: html = f.read()
                 html = html.replace('<!--{{ include_body }}-->', test_include)
-                to = os.path.join(DEBUG_JS_LOCATION,
-                                  fullname.replace('.js', '.html').split(JS_LOCATION)[-1])
+                to_rel = fullname.replace('.js', '.html').split(JS_LOCATION)[-1]
+                to = os.path.join(DEBUG_JS_LOCATION, to_rel)
                 with open(to, 'w') as f: f.write(html)
+
+                all_tests.append('js/'+to_rel)
+
+        with open(os.path.join(APP_LOCATION, 'alltests.js'), 'w') as f:
+            f.write('var _allTests = '+json.dumps(all_tests)+';')
 
     # if args.test:
     #     copy(os.path.join(CURPATH, 'lib/qunit/qunit.js'), APP_LOCATION)
@@ -159,8 +168,8 @@ else:
                  '-c', os.path.join(CURPATH, 'lib/compiler.jar'),
                  '-f', '--compilation_level', '-f', 'ADVANCED_OPTIMIZATIONS',
                  '-f', '--js_output_file', '-f', COMPILED_FILE,
-                 '-f', '--define="consy.PLATFORM=\'%s\'"' % args.platform,
-                 '-f', '--define="consy.DEBUG=%s"' % d]
+                 '-f', '--define="frame.PLATFORM=\'%s\'"' % args.platform,
+                 '-f', '--define="frame.DEBUG=%s"' % d]
     if args.map:
         calcdeps.append('-f')
         calcdeps.append('--create_name_map_files=true')
@@ -170,7 +179,9 @@ else:
 
     include += '<script src="%s"></script>' % COMPILED_FILE.split(APP_LOCATION)[-1]
 
-with open(HTML_TMPL, 'r') as f: html = f.read()
+tmpl = HTML_TMPL if not args.test else TEST_ALL_HTML_TMPL
+
+with open(tmpl, 'r') as f: html = f.read()
 
 html = html.replace('<!--{{ include }}-->', include)
 

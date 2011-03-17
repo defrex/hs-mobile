@@ -12,11 +12,12 @@ goog.require('frame.dom.Node');
 * One Class to rule them all. Or at lease rule all the Views.
 * @constructor
 **/
-frame.Controller = function(urls) {
+frame.Controller = function(settings) {
     /**
-    * @type {Array}
+    * @type {Object}
     **/
-    this.urls = urls;
+    this.settings = settings;
+    frame.log(settings);
 
     /**
     * @type {Array.<frame.View>}
@@ -43,7 +44,7 @@ frame.Controller.prototype.startHashChange = function() {
         var h = window.location.hash;
         h = h == '' ? '/' : h.slice(1);
         frame.log('loading view for url: '+h);
-        frame.route(h, null, that.urls);
+        frame.route(h, null, that.settings.urls);
     }
 
     if (window.onHashChange != undefined) {
@@ -118,9 +119,9 @@ frame.Controller.prototype.authReset = function() {
 };
 
 
-frame.start = function(urls, clbk, that) {
+frame.start = function(settings, clbk, that) {
     frame.init(function(){
-        frame.controller = new frame.Controller(urls);
+        frame.controller = new frame.Controller(settings);
         frame.controller.startHashChange();
         if (clbk) clbk.call(that);
     });

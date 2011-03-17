@@ -1,4 +1,5 @@
 
+goog.provide('frame');
 goog.provide('frame.init');
 goog.provide('frame.log');
 

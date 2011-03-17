@@ -23,10 +23,10 @@ var testController = function(){
     View2.prototype.template = function(){return 'view2'};
 
     asyncTestCase.waitForAsync();
-    frame.start([
+    frame.start({urls: [
         ['^/conTest/1/$', View1],
         ['^/conTest/2/$', View2]
-    ], function(){
+    ]}, function(){
         assertTrue('controller started', frame.controller instanceof frame.Controller);
         doc.q('body').append(hs.tmpl.Main());
         frame.controller.goTo('/conTest/1/');

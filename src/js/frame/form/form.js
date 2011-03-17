@@ -35,9 +35,8 @@ frame.Form.prototype.validate = function(clbk, that) {
         field.validate(function(valid, error) {
             this.valid = this.valid && valid;
             if (!valid) this.errors[field_name] = error;
-            num--;
-            if (num == 0)
-                clbk.call(that, this.valid, this.errors);
+            num--; if (num == 0)
+                clbk.call(that, this.valid === true, this.errors);
         }, this);
     }, this);
 };
