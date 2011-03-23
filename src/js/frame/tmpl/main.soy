@@ -1,0 +1,31 @@
+{namespace frame.tmpl}
+
+/**
+* Renders the Action Bar
+*/
+{template .ActionBar}
+    <div id="actionbar">
+        <a href="#/">
+            <img src="img/ab_logo.png" alt="Hipsell" id="ab_logo" />
+        </a>
+    </div>
+{/template}
+
+/**
+* Renders the Action Bar
+* @param text
+* @param id
+* @param position
+*/
+{template .ActionBarButton}
+    <a href="#" class="ab-button {$position}" id="{$id}">{$text}</a>
+{/template}
+
+/**
+* Renders the main HTML body
+*/
+{template .Main}
+    {call .ActionBar data="all"/}
+    <div id="main"></div>
+{/template}
+

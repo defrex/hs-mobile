@@ -1,7 +1,7 @@
 
 $green: #289289;
-$white: #F9FFE8;
-$black: #222;
+$white: #F8FAE9;
+$black: #2C2C2C;
 $grey: #666;
 $blue: #2671A8;
 
@@ -16,148 +16,96 @@ $ab_height:50px;
     top:0;left:0;
     z-index:100;
     width:100%;height:$ab_height;
-    background-color:#289289;
-    background-image:url(../img/actionbar.png);
-    background-repeat:repeat-x;
     color:#222;
     text-align:center;
-    
+    background-color:$black;
+    border-color:$black;
+    border-width:1px 0;
+    border-style:solid;
+
+    @include gradient($black + #222, $black);
+
     #ab_logo{
         position:absolute;
         height:39px;width:147px;
         top:50%;
-        margin:-19px 0 0 10px;;
+        margin:-19px 0 0 10px;
+
     }
     .back #ab_logo{left:50%;margin-left:-73px;}
+
+    .ab-button{
+        color: $white;
+        border:1px solid $black;
+        background-color:$black;
+        padding:5px;
+        margin:10px;
+
+        @include gradient($black + #131313, $black + #090909);
+        @include rounded();
+        @include box-shadow(0, 1px, 1px, $black + #333);
+    }
+    .ab-button.right{float:right;}
+    .ab-button.left{float:left;}
 }
 
 #main{
     margin:$ab_height 0 0;
-    
-    h1{
-        margin:0;
-        padding:10px;
-        border-bottom:1px solid $black;
-        font-size:24px;
-    }
+    position:absolute;
+    top:0;left:0;
+    width:100%;
+    background-color:$black;
 
-    .dashboard{
-        a.dash-item{
+    font-size:16px;
+
+    #new_listing{
+        width:100%;
+
+        li, ul {margin:0;padding:0;list-style:none;}
+        .form_item{
+            width:93%;
+            padding:2%;
+            margin:2%;
+            background-color:#fff;
             display:block;
-            float:left;
-            margin:10px 0;
-            width:50%;
-            text-align:center;
-            font-weight:bold;
-            color:#222;
+            font-size:16px;
+            @include sans();
+            @include rounded();
+
+            input[type=button]{
+                float:right;
+            }
+
+            #image{
+                max-height:100px;
+                width:auto;
+            }
         }
+        .form_item:after {@include clearfix();}
+
     }
 
-    .auth_logo{width:300px;height:100px;}
-    .auth{
+    #login{
         text-align:center;
+        $width: 252px;
+
         form{
-            $width: 250px;
             @include hor-center($width);
             width:$width;
             text-align:right;
-            input[type=text], input[type=password]{
-                width:100%;
+
+            input[type=email]{width:100%;}
+            input[type=submit]{
+                @include box-shadow(0, 1px, 2px, #000);
             }
+        }
+
+        img {
+            width:$width;height:auto;
+            margin:0 auto;
         }
     }
-    
-    .plan-list{
-        li{
-            padding:10px 10px 10px 70px;
-            border-bottom:1px solid $grey;
-            position:relative;
-            min-height:50px;
-            
-            .avatar{
-                position:absolute;
-                top:0;left:0;
-            }
-            
-            a{
-                display:block;
-                font-weight:bold;
-            }
-            .created{
-                color:$grey;
-                font-size:14px;
-            }
-        }
-    }
-    
-    .plan-view{
-        .user{border-bottom: 1px solid $black;}
-        .plan-body{
-            padding:10px;
-            .what{
-                font-size: 20px;
-                margin-bottom:10px;
-            }
-            .created{
-                color:$grey;
-                font-size:16px;
-            }
-            border-bottom:1px solid $grey;
-        }
-    }
-    
-    .plan-new{
-        .item{
-            width:96%;
-            padding: 10px 2%;
-            font-size:16px;
-            border: none;
-            border-bottom:1px solid $grey;
-        }
-        .wh{
-            @extend .item;
-            display:block;
-            margin:0;
-        }
-        input[type=text]{
-            @extend .wh;
-        }
-        textarea{
-            @extend .wh;
-            font-family: 'Nobile', arial, serif;
-            background-color:#efefef;
-            height:75px;
-            vertical-align:text-top;
-        }
-        input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{
-            color:$grey;
-        }
-        #private{
-            @extend .item;
-            color:$grey;
-            label{
-                width:50%;
-                padding:0;
-                margin:0;
-                text-align:center;
-            }
-            label:first-child{float:left;}
-            label:last-child{float:right;}
-        }
-        #private:after {@include clearfix();}
-        .list-button{
-            @extend .item;
-            color:$grey;
-            cursor:pointer;
-        }
-        #button-bar{
-            @extend .item;
-            input{
-                float:right;
-            }
-        }
-        #button-bar:after {@include clearfix();}
-    }
+
 }
 
 
@@ -165,22 +113,22 @@ $ab_height:50px;
 
 .dialog{
     $width:250px;
-    
+
     @include rounded();
     position:absolute;
     width:$width;
     border:2px solid $green;
     background-color:$white;
-    
+
     .body{
         padding:10px;
     }
-    
+
     .buttons{
         border-top:2px solid $black;
         background-color:$green;
         padding:5px 5px 10px;
-        
+
         .button{
             display:inline;
             margin-right:10px;
@@ -189,7 +137,7 @@ $ab_height:50px;
             }
         }
     }
-    
+
     &.msg{
         padding:10px;
         background-color:$black;
@@ -209,25 +157,7 @@ $ab_height:50px;
 }
 
 .widget{
-    
-    &.datetime{
-        
-        h1{
-            font-size: 16px;
-            margin: 10px 0 5px;
-        }
-        
-        .button-row{
-            padding: 3px 0;
-            div{
-                width: 50px;
-                float:left;
-            }
-        }
-        .button-row.toggle div{width:120px;}
-        .button-row.toggle div:first{padding-right:0;}
-        .button-row:after {@include clearfix();}
-    }
+
 }
 
 

@@ -7,6 +7,7 @@ import pyinotify
 from subprocess import Popen, PIPE
 import os
 import time
+from multiprocessing import Process
 
 PORT = 8080
 WATCH = os.path.join(compile.CURPATH, 'src')
@@ -16,29 +17,34 @@ args = compile.parse_args()
 
 class OnWriteHandler(pyinotify.ProcessEvent):
     def my_init(self):
+        self.compiling = True
         compile.main(args)
         self.start_serve()
+        self.compiling = False
 
     def start_serve(self):
         self.httpd = Popen(('python', '-m', 'SimpleHTTPServer', str(PORT)),
                            stdout=PIPE, cwd=SERVE)
+        print 'Resume Serving at http://0.0.0.0:%i' % PORT
 
     def stop_serve(self):
         self.httpd.terminate()
         self.httpd.wait()
         self.httpd = None
+        print 'Server Terminated'
+
+    def recompile(self):
+        self.stop_serve()
+        compile.main(args)
+        self.start_serve()
+        self.compiling = False
 
     def process_IN_MODIFY(self, event):
-        print 'change detected'
-        print event.mask, event.maskname, event.name, event.wd
+        print event.maskname, event.name
         name, ext = event.name.split('.')
-        print name, ext
-        if not (os.path.isfile(os.path.join(event.path, '%s.%s' % (name, 'soy')))
-                and ext == 'js'):
-            self.stop_serve()
-            compile.main(args)
-            self.start_serve()
-
+        if (not (os.path.isfile(os.path.join(event.path, '%s.%s' % (name, 'soy')))
+                and ext == 'js')) and not self.compiling:
+            self.recompile()
 
 def auto_compile():
     wm = pyinotify.WatchManager()

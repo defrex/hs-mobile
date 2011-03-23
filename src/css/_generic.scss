@@ -3,41 +3,34 @@
 @import "goog_css3button";
 @import "goog_dialog";
 
-body {margin:0;padding:0;font-family: 'Droid Sans', arial, serif;}
+body, html{background-color:$black;}
+
+body {margin:0;padding:0;@include sans();min-height:100%;}
+
 
 a{text-decoration:none;color:$blue;}
 ul, li{margin:0;padding:0;list-style:none;}
 
 .clear{clear:both;}
 
-.avatar{
-    width:50px;height:50px;
-    margin:5px;padding:5px;
-    background-image:url(../img/avatar_border.png);
+
+textarea, input[type=text], input[type=email]{
+    padding:5px;
+    border:none;
+    background-color:#fff;
+
+    @include rounded(5px);
 }
 
-.user{
-    $height: 70px;
-    height: $height;
-    .avatar{
-        float:left;
-    }
-    a{
-        /*@include text-shadow-lightbg($grey);*/
-        $text-height: 28px;
-        $fake: 20px;
-        height: $text-height + $fake;
-        padding: ($height - $text-height - $fake)/2 0;
-        float:left;
-        font-size:$text-height;
-        font-weight:bold;
-        vertical-align:middle;
-    }
-}
+.placeheld{color:$grey;}
 
-.list-button{
-    font-size: 18px;
-    border-bottom:1px solid $grey;
-    padding:10px;
-}
+input[type=button], input[type=submit], .button{
+    color: $black;
+    border:1px solid $grey;
+    background-color:$white;
+    padding:5px;
 
+    @include gradient(#fff - #090909, #fff - #131313);
+    @include rounded();
+    @include box-shadow(0, 1px, 2px, $black + #666);
+}

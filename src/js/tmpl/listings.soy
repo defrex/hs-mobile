@@ -4,11 +4,16 @@
 * Renders the new listing page
 */
 {template .Add}
-    <form id="new_listing">
-        <input type="button" id="take_image" />
-        <textarea id="description"></textarea>
-        <input type="text" id="price" />
-    </form>
+<form id="new_listing">
+    <div class="form_item">
+        <label for="take_image">Image:</label>
+        <img id="image" />
+        <input type="button" id="take_image" value="Take" />
+    </div>
+    <textarea class="form_item" id="description"
+        rows="3" placeholder="Description:"></textarea>
+    <input class="form_item" type="text" id="price" placeholder="Price:" />
+</form>
 {/template}
 
 

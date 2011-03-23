@@ -3,6 +3,8 @@ goog.provide('frame.View');
 
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.Error');
+goog.require('frame.store');
+goog.require('frame.tmpl');
 
 /**
 * The main View object. Subclasses of View can be registered in urls.js to
@@ -12,10 +14,10 @@ goog.require('goog.ui.Component.Error');
 frame.View = function() {
     goog.ui.Component.call(this, Array.prototype.pop.call(arguments));
 
-    if (this.requireAuth) {
-        if (!frame.store.has('username')) throw ('403');
-        this.username = frame.store.get('username');
-    }
+    if (this.requireAuth
+        && frame.controller.settings.isAuthenticated
+        && !frame.controller.settings.isAuthenticated())
+            throw ('403');
 
     this.args = Array.prototype.slice.call(arguments);
 
@@ -42,6 +44,18 @@ frame.View.prototype.actionBar = true;
 frame.View.prototype.template = null;
 
 /**
+* view has a display
+* @type {boolean}
+**/
+frame.View.prototype.noDisplay = false;
+
+/**
+* define buttons.
+* @type {Object.<string, Array.<string, function(){}>>}
+**/
+frame.View.prototype.abButtons = null;
+
+/**
 * @param {function(Object)} clbk required. called after render.
 * @param {Object} that clbk's this.
 **/
@@ -56,14 +70,22 @@ frame.View.prototype.createDom = function(clbk, that) {
     else if (this.actionBar && !this.doc.q('#actionbar').visible())
         this.doc.q('#actionbar').show();
 
-    finish.call(this);
+    if (this.abButtons != null)
+        for (var i=0, len=this.abButtons.length; i<len; i++){
+            var b = frame.tmpl.ActionBarButton(this.abButtons[i]);
+            if (this.abButtons[i].position == 'right')
+                this.doc.q('#actionbar').append(b);
+            else if (this.abButtons[i].position == 'left')
+                this.doc.q('#actionbar').prepend(b);
+            else
+                throw('invalid action bar button position: '+this.abButtons[i].position);
+        }
 
-    function finish() {
-        this.prepContext(function() {
-            this.element_.innerHTML = this.template(this);
-            clbk.call(that);
-        }, this);
-    };
+
+    this.prepContext(function() {
+        this.element_.innerHTML = this.template(this);
+        clbk.call(that);
+    }, this);
 };
 
 /**
@@ -106,6 +128,7 @@ frame.View.prototype.render = function(opt_parent, clbk, that) {
 };
 
 /**
+* Override to setup before template rendering.
 * @param {function(Object)} clbk required. called after render.
 * @param {Object} that clbk's this.
 **/
@@ -113,5 +136,28 @@ frame.View.prototype.prepContext = function(clbk, that) {
     if (clbk) clbk.call(that || this);
 };
 
-
-
+/**
+* Set up the placeholder text
+* @type {function()}
+**/
+frame.View.prototype.placehold = function(){
+    this.doc.q('[placeholder]').each(function(elem){
+        elem = new frame.dom.Node(elem);
+        elem.val(elem.attr('placeholder'));
+        elem.addClass('placeheld');
+    });
+    this.doc.q('[placeholder]').on('focus', function(e){
+        elem = new frame.dom.Node(e.target);
+        if (elem.val() == elem.attr('placeholder')){
+            elem.val('');
+            elem.removeClass('placeheld');
+        }
+    }, this);
+    this.doc.q('[placeholder]').on('blur', function(e){
+        elem = new frame.dom.Node(e.target);
+        if (elem.val() == ''){
+            elem.val(elem.attr('placeholder'));
+            elem.addClass('placeheld');
+        }
+    }, this);
+};

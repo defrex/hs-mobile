@@ -58,10 +58,10 @@ def main(args):
 
     print 'Compiling templates...'
     command = ('java -jar lib/SoyToJsSrcCompiler.jar'
-               ' --outputPathFormat %(op_path)s/{INPUT_FILE_NAME_NO_EXT}.js'
+               ' --outputPathFormat {INPUT_DIRECTORY}/{INPUT_FILE_NAME_NO_EXT}.js'
                ' --shouldGenerateJsdoc'
-               ' --shouldProvideRequireSoyNamespaces') % {
-                'op_path': os.path.join(JS_LOCATION, 'tmpl')}
+               ' --shouldProvideRequireSoyNamespaces') #% {
+               #  'op_path': os.path.join(JS_LOCATION, 'tmpl')}
     for root, dirnames, filenames in os.walk(JS_LOCATION):
         for filename in fnmatch.filter(filenames, '*.soy'):
             command += ' '+os.path.join(root, filename)
