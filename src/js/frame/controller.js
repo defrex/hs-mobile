@@ -46,14 +46,14 @@ frame.Controller = function(settings) {
     frame.init(function(){
         this.setWrapperHeight();
 
-        if (frame.PLATFORM == 'ios'){
-            this.iScroll = new iScroll('scroller', {desktopCompatibility:true});
+        // Check screen size on orientation change
+        var eventType = 'onorientationchange' in window ?
+                'orientationchange': 'resize';
+        goog.events.listen(window, eventType,
+                this.setWrapperHeight, false, this);
 
-            // Check screen size on orientation change
-            var eventType = 'onorientationchange' in window ?
-                    'orientationchange': 'resize';
-            goog.events.listen(window, eventType,
-                    this.setWrapperHeight, false, this);
+        if (frame.PLATFORM == 'ios'){
+            this.iScroll = new iScroll('wrapper', {desktopCompatibility:true});
 
             // Prevent the whole screen to scroll when dragging elements
             // outside of the scroller (ie:header/footer).
