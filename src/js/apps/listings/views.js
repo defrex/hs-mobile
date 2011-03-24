@@ -5,7 +5,9 @@ goog.require('hs.tmpl.listings');
 goog.require('frame.View');
 goog.require('PhoneGap');
 
-
+/*
+* @constructor
+*/
 hs.listings.views.Add = function(){
     frame.View.call(this, Array.prototype.pop.call(arguments));
 
@@ -32,7 +34,7 @@ hs.listings.views.Add.prototype.template = hs.tmpl.listings.Add;
 
 /**
 * define buttons.
-* @type {Object.<string, Array.<string, function(){}>>}
+* @type {Object.<string, Array.<string, function()>>}
 **/
 hs.listings.views.Add.prototype.abButtons = [
     {

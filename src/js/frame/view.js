@@ -51,7 +51,7 @@ frame.View.prototype.noDisplay = false;
 
 /**
 * define buttons.
-* @type {Object.<string, Array.<string, function(){}>>}
+* @type {Object.<string, Array.<string, function()>>}
 **/
 frame.View.prototype.abButtons = null;
 
