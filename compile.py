@@ -152,7 +152,7 @@ def main(args):
                      '-f', '--define="frame.DEBUG=%s"' % d]
         if args.map:
             calcdeps.append('-f')
-            calcdeps.append('--create_name_map_files=true')
+            calcdeps.append('--create_source_map=source.map')
         print 'Compiling JS...'
         if args.v: print 'calcdeps command:\n', ' '.join(calcdeps)
         Popen(' '.join(calcdeps), shell=True).wait()
