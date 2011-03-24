@@ -16,7 +16,8 @@ frame.View = function() {
 
     if (this.requireAuth
         && frame.controller.settings.isAuthenticated
-        && !frame.controller.settings.isAuthenticated()) throw ('403');
+        && !frame.controller.settings.isAuthenticated())
+            throw ('403');
 
     this.args = Array.prototype.slice.call(arguments);
 

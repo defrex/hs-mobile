@@ -28,7 +28,7 @@ frame.tmpl.ActionBar = function(opt_data, opt_sb) {
  */
 frame.tmpl.ActionBarButton = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<a href="#" class="ab-button ', soy.$$escapeHtml(opt_data.position), '" id="', soy.$$escapeHtml(opt_data.id), '">', soy.$$escapeHtml(opt_data.text), '</a>');
+  output.append('<a href="#" class="ab-button button ', soy.$$escapeHtml(opt_data.position), '" id="', soy.$$escapeHtml(opt_data.id), '">', soy.$$escapeHtml(opt_data.text), '</a>');
   if (!opt_sb) return output.toString();
 };
 

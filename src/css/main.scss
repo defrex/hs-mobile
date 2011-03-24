@@ -27,7 +27,7 @@ $ab_height:50px;
 
     #ab_logo{
         position:absolute;
-        height:39px;width:147px;
+        height:39px;width:auto;
         top:50%;
         margin:-19px 0 0 10px;
 
@@ -37,12 +37,10 @@ $ab_height:50px;
     .ab-button{
         color: $white;
         border:1px solid $black;
-        background-color:$black;
-        padding:5px;
-        margin:10px;
+        background-color:$green;
+        margin:11px 10px;
 
-        @include gradient($black + #131313, $black + #090909);
-        @include rounded();
+        @include gradient($green - #090909, $green - #222);
         @include box-shadow(0, 1px, 1px, $black + #333);
     }
     .ab-button.right{float:right;}
@@ -66,7 +64,7 @@ $ab_height:50px;
             width:93%;
             padding:2%;
             margin:2%;
-            background-color:#fff;
+            background-color:$white;
             display:block;
             font-size:16px;
             @include sans();
@@ -80,6 +78,8 @@ $ab_height:50px;
                 max-height:100px;
                 width:auto;
             }
+
+            label{color:$grey;}
         }
         .form_item:after {@include clearfix();}
 

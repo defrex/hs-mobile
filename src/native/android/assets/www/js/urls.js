@@ -10,6 +10,7 @@ goog.require('hs.users.views')
 **/
 hs.urls = [
     ['^/$', hs.listings.views.Add],
-    ['^thanks/$', hs.listings.views.Thanks],
-    ['^/login/$', hs.users.views.Login]
+    ['^/thanks/$', hs.listings.views.Thanks],
+    ['^/login/$', hs.users.views.Login],
+    ['^/logout/$', hs.users.views.Logout]
 ];

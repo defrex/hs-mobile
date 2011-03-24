@@ -5,7 +5,7 @@
 
 body, html{background-color:$black;}
 
-body {margin:0;padding:0;@include sans();min-height:100%;}
+body {margin:0;padding:0;@include sans();height:100%;}
 
 
 a{text-decoration:none;color:$blue;}
@@ -17,7 +17,7 @@ ul, li{margin:0;padding:0;list-style:none;}
 textarea, input[type=text], input[type=email]{
     padding:5px;
     border:none;
-    background-color:#fff;
+    background-color:$white;
 
     @include rounded(5px);
 }
@@ -28,9 +28,10 @@ input[type=button], input[type=submit], .button{
     color: $black;
     border:1px solid $grey;
     background-color:$white;
-    padding:5px;
+    padding:5px 10px;
+    font-size:12px;
 
-    @include gradient(#fff - #090909, #fff - #131313);
+    @include gradient($white - #090909, $white - #222);
     @include rounded();
     @include box-shadow(0, 1px, 2px, $black + #666);
 }

@@ -59,3 +59,13 @@ hs.users.views.Login.prototype.submit = function(){
 };
 
 
+
+hs.users.views.Logout = function(){
+    frame.View.call(this, Array.prototype.pop.call(arguments));
+
+    frame.store.del('email');
+    frame.controller.goTo('/');
+};
+goog.inherits(hs.users.views.Logout, frame.View);
+
+hs.users.views.Logout.prototype.noDisplay = true;
