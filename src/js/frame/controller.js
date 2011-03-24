@@ -42,38 +42,13 @@ frame.Controller = function(settings) {
 
     this.doc.q('body').append(frame.tmpl.Main());
 
-    // iScroll for iOS
-    frame.init(function(){
-        // this.setWrapperHeight();
-
-        // // Check screen size on orientation change
-        // var eventType = 'onorientationchange' in window ?
-        //         'orientationchange': 'resize';
-        // goog.events.listen(window, eventType,
-        //         this.setWrapperHeight, false, this);
-
-        if (frame.PLATFORM == 'ios'){
-            this.doc.q('#actionbar').style('position', 'absolute');
-
-            // var that = this;
-            // window.onscroll = function(e){
-            //     that.doc.q('#actionbar').style('top', window.pageYOffset+'px');
-            // };
-
-            var that = this;
-            (function moveAB(){
-                that.doc.q('#actionbar').style('top', window.pageYOffset+'px');
-                setTimeout(moveAB, 100);
-            })();
-
-            // this.iScroll = new iScroll('wrapper', {desktopCompatibility:true});
-
-            // // Prevent the whole screen to scroll when dragging elements
-            // // outside of the scroller (ie:header/footer).
-            // document.addEventListener('touchmove', function (e) {
-            //     e.preventDefault();
-            // }, false);
-        }
+    if (frame.PLATFORM == 'ios') frame.init(function(){
+        this.doc.q('#actionbar').style('position', 'absolute');
+        var that = this;
+        (function moveAB(){
+            that.doc.q('#actionbar').style('top', window.pageYOffset+'px');
+            setTimeout(moveAB, 100);
+        })();
     }, this);
 };
 
