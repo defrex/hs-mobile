@@ -10,8 +10,6 @@ goog.require('frame.dom.Node');
 goog.require('frame.tmpl');
 goog.require('frame');
 
-goog.require('iScroll');
-
 /**
 * One Class to rule them all. Or at lease rule all the Views.
 * @constructor
