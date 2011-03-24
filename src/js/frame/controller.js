@@ -8,6 +8,9 @@ goog.require('frame.route');
 goog.require('frame.init');
 goog.require('frame.dom.Node');
 goog.require('frame.tmpl');
+goog.require('frame');
+
+goog.require('iScroll');
 
 /**
 * One Class to rule them all. Or at lease rule all the Views.
@@ -38,6 +41,18 @@ frame.Controller = function(settings) {
     this.doc = new frame.dom.Node(document, this.dom_);
 
     this.doc.q('body').append(frame.tmpl.Main());
+
+    // iScroll for iOS
+    if (frame.PLATFORM == 'ios') frame.init(function(){
+        this.iScroll = new iScroll('main');
+        // Check screen size on orientation change
+        //window.addEventListener('onorientationchange' in window ? 'orientationchange' : 'resize', setHeight, false);
+
+        // Prevent the whole screen to scroll when dragging elements outside of the scroller (ie:header/footer).
+        // If you want to use iScroll in a portion of the screen and still be able to use the native scrolling, do *not* preventDefault on touchmove.
+        document.addEventListener('touchmove', function (e) {
+                e.preventDefault(); }, false);
+    });
 };
 
 /** Kicks off the hash change monitoring. **/
