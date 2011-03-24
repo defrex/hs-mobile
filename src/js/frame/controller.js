@@ -44,24 +44,35 @@ frame.Controller = function(settings) {
 
     // iScroll for iOS
     frame.init(function(){
-        this.setWrapperHeight();
+        // this.setWrapperHeight();
 
-        // Check screen size on orientation change
-        var eventType = 'onorientationchange' in window ?
-                'orientationchange': 'resize';
-        goog.events.listen(window, eventType,
-                this.setWrapperHeight, false, this);
+        // // Check screen size on orientation change
+        // var eventType = 'onorientationchange' in window ?
+        //         'orientationchange': 'resize';
+        // goog.events.listen(window, eventType,
+        //         this.setWrapperHeight, false, this);
 
         if (frame.PLATFORM == 'ios'){
-            this.iScroll = new iScroll('wrapper', {desktopCompatibility:true});
+            this.doc.q('#actionbar').style('position', 'absolute');
 
-            // Prevent the whole screen to scroll when dragging elements
-            // outside of the scroller (ie:header/footer).
-            document.addEventListener('touchmove', function (e) {
-                e.preventDefault();
-            }, false);
-        }else{
-            this.doc.q('#actionbar').style('position', 'fixed');
+            // var that = this;
+            // window.onscroll = function(e){
+            //     that.doc.q('#actionbar').style('top', window.pageYOffset+'px');
+            // };
+
+            var that = this;
+            (function moveAB(){
+                that.doc.q('#actionbar').style('top', window.pageYOffset+'px');
+                setTimeout(moveAB, 100);
+            })();
+
+            // this.iScroll = new iScroll('wrapper', {desktopCompatibility:true});
+
+            // // Prevent the whole screen to scroll when dragging elements
+            // // outside of the scroller (ie:header/footer).
+            // document.addEventListener('touchmove', function (e) {
+            //     e.preventDefault();
+            // }, false);
         }
     }, this);
 };

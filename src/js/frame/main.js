@@ -25,9 +25,9 @@ frame.init = (function() {
     var toLoad = new Array(),
         loaded = false;
     window.onload = function() {
+        loaded = true;
         for (var i=0, len=toLoad.length; i<len; i++)
             toLoad[i][0].call(toLoad[i][1]);
-        loaded = true;
     };
     return function(fn, that) {
         if (!loaded) toLoad.push([fn, that]);
