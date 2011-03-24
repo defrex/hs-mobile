@@ -42,6 +42,6 @@ frame.tmpl.ActionBarButton = function(opt_data, opt_sb) {
 frame.tmpl.Main = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   frame.tmpl.ActionBar(opt_data, output);
-  output.append('<div id="main"></div>');
+  output.append('<div id="wrapper"><div id="scroller"><div id="main"></div></div></div>');
   if (!opt_sb) return output.toString();
 };

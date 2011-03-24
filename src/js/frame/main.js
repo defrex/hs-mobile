@@ -25,12 +25,13 @@ frame.init = (function() {
     var toLoad = new Array(),
         loaded = false;
     window.onload = function() {
-        for (var i = 0; i < toLoad.length; i++) toLoad[i]();
+        for (var i=0, len=toLoad.length; i<len; i++)
+            toLoad[i][0].call(toLoad[i][1]);
         loaded = true;
     };
-    return function(fn) {
-        if (!loaded) toLoad.push(fn);
-        else fn();
+    return function(fn, that) {
+        if (!loaded) toLoad.push([fn, that]);
+        else fn.call(that);
     }
 })();
 

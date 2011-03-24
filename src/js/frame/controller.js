@@ -43,16 +43,27 @@ frame.Controller = function(settings) {
     this.doc.q('body').append(frame.tmpl.Main());
 
     // iScroll for iOS
-    if (frame.PLATFORM == 'ios') frame.init(function(){
-        this.iScroll = new iScroll('main');
-        // Check screen size on orientation change
-        //window.addEventListener('onorientationchange' in window ? 'orientationchange' : 'resize', setHeight, false);
+    frame.init(function(){
+        this.setWrapperHeight();
 
-        // Prevent the whole screen to scroll when dragging elements outside of the scroller (ie:header/footer).
-        // If you want to use iScroll in a portion of the screen and still be able to use the native scrolling, do *not* preventDefault on touchmove.
-        document.addEventListener('touchmove', function (e) {
-                e.preventDefault(); }, false);
-    });
+        if (frame.PLATFORM == 'ios'){
+            this.iScroll = new iScroll('scroller', {desktopCompatibility:true});
+
+            // Check screen size on orientation change
+            var eventType = 'onorientationchange' in window ?
+                    'orientationchange': 'resize';
+            goog.events.listen(window, eventType,
+                    this.setWrapperHeight, false, this);
+
+            // Prevent the whole screen to scroll when dragging elements
+            // outside of the scroller (ie:header/footer).
+            document.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+            }, false);
+        }else{
+            this.doc.q('#actionbar').style('position', 'fixed');
+        }
+    }, this);
 };
 
 /** Kicks off the hash change monitoring. **/
@@ -135,6 +146,15 @@ frame.Controller.prototype.authReset = function() {
     if (this.settings.on403)
         this.settings.on403.call(this);
     else throw('403');
+};
+
+/**
+* resizes the wrapper div. Needed for iScroll.
+**/
+frame.Controller.prototype.setWrapperHeight = function(){
+    var abHeight = this.doc.q('#actionbar')[0].offsetHeight,
+        wrapperHeight = window.innerHeight - abHeight;
+    this.doc.q('#wrapper').style('height', wrapperHeight+'px');
 };
 
 

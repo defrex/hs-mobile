@@ -3,11 +3,6 @@
 @import "goog_css3button";
 @import "goog_dialog";
 
-body, html{background-color:$black;}
-
-body {margin:0;padding:0;@include sans();height:100%;}
-
-
 a{text-decoration:none;color:$blue;}
 ul, li{margin:0;padding:0;list-style:none;}
 
