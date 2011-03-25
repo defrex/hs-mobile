@@ -23,7 +23,7 @@ class OnWriteHandler(pyinotify.ProcessEvent):
     def start_serve(self):
         self.httpd = Popen(('python', '-m', 'SimpleHTTPServer', str(PORT)),
                            stdout=PIPE, cwd=SERVE)
-        print 'Resume Serving at http://0.0.0.0:%i' % PORT
+        print 'Serving at http://0.0.0.0:%i' % PORT
 
     def stop_serve(self):
         self.httpd.terminate()
@@ -49,10 +49,10 @@ class OnWriteHandler(pyinotify.ProcessEvent):
                 self.recompile()
 
 def auto_compile():
+    print 'Watching directory: %s' % WATCH
     wm = pyinotify.WatchManager()
     notifier = pyinotify.Notifier(wm, default_proc_fun=OnWriteHandler(), timeout=10)
     wm.add_watch(WATCH, pyinotify.IN_MODIFY, rec=True, auto_add=True)
-    print 'Begin watching directory: %s\nServing at http://0.0.0.0:%i' % (WATCH, PORT)
     notifier.loop()
 
 if __name__ == '__main__': auto_compile()
