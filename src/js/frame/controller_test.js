@@ -2,7 +2,6 @@
 goog.require('frame.Controller');
 goog.require('frame.dom.Node');
 goog.require('frame.View');
-goog.require('hs.tmpl');
 
 goog.require('goog.testing.AsyncTestCase');
 goog.require('goog.testing.jsunit');
@@ -28,7 +27,6 @@ var testController = function(){
         ['^/conTest/2/$', View2]
     ]}, function(){
         assertTrue('controller started', frame.controller instanceof frame.Controller);
-        doc.q('body').append(hs.tmpl.Main());
         frame.controller.goTo('/conTest/1/');
         setTimeout(function(){
             assertTrue('view1 loaded', doc.q('#main').html().indexOf('view1') > -1);

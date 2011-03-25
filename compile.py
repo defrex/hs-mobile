@@ -29,6 +29,29 @@ DEBUG_CLOSURE_LOCATION = os.path.join(APP_LOCATION, 'closure/')
 APP_CSS_LOCATION = os.path.join(APP_LOCATION, 'css/')
 APP_IMG_LOCATION = os.path.join(APP_LOCATION, 'img/')
 
+
+def parse_args():
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Compile Connectsy\'s js')
+    parser.add_argument('-v', '--verbose', default=False, dest='v',
+                        action='store_true', help='verbose output')
+    parser.add_argument('-m', '--map', default=False, dest='map',
+                        action='store_true', help='Create source map from the compiler')
+    parser.add_argument('-t', '--test', default=False, dest='test',
+                        action='store_true', help='compile the test environment')
+    parser.add_argument('-d', '--debug', default=False, dest='debug',
+                        action='store_true', help='Don\'t concat or minify the js')
+    parser.add_argument('-c', '--compiled', default=False, action='store_true',
+                        help='Compile the JS with debug true')
+    parser.add_argument('-p', '--platform', default="mobile-web",
+                        help='The platform the js should be compiled for.')
+    args = parser.parse_args()
+    if args.test: args.debug = True
+
+    return args
+
+
 def main(args):
 
     print 'Removing old files...'
@@ -53,6 +76,9 @@ def main(args):
         Popen(command, shell=True).wait()
         include += '<link rel="stylesheet" type="text/css" href="%s"/>' % (
                 newcss.split(APP_LOCATION)[-1])
+        if args.test:
+            test_css = '<link rel="stylesheet" type="text/css" href="%s/%s"/>' % (
+                    '%s', newcss.split(APP_LOCATION)[-1])
     #if args.test: copy(os.path.join(CURPATH, 'lib/qunit/qunit.css'), APP_CSS_LOCATION)
 
 
@@ -109,7 +135,7 @@ def main(args):
             all_tests = []
             for root, dirnames, filenames in os.walk(JS_LOCATION):
                 for filename in fnmatch.filter(filenames, '*_test.js'):
-                    print filename
+                    print 'Calcdeps for', filename
                     fullname = os.path.join(root, filename)
                     testdeps = [os.path.join(CURPATH, 'lib/closure/bin/calcdeps.py'),
                                 '-p', JS_LOCATION,
@@ -123,6 +149,7 @@ def main(args):
                     test_include = get_scripts(testdeps_results, root=rel_path)
 
                     with open(TEST_HTML_TMPL, 'r') as f: html = f.read()
+                    html = html.replace('<!--{{ include }}-->', test_css % rel_path)
                     html = html.replace('<!--{{ include_body }}-->', test_include)
                     to_rel = fullname.replace('.js', '.html').split(JS_LOCATION)[-1]
                     to = os.path.join(DEBUG_JS_LOCATION, to_rel)
@@ -132,15 +159,6 @@ def main(args):
 
             with open(os.path.join(APP_LOCATION, 'alltests.js'), 'w') as f:
                 f.write('var _allTests = '+json.dumps(all_tests)+';')
-
-        # if args.test:
-        #     copy(os.path.join(CURPATH, 'lib/qunit/qunit.js'), APP_LOCATION)
-        #     include += '<script src="qunit.js"></script>'
-        #     copytree(TEST_JS_LOCATION, DEBUG_TEST_JS_LOCATION)
-        #     for root, dirnames, filenames in os.walk(DEBUG_TEST_JS_LOCATION):
-        #         for filename in fnmatch.filter(filenames, '*.js'):
-        #             t = os.path.join(root, filename).split(APP_LOCATION)[-1]
-        #             include += '<script src="%s"></script>' % t
     else:
         if args.compiled: d = 'true'
         else: d = 'false'
@@ -151,8 +169,9 @@ def main(args):
                      '-f', '--define="frame.PLATFORM=\'%s\'"' % args.platform,
                      '-f', '--define="frame.DEBUG=%s"' % d]
         if args.map:
-            calcdeps.append('-f')
-            calcdeps.append('--create_source_map=source.map')
+            calcdeps += ['-f', '--create_source_map=source.map',
+                         '-f', '--variable_map_output_file=vars.map',
+                         '-f', '--property_map_output_file=props.map']
         print 'Compiling JS...'
         if args.v: print 'calcdeps command:\n', ' '.join(calcdeps)
         Popen(' '.join(calcdeps), shell=True).wait()
@@ -170,28 +189,6 @@ def main(args):
         f.write(html)
 
     print 'Done.'
-
-
-def parse_args():
-    import argparse
-
-    parser = argparse.ArgumentParser(description='Compile Connectsy\'s js')
-    parser.add_argument('-v', '--verbose', default=False, dest='v',
-                        action='store_true', help='verbose output')
-    parser.add_argument('-m', '--map', default=False, dest='map',
-                        action='store_true', help='Create source map from the compiler')
-    parser.add_argument('-t', '--test', default=False, dest='test',
-                        action='store_true', help='compile the test environment')
-    parser.add_argument('-d', '--debug', default=False, dest='debug',
-                        action='store_true', help='Don\'t concat or minify the js')
-    parser.add_argument('-c', '--compiled', default=False, action='store_true',
-                        help='Compile the JS with debug true')
-    parser.add_argument('-p', '--platform', default="mobile-web",
-                        help='The platform the js should be compiled for.')
-    args = parser.parse_args()
-    if args.test: args.debug = True
-
-    return args
 
 
 if __name__ == '__main__':

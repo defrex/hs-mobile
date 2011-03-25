@@ -19,7 +19,7 @@ goog.require('frame.Controller');
 * @param {function(Object, number)} clbk optional. request complete callback,
 *     should take a json response body, and a status code.
 **/
-frame.apiRequest = function(o, clbk) {
+frame.apiRequest = function(o, clbk, that) {
     if (typeof o == 'undefined')
         throw ('no arguments passed to apiRequest');
     else if (typeof o == 'string')
@@ -39,11 +39,11 @@ frame.apiRequest = function(o, clbk) {
     if (typeof o.body == 'object')
         o.body = JSON.stringify(o.body);
 
-    o.path = 'http://'+frame.controller.settings.apiServer + o.path;
+    o.path = 'http://'+frame.controller.settings.apiServer+o.path;
 
     if (o.auth && !frame.store.has('token')) {
         frame.controller.authReset();
-        if (clbk) clbk();
+        if (clbk) clbk.call(that);
         return;
     }
 
@@ -62,9 +62,10 @@ frame.apiRequest = function(o, clbk) {
             }catch (e) {
                 resp = req.responseText;
             }
-            clbk(resp, req.status);
+            clbk.call(that, resp, req.status);
         }
     };
+
     req.send(o.body);
 };
 

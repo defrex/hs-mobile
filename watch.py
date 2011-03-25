@@ -17,10 +17,8 @@ args = compile.parse_args()
 
 class OnWriteHandler(pyinotify.ProcessEvent):
     def my_init(self):
-        self.compiling = True
-        compile.main(args)
         self.start_serve()
-        self.compiling = False
+        self.last = None
 
     def start_serve(self):
         self.httpd = Popen(('python', '-m', 'SimpleHTTPServer', str(PORT)),
@@ -37,14 +35,18 @@ class OnWriteHandler(pyinotify.ProcessEvent):
         self.stop_serve()
         compile.main(args)
         self.start_serve()
-        self.compiling = False
 
     def process_IN_MODIFY(self, event):
         print event.maskname, event.name
         name, ext = event.name.split('.')
-        if (not (os.path.isfile(os.path.join(event.path, '%s.%s' % (name, 'soy')))
-                and ext == 'js')) and not self.compiling:
-            self.recompile()
+        if not (os.path.isfile(os.path.join(event.path, '%s.%s' % (name, 'soy')))
+                and ext == 'js'):
+            cur = '%s-%s' % (event.path, event.name)
+            if self.last == cur:
+                self.last = None
+            else:
+                self.last = cur
+                self.recompile()
 
 def auto_compile():
     wm = pyinotify.WatchManager()
@@ -52,12 +54,5 @@ def auto_compile():
     wm.add_watch(WATCH, pyinotify.IN_MODIFY, rec=True, auto_add=True)
     print 'Begin watching directory: %s\nServing at http://0.0.0.0:%i' % (WATCH, PORT)
     notifier.loop()
-    # notifier.process_events()
-    # while True:
-    #     if not compiling:
-    #         while notifier.check_events():
-    #             notifier.read_events()
-    #         notifier.process_events()
-    #     time.sleep(0.1)
 
 if __name__ == '__main__': auto_compile()

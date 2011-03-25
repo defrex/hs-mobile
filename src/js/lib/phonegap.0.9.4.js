@@ -1,6 +1,6 @@
 /**
  * @fileoverview
- * @suppress {warnings}
+ * @export
  */
 
 goog.provide('PhoneGap');

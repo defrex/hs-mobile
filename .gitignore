@@ -1,3 +1,6 @@
 *.pyc
 .sass-cache
 app/*
+vars.map
+props.map
+source.map

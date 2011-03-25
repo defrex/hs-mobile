@@ -20,6 +20,10 @@ frame.warn = function() {
     if (frame.DEBUG && console.warn != undefined)
         console.warn.apply(window.console, arguments);
 };
+frame.info = function() {
+    if (frame.DEBUG && console.info != undefined)
+        console.info.apply(window.console, arguments);
+};
 
 frame.init = (function() {
     var toLoad = new Array(),

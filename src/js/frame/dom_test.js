@@ -1,6 +1,6 @@
 
 goog.require('frame.dom.Node');
-goog.require('hs.tmpl');
+goog.require('frame.tmpl');
 
 goog.require('goog.testing.jsunit');
 
@@ -8,7 +8,7 @@ var testDomNode = function(){
     assertEquals('Node exists', typeof frame.dom.Node, 'function');
     var doc = new frame.dom.Node(document);
 
-    doc.q('body').append(hs.tmpl.Main());
+    doc.q('body').append(frame.tmpl.Main());
 
     assertEquals('q func exists', typeof doc.q, 'function');
 

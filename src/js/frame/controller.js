@@ -19,7 +19,6 @@ frame.Controller = function(settings) {
     * @type {Object}
     **/
     this.settings = settings;
-    frame.log(settings);
 
     /**
     * @type {Array.<frame.View>}
@@ -56,7 +55,7 @@ frame.Controller.prototype.startHashChange = function() {
     var hashChange = function() {
         var h = window.location.hash;
         h = h == '' ? '/' : h.slice(1);
-        frame.log('loading view for url: '+h);
+        frame.info('hashchange: '+h);
         frame.route(h, null, that.settings.urls);
     }
 

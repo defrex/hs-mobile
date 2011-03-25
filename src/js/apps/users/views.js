@@ -7,9 +7,7 @@ goog.require('frame.dom.fx');
 goog.require('frame.form.utils')
 goog.require('PhoneGap');
 
-/*
-* @constructor
-*/
+/** @constructor **/
 hs.users.views.Login = function(){
     frame.View.call(this, Array.prototype.pop.call(arguments));
 };
@@ -63,6 +61,7 @@ hs.users.views.Login.prototype.submit = function(){
 
 
 
+/** @constructor **/
 hs.users.views.Logout = function(){
     frame.View.call(this, Array.prototype.pop.call(arguments));
 

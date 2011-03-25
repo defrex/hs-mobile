@@ -9,6 +9,7 @@ frame.storeBack.Mem = function() {
     this.cache = new Object();
 };
 goog.inherits(frame.storeBack.Mem, frame.storeBack);
+
 frame.storeBack.Mem.prototype.get = function(key) {
     return this.cache[key];
 };
