@@ -15,7 +15,7 @@ goog.require('soy.StringBuilder');
  */
 frame.tmpl.ActionBar = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div id="actionbar"><a href="#/"><img src="/img/ab_logo.png" alt="Hipsell" id="ab_logo" /></a></div>');
+  output.append('<div id="actionbar"><a href="#/"><img src="img/ab_logo.png" alt="Hipsell" id="ab_logo" /></a></div>');
   if (!opt_sb) return output.toString();
 };
 

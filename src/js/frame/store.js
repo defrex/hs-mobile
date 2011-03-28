@@ -7,8 +7,8 @@ goog.require('frame.storeBack.Mem');
 frame.store = (function() {
     /** prioritised list of backends **/
     var backends = [
-        frame.storeBack.LocalStore,
-        frame.storeBack.Mem
+        [frame.storeBack.LocalStore.isAvailable, frame.storeBack.LocalStore],
+        [frame.storeBack.Mem, frame.storeBack.Mem]
     ];
 
     // frame.log('backends', backends);
@@ -18,8 +18,8 @@ frame.store = (function() {
     // frame.log('array:', backends[0].isAvailable);
 
     for (var i=0, len=backends.length; i<len; i++)
-        if (backends[i].isAvailable())
-            return new backends[i]();
+        if (backends[i][0]())
+            return new backends[i][1]();
 
     throw('no suitable storage backend');
 })();

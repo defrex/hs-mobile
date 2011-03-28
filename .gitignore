@@ -4,3 +4,4 @@ app/*
 vars.map
 props.map
 source.map
+src/native/android/assets/www/*

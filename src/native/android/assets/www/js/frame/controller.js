@@ -8,6 +8,7 @@ goog.require('frame.route');
 goog.require('frame.init');
 goog.require('frame.dom.Node');
 goog.require('frame.tmpl');
+goog.require('frame');
 
 /**
 * One Class to rule them all. Or at lease rule all the Views.
@@ -18,7 +19,6 @@ frame.Controller = function(settings) {
     * @type {Object}
     **/
     this.settings = settings;
-    frame.log(settings);
 
     /**
     * @type {Array.<frame.View>}
@@ -38,6 +38,15 @@ frame.Controller = function(settings) {
     this.doc = new frame.dom.Node(document, this.dom_);
 
     this.doc.q('body').append(frame.tmpl.Main());
+
+    if (frame.PLATFORM == 'ios') frame.init(function(){
+        this.doc.q('#actionbar').style('position', 'absolute');
+        var that = this;
+        (function moveAB(){
+            that.doc.q('#actionbar').style('top', window.pageYOffset+'px');
+            setTimeout(moveAB, 100);
+        })();
+    }, this);
 };
 
 /** Kicks off the hash change monitoring. **/
@@ -46,7 +55,7 @@ frame.Controller.prototype.startHashChange = function() {
     var hashChange = function() {
         var h = window.location.hash;
         h = h == '' ? '/' : h.slice(1);
-        frame.log('loading view for url: '+h);
+        frame.info('hashchange: '+h);
         frame.route(h, null, that.settings.urls);
     }
 
@@ -120,6 +129,15 @@ frame.Controller.prototype.authReset = function() {
     if (this.settings.on403)
         this.settings.on403.call(this);
     else throw('403');
+};
+
+/**
+* resizes the wrapper div. Needed for iScroll.
+**/
+frame.Controller.prototype.setWrapperHeight = function(){
+    var abHeight = this.doc.q('#actionbar')[0].offsetHeight,
+        wrapperHeight = window.innerHeight - abHeight;
+    this.doc.q('#wrapper').style('height', wrapperHeight+'px');
 };
 
 

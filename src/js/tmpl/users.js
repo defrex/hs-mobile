@@ -15,6 +15,6 @@ goog.require('soy.StringBuilder');
  */
 hs.tmpl.users.Login = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div id="login"><img src="/img/auth_logo.png" /><form><input type="email" placeholder="Email" id="email" /><input type="submit" value="Start Posting" /></form></div>');
+  output.append('<div id="login"><img src="img/auth_logo.png" /><form><input type="email" placeholder="Email" id="email" /><input type="submit" value="Start Posting" /></form></div>');
   if (!opt_sb) return output.toString();
 };

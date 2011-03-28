@@ -44,24 +44,6 @@ hs.listings.views.Add.prototype.abButtons = [
 ];
 
 /**
-* Submit the form
-* @type {function()}
-**/
-hs.listings.views.Add.prototype.submit = function(){
-    var data = {
-        'description': this.doc.q('#description').val(),
-        'price': this.doc.q('#price').val(),
-        'latitude': '43.6519',
-        'longtitude': '-79.3736',
-        'photo': this.imageData
-    };
-    frame.apiRequest({method: 'POST', path: '/api/v1/listing/'},
-        function(resp, status){
-            frame.log('scs', status, resp);
-        }, this);
-};
-
-/**
 * Set up event handlers after the DOM is loaded
 * @type {function()}
 **/
@@ -84,11 +66,41 @@ hs.listings.views.Add.prototype.enterDocument = function(){
         });
     }, this);
 
+    // fastbutton these focus clicks
+    this.doc.q('textarea, input[type=text]').on('click', function(e){
+        e.preventDefault();
+        frame.log('bustclick');
+        e.target.focus();
+    });
+
     this.doc.q('form').on('submit', function(e){
+        e.preventDefault();
         this.submit();
     }, this);
     this.doc.q('#postListing').on('click', function(e){
+        e.preventDefault();
+        frame.log('postListing');
         this.submit();
     }, this);
 
+};
+
+/**
+* Submit the form
+* @type {function()}
+**/
+hs.listings.views.Add.prototype.submit = function(){
+    var data = {
+        'description': this.doc.q('#description').val(),
+        'price': this.doc.q('#price').val(),
+        'latitude': '43.6519',
+        'longtitude': '-79.3736',
+        'photo': this.imageData
+    };
+    frame.log('submitting');
+    frame.apiRequest({method: 'POST', path: '/api/v1/listing/'},
+        function(resp, status){
+            frame.log('scs', status, resp);
+            frame.controller.goTo('/thanks/');
+        }, this);
 };

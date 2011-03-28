@@ -89,6 +89,14 @@ frame.View.prototype.createDom = function(clbk, that) {
 };
 
 /**
+* @param {function(Object)} clbk required. called after render.
+* @param {Object} that clbk's this.
+**/
+frame.View.prototype.exitDocument = function(clbk, that) {
+    this.doc.q('.ab-button').remove();
+};
+
+/**
 * async-able verstion of goog.ui.Component.prototype.render_
 * @param {Element} opt_parent the parent element to render into.
 * @param {function(Object)} clbk required. called after render.

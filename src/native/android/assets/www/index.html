@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0" />
-    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <link rel="stylesheet" type="text/css" href="css/main.css"/><script src="closure/goog/base.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Cantarell:regular,bold' rel='stylesheet' type='text/css'>
+  </head>
+  <body><link rel="stylesheet" type="text/css" href="css/main.css"/><script src="closure/goog/base.js"></script>
 <script src="closure/goog/debug/error.js"></script>
 <script src="closure/goog/string/string.js"></script>
 <script src="closure/goog/asserts/asserts.js"></script>
@@ -20,7 +24,6 @@
 <script src="closure/goog/testing/stacktrace.js"></script>
 <script src="js/frame/route.js"></script>
 <script src="js/frame/main.js"></script>
-<script src="js/frame/class.js"></script>
 <script src="closure/goog/debug/entrypointregistry.js"></script>
 <script src="closure/goog/debug/errorhandlerweakdep.js"></script>
 <script src="closure/goog/events/browserfeature.js"></script>
@@ -35,7 +38,9 @@
 <script src="closure/goog/useragent/jscript.js"></script>
 <script src="closure/goog/events/pools.js"></script>
 <script src="closure/goog/events/events.js"></script>
-<script src="js/frame/dom.js"></script>
+<script src="js/frame/dom/fastClick.js"></script>
+<script src="js/frame/class.js"></script>
+<script src="js/frame/dom/node.js"></script>
 <script src="closure/goog/structs/inversionmap.js"></script>
 <script src="closure/goog/i18n/graphemebreak.js"></script>
 <script src="closure/goog/format/format.js"></script>
@@ -59,6 +64,8 @@
 <script src="js/frame/store.js"></script>
 <script src="js/frame/view.js"></script>
 <script src="js/lib/phonegap.0.9.4.js"></script>
+<script src="closure/goog/uri/utils.js"></script>
+<script src="js/frame/apiRequest.js"></script>
 <script src="js/apps/listings/views.js"></script>
 <script src="js/tmpl/users.js"></script>
 <script src="closure/goog/color/names.js"></script>
@@ -74,7 +81,5 @@
 <script src="js/apps/users/views.js"></script>
 <script src="js/urls.js"></script>
 <script src="js/init.js"></script>
-
-  </head>
-  <body></body>
+</body>
 </html>

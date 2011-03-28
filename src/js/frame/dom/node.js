@@ -1,6 +1,7 @@
 
 goog.provide('frame.dom.Node');
 
+goog.require('frame.dom.FastClick');
 goog.require('frame.ArrayClass');
 goog.require('goog.dom');
 goog.require('goog.dom.classes');
@@ -55,8 +56,15 @@ frame.dom.Node.prototype.q = function(q) {
 
 frame.dom.Node.prototype.on = function(type, fn, that) {
     this.each(function(n) {
-        goog.events.listen(n, type, fn, false, that || n);
+        if (type != 'click'){
+            goog.events.listen(n, type, fn, false, that || n);
+        }else{
+            frame.log('doing fastclick');
+            frame.dom.addFastClick(n, fn, that || n);
+        }
     });
+    return this;
+
 };
 
 frame.dom.Node.prototype.un = function(type, fn) {
@@ -174,5 +182,4 @@ frame.dom.Node.prototype.removeClass = function(cls) {
     });
     return this;
 };
-
 

@@ -51,7 +51,7 @@ frame.View.prototype.noDisplay = false;
 
 /**
 * define buttons.
-* @type {Object.<string, Array.<string, function(){}>>}
+* @type {Object.<string, Array.<string, function()>>}
 **/
 frame.View.prototype.abButtons = null;
 
@@ -86,6 +86,14 @@ frame.View.prototype.createDom = function(clbk, that) {
         this.element_.innerHTML = this.template(this);
         clbk.call(that);
     }, this);
+};
+
+/**
+* @param {function(Object)} clbk required. called after render.
+* @param {Object} that clbk's this.
+**/
+frame.View.prototype.exitDocument = function(clbk, that) {
+    this.doc.q('.ab-button').remove();
 };
 
 /**

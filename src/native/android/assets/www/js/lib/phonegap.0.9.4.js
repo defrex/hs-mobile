@@ -1,3 +1,7 @@
+/**
+ * @fileoverview
+ * @suppress {checkTypes}
+ */
 goog.provide('PhoneGap');
 /*
  * PhoneGap is available under *either* the terms of the modified BSD license *or* the
