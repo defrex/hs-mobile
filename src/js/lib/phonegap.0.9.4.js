@@ -52,6 +52,7 @@ var PhoneGap = {
 
 /**
  * Custom pub-sub channel that can have functions subscribed to it
+ * @constructor
  */
 PhoneGap.Channel = function(type)
 {
@@ -360,8 +361,8 @@ document.addEventListener = function(evt, handler, capture) {
  * If JSON not included, use our own stringify. (Android 1.6)
  * The restriction on ours is that it must be an array of simple types.
  *
- * @param args
- * @return
+ * @param args{Object}
+ * @return {String}
  */
 PhoneGap.stringify = function(args) {
     if (typeof JSON == "undefined") {
@@ -395,7 +396,7 @@ PhoneGap.stringify = function(args) {
 	            			s = s + '""';
 	            		}
 	            		else if (args[i][name] instanceof Object) {
-	            			s = s + this.stringify(args[i][name]);
+	            			s = s + PhoneGap.stringify(args[i][name]);
 	            		}
 	            		else {
 	                        s = s + '"' + args[i][name] + '"';
@@ -422,8 +423,8 @@ PhoneGap.stringify = function(args) {
 /**
  * Does a deep clone of the object.
  *
- * @param obj
- * @return
+ * @param obj {Object}
+ * @return {Object}
  */
 PhoneGap.clone = function(obj) {
 	if(!obj) {
@@ -483,11 +484,11 @@ PhoneGap.callbackStatus = {
  * If async, the native side will PhoneGap.callbackSuccess or PhoneGap.callbackError,
  * depending upon the result of the action.
  *
- * @param {Function} success    The success callback
- * @param {Function} fail       The fail callback
- * @param {String} service      The name of the service to use
- * @param {String} action       Action to be run in PhoneGap
- * @param {String[]} [args]     Zero or more arguments to pass to the method
+ * @param success {Function}    The success callback
+ * @param fail {Function}       The fail callback
+ * @param service {String}      The name of the service to use
+ * @param action {String}       Action to be run in PhoneGap
+ * @param args {Array.<String>}     Zero or more arguments to pass to the method
  */
 PhoneGap.exec = function(success, fail, service, action, args) {
     try {
@@ -497,7 +498,7 @@ PhoneGap.exec = function(success, fail, service, action, args) {
         }
 
         // Note: Device returns string, but for some reason emulator returns object - so convert to string.
-        var r = ""+PluginManager.exec(service, action, callbackId, this.stringify(args), true);
+        var r = ""+PluginManager.exec(service, action, callbackId, PhoneGap.stringify(args), true);
 
         // If a result was returned
         if (r.length > 0) {
@@ -767,7 +768,7 @@ PhoneGap.JSCallbackPolling = function() {
 /**
  * Create a UUID
  *
- * @return
+ * @return {String}
  */
 PhoneGap.createUUID = function() {
     return PhoneGap.UUIDcreatePart(4) + '-' +
@@ -825,6 +826,7 @@ PhoneGap.includeJavascript = function(jsfile, successCallback) {
  * Copyright (c) 2010, IBM Corporation
  */
 
+/** @constructor */
 function Acceleration(x, y, z) {
   this.x = x;
   this.y = y;
@@ -1216,22 +1218,23 @@ PhoneGap.addConstructor(function() {
 
 /**
 * Contains information about a single contact.
+* @constructor
 * @param {DOMString} id unique identifier
 * @param {DOMString} displayName
 * @param {ContactName} name
 * @param {DOMString} nickname
-* @param {ContactField[]} phoneNumbers array of phone numbers
-* @param {ContactField[]} emails array of email addresses
-* @param {ContactAddress[]} addresses array of addresses
-* @param {ContactField[]} ims instant messaging user ids
-* @param {ContactOrganization[]} organizations
+* @param {Array.<ContactField>} phoneNumbers array of phone numbers
+* @param {Array.<ContactField>} emails array of email addresses
+* @param {Array.<ContactAddress>} addresses array of addresses
+* @param {Array.<ContactField>} ims instant messaging user ids
+* @param {Array.<ContactOrganization>} organizations
 * @param {DOMString} revision date contact was last updated
 * @param {DOMString} birthday contact's birthday
 * @param {DOMString} gender contact's gender
 * @param {DOMString} note user notes about contact
-* @param {ContactField[]} photos
-* @param {ContactField[]} categories
-* @param {ContactField[]} urls contact's web sites
+* @param {Array.<ContactField>} photos
+* @param {Array.<ContactField>} categories
+* @param {Array.<ContactField>} urls contact's web sites
 * @param {DOMString} timezone the contacts time zone
 */
 var Contact = function(id, displayName, name, nickname, phoneNumbers, emails, addresses,
@@ -1336,6 +1339,7 @@ Contact.prototype.save = function(successCB, errorCB) {
 
 /**
 * Contact name.
+* @constructor
 * @param formatted
 * @param familyName
 * @param givenName
@@ -1354,6 +1358,7 @@ var ContactName = function(formatted, familyName, givenName, middle, prefix, suf
 
 /**
 * Generic contact field.
+* @constructor
 * @param {DOMString} id unique identifier, should only be set by native code
 * @param type
 * @param value
@@ -1368,6 +1373,7 @@ var ContactField = function(type, value, pref) {
 
 /**
 * Contact address.
+* @constructor
 * @param {DOMString} id unique identifier, should only be set by native code
 * @param formatted
 * @param streetAddress
@@ -1388,6 +1394,7 @@ var ContactAddress = function(formatted, streetAddress, locality, region, postal
 
 /**
 * Contact organization.
+* @constructor
 * @param {DOMString} id unique identifier, should only be set by native code
 * @param name
 * @param dept
@@ -1406,6 +1413,7 @@ var ContactOrganization = function(name, dept, title) {
 
 /**
 * Represents a group of Contacts.
+* @constructor
 */
 var Contacts = function() {
     this.inProgress = false;
@@ -1459,6 +1467,7 @@ Contacts.prototype.cast = function(pluginResult) {
 
 /**
  * ContactFindOptions.
+ * @constructor
  * @param filter used to match contacts against
  * @param multiple boolean used to determine if more than one contact should be returned
  * @param updatedSince return only contact records that have been updated on or after the given time
@@ -1471,6 +1480,7 @@ var ContactFindOptions = function(filter, multiple, updatedSince) {
 
 /**
  *  ContactError.
+ *  @constructor
  *  An error code assigned by an implementation when an error has occurred
  */
 var ContactError = function() {
@@ -1641,6 +1651,7 @@ PhoneGap.addConstructor(function() {
  * This class provides some useful information about a file.
  * This is the fields returned when navigator.fileMgr.getFileProperties()
  * is called.
+ * @constructor
  */
 function FileProperties(filePath) {
     this.filePath = filePath;
@@ -1664,6 +1675,9 @@ File._createEvent = function(type, target) {
     return evt;
 };
 
+/**
+* @constructor
+*/
 function FileError() {
    this.code = null;
 };
@@ -1763,6 +1777,7 @@ PhoneGap.addConstructor(function() {
  * For Android:
  *      The root directory is the root of the file system.
  *      To read from the SD card, the file name is "sdcard/my_file.txt"
+ * @constructor
  */
 function FileReader() {
     this.fileName = "";
@@ -2012,6 +2027,7 @@ FileReader.prototype.readAsArrayBuffer = function(file) {
  *      The root directory is the root of the file system.
  *      To write to the SD card, the file name is "sdcard/my_file.txt"
  *
+ * @constructor
  * @param filePath the file to write to
  * @param append if true write to the end of the file, otherwise overwrite the file
  */
@@ -2082,7 +2098,7 @@ FileWriter.prototype.abort = function() {
 };
 
 /**
- * @Deprecated: use write instead
+ * @deprecated: use write instead
  *
  * @param file to write the data to
  * @param text to be written
@@ -2387,6 +2403,7 @@ function FileTransfer() {};
 
 /**
  * FileUploadResult
+ * @constructor
  */
 function FileUploadResult() {
     this.bytesSent = 0;
@@ -2396,6 +2413,7 @@ function FileUploadResult() {
 
 /**
  * FileTransferError
+ * @constructor
  */
 function FileTransferError() {
     this.code = null;
@@ -2438,6 +2456,7 @@ FileTransfer.prototype.upload = function(filePath, server, successCallback, erro
 
 /**
  * Options to customize the HTTP request used to upload files.
+ * @constructor
  * @param fileKey {String}   Name of file request parameter.
  * @param fileName {String}  Filename to be used by the server. Defaults to image.jpg.
  * @param mimeType {String}  Mimetype of the uploaded file. Defaults to image/jpeg.
@@ -2473,6 +2492,7 @@ function Geolocation() {
 /**
  * Position error object
  *
+ * @constructor
  * @param code
  * @param message
  */
@@ -2740,6 +2760,7 @@ PhoneGap.Media.onStatus = function(id, msg, value) {
 /**
  * This class provides access to the device media, interfaces to both sound and video
  *
+ * @constructor
  * @param src                   The file name or url to play
  * @param successCallback       The callback to be called when the file is done playing or recording.
  *                                  successCallback() - OPTIONAL
@@ -2848,8 +2869,6 @@ Media.prototype.getDuration = function() {
 
 /**
  * Get position of audio.
- *
- * @return
  */
 Media.prototype.getCurrentPosition = function(success, fail) {
     PhoneGap.exec(success, fail, "Media", "getCurrentPositionAudio", [this.id]);
@@ -2912,6 +2931,7 @@ function Network() {
 
 /**
  * Called by the geolocation framework when the reachability status has changed.
+ * @constructor
  * @param {Reachibility} reachability The current reachability status.
  */
 // TODO: Callback from native code not implemented for Android
@@ -3077,7 +3097,9 @@ function Position(coords, timestamp) {
 	this.coords = coords;
 	this.timestamp = (timestamp != 'undefined') ? timestamp : new Date().getTime();
 }
-
+/**
+ * @constructor
+ */
 function Coordinates(lat, lng, alt, acc, head, vel, altacc) {
 	/**
 	 * The latitude of the position.
@@ -3155,6 +3177,7 @@ PositionError.TIMEOUT = 3;
 /**
  * Storage object that is called by native code when performing queries.
  * PRIVATE METHOD
+ * @constructor
  */
 var DroidDB = function() {
     this.queryQueue = {};
@@ -3271,6 +3294,7 @@ DatabaseShell.prototype.transaction = function(process, errorCallback, successCa
 /**
  * Transaction object
  * PRIVATE METHOD
+ * @constructor
  */
 var DroidDB_Tx = function() {
 
@@ -3337,6 +3361,7 @@ DroidDB_Tx.prototype.queryFailed = function(id, reason) {
  * SQL query object
  * PRIVATE METHOD
  *
+ * @constructor
  * @param tx                The transaction object that this query belongs to
  */
 var DroidDB_Query = function(tx) {
@@ -3392,6 +3417,7 @@ DroidDB_Tx.prototype.executeSql = function(sql, params, successCallback, errorCa
 /**
  * SQL result set that is returned to user.
  * PRIVATE METHOD
+ * @constructor
  */
 DroidDB_Result = function() {
     this.rows = new DroidDB_Rows();
@@ -3400,6 +3426,7 @@ DroidDB_Result = function() {
 /**
  * SQL result set object
  * PRIVATE METHOD
+ * @constructor
  */
 DroidDB_Rows = function() {
     this.resultSet = [];    // results array
@@ -3435,8 +3462,8 @@ DroidDB_openDatabase = function(name, version, display_name, size) {
 /**
  * For browsers with no localStorage we emulate it with SQLite. Follows the w3c api.
  * TODO: Do similar for sessionStorage.
+ * @constructor
  */
-
 var CupcakeLocalStorage = function() {
 		try {
 

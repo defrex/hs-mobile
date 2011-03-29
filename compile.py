@@ -17,6 +17,7 @@ TEST_JS_LOCATION = os.path.join(CURPATH, 'tests/')
 CSS_LOCATION = os.path.join(CURPATH, 'src/css/')
 CLOSURE_LOCATION = os.path.join(CURPATH, 'lib/closure/')
 IMG_LOCATION = os.path.join(CURPATH, 'src/img/')
+CONFIG_LOCATION = os.path.join(CURPATH, 'src/config/')
 
 TEST_HTML_TMPL = os.path.join(CURPATH, 'src/html/test.html')
 TEST_ALL_HTML_TMPL = os.path.join(CURPATH, 'src/html/all_tests.html')
@@ -63,6 +64,9 @@ def main(args):
 
     print 'Copyimg images...'
     copytree(IMG_LOCATION, APP_IMG_LOCATION)
+
+    print 'Copyimg config...'
+    copytree(CONFIG_LOCATION, APP_LOCATION)
 
     print 'Compiling css...'
     os.mkdir(APP_CSS_LOCATION)

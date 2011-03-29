@@ -16,6 +16,7 @@ frame.dom.removeFastClick = function(element, handler) {
     frame.dom.fastClicks[element][handler] = null;
 };
 
+/** @constructor */
 frame.dom.FastClick = function(element, handler, that) {
     this.element = element;
     this.handler = handler;

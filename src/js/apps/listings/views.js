@@ -56,13 +56,15 @@ hs.listings.views.Add.prototype.enterDocument = function(){
         var v = this;
         frame.log('getting image');
         navigator.camera.getPicture(function(image){
-            v.doc.q('#image').attr('src', 'data:image/jpeg;base64,'+image);
+            frame.log('got image');
+            //v.doc.q('#image').attr('src', 'data:image/jpeg;base64,'+image);
             v.imageData = image;
             v.doc.q('#take_image').attr('value', 'Retake');
         }, function(){
-            frame.log('#fail')
+            frame.log('#fail');
         }, {
-            quality: 100
+            quality: 80,
+            destinationType: Camera.DestinationType.FILE_URI
         });
     }, this);
 

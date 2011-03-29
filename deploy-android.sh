@@ -3,7 +3,7 @@
 ANDROID_DIR="src/native/android/"
 ANDROID_WWW=$ANDROID_DIR"assets/www/"
 
-#python compile.py $@
+python compile.py $@
 
 rm -rf $ANDROID_WWW
 mkdir $ANDROID_WWW
