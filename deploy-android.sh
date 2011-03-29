@@ -1,17 +1,11 @@
 #!/bin/sh
 
-ANDROID_DIR="src/native/android/"
-ANDROID_WWW=$ANDROID_DIR"assets/www/"
+APP_DIR=`pwd`"/app/"
+AND_DIR=`pwd`"/app_android/"
 
 python compile.py $@
 
-rm -rf $ANDROID_WWW
-mkdir $ANDROID_WWW
-cp -r app/* $ANDROID_WWW
+droidgap create $APP_DIR
 
-cd $ANDROID_DIR 
-#adb $1 uninstall com.connectsy2
-#ant debug install
-#adb uninstall com.hipsell.Hipsell
-#adb install bin/Hipsell.apk
-
+cd $AND_DIR
+ant debug install
