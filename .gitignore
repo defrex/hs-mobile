@@ -1,8 +1,4 @@
 *.pyc
 .sass-cache
-app/*
-vars.map
-props.map
-source.map
-src/native/android/assets/www/*
-app_android/
+app*
+*.map
