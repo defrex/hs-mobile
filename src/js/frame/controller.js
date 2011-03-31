@@ -8,6 +8,7 @@ goog.require('frame.route');
 goog.require('frame.dom.Node');
 goog.require('frame.tmpl');
 goog.require('frame.init');
+goog.require('frame.Scroller');
 
 /**
 * One Class to rule them all. Or at lease rule all the Views.
@@ -39,12 +40,14 @@ frame.Controller = function(settings) {
     this.doc.q('body').append(frame.tmpl.Main());
 
     if (frame.PLATFORM == 'ios') frame.init(function(){
-        this.doc.q('#actionbar').style('position', 'absolute');
-        var that = this;
-        (function moveAB(){
-            that.doc.q('#actionbar').style('top', window.pageYOffset+'px');
-            setTimeout(moveAB, 100);
-        })();
+        this.scroller = new frame.Scroller(this.doc.q('#scroller'));
+
+        // this.doc.q('#actionbar').style('position', 'absolute');
+        // var that = this;
+        // (function moveAB(){
+        //     that.doc.q('#actionbar').style('top', window.pageYOffset+'px');
+        //     setTimeout(moveAB, 100);
+        // })();
     }, this);
 };
 

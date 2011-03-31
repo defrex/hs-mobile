@@ -6,7 +6,7 @@ goog.provide('frame.log');
 goog.require('PhoneGap');
 
 /** @define {string} Platform constant, filled at compile-time *.*/
-frame.PLATFORM = 'web';
+frame.PLATFORM = 'ios';
 
 /** @define {boolean} Debug mode *.*/
 frame.DEBUG = true;

@@ -11,7 +11,11 @@ $ab_height:50px;
 @import "mixins";
 
 
-body, html{background-color:$black;}
+body, html{
+    background-color:$black;
+    background-image: url(../img/background.jpg);
+    background-repeat:repeat;
+}
 
 body {
     margin:0;
@@ -31,11 +35,12 @@ body {
     height:$ab_height;
 
     background-color:$black;
-    border-color:$black;
+    @include gradient($black, $black - #222);
+
+    border-color:$black - #222;
     border-width:1px 0;
     border-style:solid;
 
-    @include gradient($black + #222, $black);
 
     #ab_logo{
         position:absolute;
@@ -78,8 +83,6 @@ body {
 
 #main{
     width:100%;
-    background-color:$black;
-
     font-size:16px;
 
     #new_listing{
