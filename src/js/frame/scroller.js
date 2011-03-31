@@ -22,7 +22,7 @@ frame.Scroller = function(element){
     var scrl = this;
     (function fixBadScroll(){
         if (window.pageYOffset != 0){
-            alert(-(window.pageYOffset));
+            // alert(-(window.pageYOffset));
             scrl.animateTo( -(window.pageYOffset));
             window.scrollTo(0, 0);
         }
