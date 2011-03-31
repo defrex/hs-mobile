@@ -4,7 +4,8 @@ goog.provide('hs.users.views');
 goog.require('hs.tmpl.users');
 goog.require('frame.View');
 goog.require('frame.dom.fx');
-goog.require('frame.form.utils')
+goog.require('frame.form.utils');
+goog.require('frame.apiRequest');
 goog.require('PhoneGap');
 
 /** @constructor **/
@@ -44,10 +45,29 @@ hs.users.views.Login.prototype.enterDocument = function(){
         if (!frame.form.utils.isValidEmail(email.val())){
             email.alert();
         }else{
-            frame.log('TODO: POST email!');
-            frame.store.put('email', email.val());
-            frame.controller.goTo('/');
+            var email = email.val();
+            frame.apiRequest({
+                path: '/api/v1/user/',
+                method: 'POST',
+                body: {'email': email},
+                auth: false
+            }, function(resp, status, xhr){
+                if (status == 201){
+                    frame.store.put('email', email);
+                    frame.store.put('user', xhr.getResponseHeader('Location'));
+                    frame.store.put('token', resp.token || 'faketoken');
+                    frame.controller.goTo('/');
+                }else{
+                    frame.warn('TODO: handle login');
+                }
+            }, this);
         }
+    }, this);
+    this.doc.q('#fake').on('click', function(){
+        frame.store.put('email', 'fake@sofake.co');
+        frame.store.put('user', '/asd/1/');
+        frame.store.put('token', 'faketoken');
+        frame.controller.goTo('/');
     }, this);
 };
 

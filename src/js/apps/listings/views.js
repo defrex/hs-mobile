@@ -55,15 +55,17 @@ hs.listings.views.Add.prototype.enterDocument = function(){
     this.doc.q('#take_image').on('click', function(e){
         var v = this;
         frame.log('getting image');
+
+        frame.log('nav.cam ' + typeof navigator.camera);
         navigator.camera.getPicture(function(image){
             frame.log('got image');
-            //v.doc.q('#image').attr('src', 'data:image/jpeg;base64,'+image);
+            v.doc.q('#image').attr('src', image);
             v.imageData = image;
             v.doc.q('#take_image').attr('value', 'Retake');
         }, function(){
             frame.log('#fail');
         }, {
-            quality: 80,
+            quality: 10,
             destinationType: Camera.DestinationType.FILE_URI
         });
     }, this);
@@ -103,6 +105,18 @@ hs.listings.views.Add.prototype.submit = function(){
     frame.apiRequest({method: 'POST', path: '/api/v1/listing/'},
         function(resp, status){
             frame.log('scs', status, resp);
-            frame.controller.goTo('/thanks/');
+            if (status == 200){
+                frame.controller.goTo('/thanks/');
+            }
         }, this);
 };
+
+
+
+/** @constructor **/
+hs.listings.views.Thanks = function(){
+    frame.View.call(this, Array.prototype.pop.call(arguments));
+};
+goog.inherits(hs.listings.views.Thanks, frame.View);
+hs.listings.views.Thanks.prototype.requireAuth = true;
+hs.listings.views.Thanks.prototype.template = hs.tmpl.listings.Thanks;

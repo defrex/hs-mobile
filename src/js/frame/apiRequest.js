@@ -73,7 +73,7 @@ frame.apiRequest = function(o, clbk, that) {
             }catch (e) {
                 resp = req.responseText;
             }
-            clbk.call(that, resp, req.status);
+            clbk.call(that, resp, req.status, req);
         }
     };
 

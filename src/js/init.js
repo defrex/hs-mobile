@@ -7,7 +7,7 @@ goog.require('hs.urls');
 setTimeout(function(){
     frame.start({
         urls: hs.urls,
-        apiServer: '127.0.0.1:8000',
+        apiServer: '192.168.1.106:8000',
         on403: function(){
             this.clear();
             this.goTo('/login/');
@@ -20,6 +20,4 @@ setTimeout(function(){
         }
     });
 }, 0);
-
-frame.init(function(){window.top.scrollTo(0, 1);});
 

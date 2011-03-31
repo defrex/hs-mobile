@@ -25,7 +25,7 @@ frame.form.fields.TextField.prototype.validate = function(clbk, that) {
     frame.form.fields.TextField.superClass_.validate.call(this, function() {
         var done = function() {clbk.call(that, this.valid, this.error);}
 
-        if (!this.valid) done();
+        if (!this.valid) done.call(this);
 
         var el = this.getElem(),
             val = el.val(),

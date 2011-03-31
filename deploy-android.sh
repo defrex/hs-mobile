@@ -3,7 +3,7 @@
 APP_DIR=`pwd`"/app/"
 AND_DIR=`pwd`"/app_android/"
 
-python compile.py $@
+#python compile.py $@
 
 droidgap create $APP_DIR
 

@@ -5,10 +5,9 @@ goog.provide('frame.start');
 goog.require('goog.dom');
 goog.require('goog.testing.stacktrace');
 goog.require('frame.route');
-goog.require('frame.init');
 goog.require('frame.dom.Node');
 goog.require('frame.tmpl');
-goog.require('frame');
+goog.require('frame.init');
 
 /**
 * One Class to rule them all. Or at lease rule all the Views.

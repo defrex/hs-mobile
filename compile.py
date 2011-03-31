@@ -45,7 +45,7 @@ def parse_args():
                         action='store_true', help='Don\'t concat or minify the js')
     parser.add_argument('-c', '--compiled', default=False, action='store_true',
                         help='Compile the JS with debug true')
-    parser.add_argument('-p', '--platform', default="mobile-web",
+    parser.add_argument('-p', '--platform', default="web",
                         help='The platform the js should be compiled for.')
     args = parser.parse_args()
     if args.test: args.debug = True
@@ -172,6 +172,10 @@ def main(args):
                      '-f', '--js_output_file', '-f', COMPILED_FILE,
                      '-f', '--define="frame.PLATFORM=\'%s\'"' % args.platform,
                      '-f', '--define="frame.DEBUG=%s"' % d]
+        if args.compiled:
+            calcdeps += ['-f', '--formatting="PRETTY_PRINT"',
+                         '-f', '--formatting="PRINT_INPUT_DELIMITER"',
+                         '-f', '--debug=true']
         if args.map:
             calcdeps += ['-f', '--create_source_map=source.map',
                          '-f', '--variable_map_output_file=vars.map',

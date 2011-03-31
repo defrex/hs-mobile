@@ -6,6 +6,12 @@ goog.require('frame.form.fields.TextField');
 goog.require('goog.testing.AsyncTestCase');
 goog.require('goog.testing.jsunit');
 
+var setUp = function(){
+    var doc = new frame.dom.Node(document);
+
+    doc.q('body').append('<div id="tests"></div>');
+};
+
 var testFormField = function(){
     var Field = frame.form.fields.Field;
 
@@ -83,6 +89,12 @@ var testForm = function(){
             asyncTestCase.continueTesting();
         });
     });
+};
+
+var tearDown = function(){
+    var doc = new frame.dom.Node(document);
+
+    doc.q('#tests').remove();
 };
 
 var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall();

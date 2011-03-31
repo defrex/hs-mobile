@@ -3,6 +3,8 @@ goog.provide('frame');
 goog.provide('frame.init');
 goog.provide('frame.log');
 
+goog.require('PhoneGap');
+
 /** @define {string} Platform constant, filled at compile-time *.*/
 frame.PLATFORM = 'web';
 
@@ -28,11 +30,22 @@ frame.info = function() {
 frame.init = (function() {
     var toLoad = new Array(),
         loaded = false;
-    window.onload = function() {
+
+    window.onload = function(){
+        if (!PhoneGap.onDeviceReady.fired && false){
+            document.addEventListener('deviceready', load, false);
+        }else{
+            load();
+        }
+    };
+
+    function load() {
+        frame.log('load fire');
         loaded = true;
         for (var i=0, len=toLoad.length; i<len; i++)
             toLoad[i][0].call(toLoad[i][1]);
     };
+
     return function(fn, that) {
         if (!loaded) toLoad.push([fn, that]);
         else fn.call(that);

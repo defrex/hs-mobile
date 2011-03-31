@@ -32,6 +32,8 @@ var testApiRequestGET = function(){
 var testApiRequestPOST = function(){
     asyncTestCase.waitForAsync();
 
+    frame.store.put('token', 'faketoken');
+
     frame.apiRequest({path: '/cors_test/', auth: true, method: 'POST'},
             function(resp, status){
         assertEquals('POST returned 200', 200, status);

@@ -59,7 +59,6 @@ frame.dom.Node.prototype.on = function(type, fn, that) {
         if (type != 'click'){
             goog.events.listen(n, type, fn, false, that || n);
         }else{
-            frame.log('doing fastclick');
             frame.dom.addFastClick(n, fn, that || n);
         }
     });
