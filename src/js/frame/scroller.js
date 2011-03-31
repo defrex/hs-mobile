@@ -18,6 +18,12 @@ frame.Scroller = function(element){
     element.on('touchstart', this.handleEvent, this);
     element.on('touchmove', this.handleEvent, this);
     element.on('touchend', this.handleEvent, this);
+
+    (function fixBadScroll(){
+        if (window.scrollY != 1) 
+            window.scrollTo(0, 1)
+        setTimeout(fixBadScroll, 10);
+    })();
 }
 
 frame.Scroller.prototype.handleEvent = function(e) {
