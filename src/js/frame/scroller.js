@@ -21,10 +21,10 @@ frame.Scroller = function(element){
 
     var scrl = this;
     (function fixBadScroll(){
-        if (window.pageYOffset != 1){
+        if (window.pageYOffset != 0){
             alert(-(window.pageYOffset));
             scrl.animateTo( -(window.pageYOffset));
-            window.scrollTo(0, 1);
+            window.scrollTo(0, 0);
         }
         setTimeout(fixBadScroll, 10);
     })();
