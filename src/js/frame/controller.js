@@ -78,6 +78,7 @@ frame.Controller.prototype.startHashChange = function() {
 /** Render the top view **/
 frame.Controller.prototype.renderTop = function() {
     this.viewStack[this.viewStack.length - 1].render(this.doc.q('#main').html('')[0]);
+    if (frame.PLATFORM == 'ios') this.scroller.onNewDom();
 };
 
 /**

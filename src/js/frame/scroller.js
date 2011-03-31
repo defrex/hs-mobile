@@ -2,6 +2,8 @@
 goog.provide('frame.Scroller');
 
 goog.require('frame.dom.Node');
+goog.require('frame.utils');
+goog.require('goog.style');
 
 /** @constructor */
 frame.Scroller = function(element){
@@ -31,6 +33,8 @@ frame.Scroller = function(element){
         }
         setTimeout(fixBadScroll, 10);
     })();
+
+    this.onNewDom();
 }
 
 frame.Scroller.prototype.handleEvent = function(e) {
@@ -42,8 +46,7 @@ frame.Scroller.prototype.handleEvent = function(e) {
 }
 
 frame.Scroller.prototype.onTouchStart = function(e) {
-    // This will be shown in part 4.
-    //this.stopMomentum();
+    this.stopMomentum();
 
     this.startTouchY = e.getBrowserEvent().touches[0].clientY;
     this.contentStartOffsetY = this.contentOffsetY;
@@ -62,8 +65,7 @@ frame.Scroller.prototype.onTouchMove = function(e) {
 frame.Scroller.prototype.onTouchEnd = function(e) {
     if (this.isDragging()) {
         if (this.shouldStartMomentum()) {
-            // This will be shown in part 3.
-            //this.doMomentum();
+            this.doMomentum();
         } else {
             this.snapToBounds();
         }
@@ -79,10 +81,6 @@ frame.Scroller.prototype.animateTo = function(offsetY) {
     this.element.style('webkitTransform', 'translate3d(0, ' + offsetY + 'px, 0)');
 }
 
-// Implementation of this method is left as an exercise for the reader.
-// You need to measure the current position of the scrollable content
-// relative to the frame. If the content is outside of the boundaries
-// then simply reposition it to be just within the appropriate boundary.
 frame.Scroller.prototype.snapToBounds = function() {
     var mainHeight = this.doc.q('#main')[0].scrollHeight;
     var displayHeight = window.innerHeight - 50;
@@ -99,16 +97,44 @@ frame.Scroller.prototype.snapToBounds = function() {
     }
 }
 
-// Implementation of this method is left as an exercise for the reader.
-// You need to consider whether their touch has moved past a certain
-// threshold that should be considered 'dragging'.
 frame.Scroller.prototype.isDragging = function() {
     return Math.abs(this.currentTouchY - this.startTouchY) > 10;
 }
 
-// Implementation of this method is left as an exercise for the reader.
-// You need to consider the end velocity of the drag was past the
-// threshold required to initiate momentum.
-frame.Scroller.prototype.shouldStartMomentum = function() {
-    return false;
+// TODO: impliment momentum
+frame.Scroller.prototype.shouldStartMomentum = function() {return false;}
+frame.Scroller.prototype.doMomentum = function() {}
+frame.Scroller.prototype.stopMomentum = function() {}
+
+frame.Scroller.prototype.onNewDom = function() {
+    var badElements = this.doc.q('input[type=text], '
+                                +'input[type=email], '
+                                +'input[type=password], '
+                                +'textarea');
+    badElements.each(function(e){
+        var e = new frame.dom.Node(e),
+            id = e.attr('id');
+        
+        if (typeof id == 'undefined'){
+            id = frame.utils.uuid4();
+            e.attr('id', id);
+        }
+
+        var coverId = id+'_cover';
+        this.doc.q('body').append('<div id="'+coverId+'"></div>');
+        cover = this.doc.q('#'+coverId);
+
+        var pos = goog.style.getClientLeftTop(e[0]);
+        cover.style('position', 'absolute');
+        cover.style('top', pos.y);
+        cover.style('left', pos.x);
+
+        goog.style.setSize(cover[0], goog.style.getSize(e[0]));
+        cover.style('zIndex', goog.style.getComputedZIndex(e[0])+1);
+        cover.style('backgroundColor', '#efefef');
+
+        cover.on('click', function(){
+            e.click();
+        }, this);
+    }, this);
 }

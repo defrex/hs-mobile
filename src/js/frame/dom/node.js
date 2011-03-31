@@ -6,6 +6,7 @@ goog.require('frame.ArrayClass');
 goog.require('goog.dom');
 goog.require('goog.dom.classes');
 goog.require('goog.events');
+goog.require('goog.style');
 
 /**
 * The DOMinator. generally this will be created via doc.q. It holds the keys to
@@ -40,7 +41,7 @@ frame.dom.Node.prototype.each = function(fn, clbk, that) {
     that = typeof clbk == 'object' ? clbk : that || this;
     for (var i=0, len=this.length; i<len; i++)
         fn.call(that, this[i], i);
-    if (clbk) clbk.call(that);
+    if (clbk && clbk != that) clbk.call(that);
     return this;
 };
 
@@ -137,10 +138,10 @@ frame.dom.Node.prototype.remove = function() {
 
 frame.dom.Node.prototype.style = function(prop, val) {
     if (typeof val == 'undefined')
-        return this[0].style[prop] = val;
+        return goog.style.getStyle(this[0], prop);
     else {
         this.each(function(n) {
-            n.style[prop] = val;
+            goog.style.setStyle(n, prop, val);
         });
         return this;
     }
