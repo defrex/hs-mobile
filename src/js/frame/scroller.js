@@ -6,7 +6,9 @@ goog.require('frame.dom.Node');
 /** @constructor */
 frame.Scroller = function(element){
     document.body.addEventListener('touchmove', function(e) {
-            e.preventDefault();}, false);
+        e.preventDefault();
+        frame.log('prevented scroll');
+    }, false);
 
     this.element = element;
     this.startTouchY = 0;

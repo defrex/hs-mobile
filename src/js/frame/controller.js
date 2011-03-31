@@ -41,6 +41,10 @@ frame.Controller = function(settings) {
 
     if (frame.PLATFORM == 'ios') frame.init(function(){
         this.scroller = new frame.Scroller(this.doc.q('#scroller'));
+        
+        this.doc.q('body').style('height', '100%');
+
+        setTimeout(function(){window.scrollTo(0, 1)}, 0);
 
         // this.doc.q('#actionbar').style('position', 'absolute');
         // var that = this;
