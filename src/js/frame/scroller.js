@@ -12,7 +12,7 @@ frame.Scroller = function(element){
 
     this.element = element;
     this.startTouchY = 0;
-    this.animateTo(50);
+    this.animateTo(0);
     this.doc = new frame.dom.Node(document);
 
     element.on('touchstart', this.handleEvent, this);
