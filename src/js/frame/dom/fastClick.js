@@ -36,6 +36,7 @@ frame.dom.FastClick.prototype.handleEvent = function(event) {
 };
 
 frame.dom.FastClick.prototype.onTouchStart = function(event) {
+    event.preventDefault();
     event.stopPropagation();
 
     this.element.addEventListener('touchend', this, false);
@@ -55,6 +56,7 @@ frame.dom.FastClick.prototype.onTouchMove = function(event) {
 
 frame.dom.FastClick.prototype.onClick = function(event) {
     event.stopPropagation();
+    event.preventDefault();
     this.reset();
     this.handler.call(this.that, event);
 
