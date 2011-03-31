@@ -19,12 +19,15 @@ frame.Scroller = function(element){
     element.on('touchmove', this.handleEvent, this);
     element.on('touchend', this.handleEvent, this);
 
-    var scrl = this;
+    var scrl = this,
+        vpHeight = window.innerHeight;
     (function fixBadScroll(){
         if (window.pageYOffset != 0){
-            // alert(-(window.pageYOffset));
             scrl.animateTo( -(window.pageYOffset));
             window.scrollTo(0, 0);
+        }
+        if (window.innerHeight != vpHeight){
+            scrl.snapToBounds();
         }
         setTimeout(fixBadScroll, 10);
     })();
