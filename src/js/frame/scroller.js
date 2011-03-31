@@ -19,14 +19,14 @@ frame.Scroller = function(element){
     element.on('touchmove', this.handleEvent, this);
     element.on('touchend', this.handleEvent, this);
 
-    var scrl = this;
-    (function fixBadScroll(){
-        if (window.scrollY != 1){
-            scrl.animateTo(-window.scrollY);
-            window.scrollTo(0, 1);
-        }
-        setTimeout(fixBadScroll, 10);
-    })();
+    // var scrl = this;
+    // (function fixBadScroll(){
+    //     if (window.scrollY != 1){
+    //         scrl.animateTo(-window.scrollY);
+    //         window.scrollTo(0, 1);
+    //     }
+    //     setTimeout(fixBadScroll, 10);
+    // })();
 }
 
 frame.Scroller.prototype.handleEvent = function(e) {
