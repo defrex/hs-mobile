@@ -81,8 +81,19 @@ frame.Scroller.prototype.animateTo = function(offsetY) {
 // relative to the frame. If the content is outside of the boundaries
 // then simply reposition it to be just within the appropriate boundary.
 frame.Scroller.prototype.snapToBounds = function() {
-    if (this.contentOffsetY < 0)
+    var mainHeight = this.doc.q('#main')[0].scrollHeight;
+    var displayHeight = window.innerHeight - 50;
+
+    // if the whole div can be displayed at once, scroll to top.
+    if (displayHeight > mainHeight){
         this.animateTo(0);
+    // if the div is below the top, scroll to top.
+    }else if (this.contentOffsetY > 0){
+        this.animateTo(this.contentOffsetY - mainHeight);
+    // if the bottom of the div is above the bottom of the viewport, scroll to the bottom
+    }else if (this.contentOffsetY - mainHeight > displayHeight){
+        this.animateTo(this.contentOffsetY - mainHeight);
+    }
 }
 
 // Implementation of this method is left as an exercise for the reader.
