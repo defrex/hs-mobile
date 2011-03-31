@@ -46,10 +46,11 @@ frame.dom.FastClick.prototype.onTouchStart = function(event) {
 };
 
 frame.dom.FastClick.prototype.onTouchMove = function(event) {
-  if (Math.abs(event.touches[0].clientX - this.startX) > 10 ||
-      Math.abs(event.touches[0].clientY - this.startY) > 10) {
-    this.reset();
-  }
+    event.preventDefault();
+    if (Math.abs(event.touches[0].clientX - this.startX) > 10 ||
+            Math.abs(event.touches[0].clientY - this.startY) > 10) {
+        this.reset();
+    }
 };
 
 frame.dom.FastClick.prototype.onClick = function(event) {

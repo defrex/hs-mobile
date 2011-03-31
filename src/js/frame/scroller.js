@@ -46,6 +46,7 @@ frame.Scroller.prototype.onTouchStart = function(e) {
 }
 
 frame.Scroller.prototype.onTouchMove = function(e) {
+    e.preventDefault();
     this.currentTouchY = e.getBrowserEvent().touches[0].clientY;
     if (this.isDragging()) {
         var deltaY = this.currentTouchY - this.startTouchY;
