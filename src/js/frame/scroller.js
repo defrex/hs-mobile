@@ -80,7 +80,8 @@ frame.Scroller.prototype.animateTo = function(offsetY) {
 // relative to the frame. If the content is outside of the boundaries
 // then simply reposition it to be just within the appropriate boundary.
 frame.Scroller.prototype.snapToBounds = function() {
-    this.animateTo(0);
+    if (this.contentOffsetY < 0)
+        this.animateTo(0);
 }
 
 // Implementation of this method is left as an exercise for the reader.
