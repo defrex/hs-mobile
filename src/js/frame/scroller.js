@@ -5,28 +5,28 @@ goog.require('frame.dom.Node');
 
 /** @constructor */
 frame.Scroller = function(element){
-    document.body.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-        frame.log('prevented scroll');
-    }, false);
+    // document.body.addEventListener('touchmove', function(e) {
+    //     e.preventDefault();
+    //     frame.log('prevented scroll');
+    // }, false);
 
     this.element = element;
     this.startTouchY = 0;
-    this.animateTo(0);
+    this.animateTo(50);
     this.doc = new frame.dom.Node(document);
 
     element.on('touchstart', this.handleEvent, this);
     element.on('touchmove', this.handleEvent, this);
     element.on('touchend', this.handleEvent, this);
 
-    // var scrl = this;
-    // (function fixBadScroll(){
-    //     if (window.scrollY != 1){
-    //         scrl.animateTo(-window.scrollY);
-    //         window.scrollTo(0, 1);
-    //     }
-    //     setTimeout(fixBadScroll, 10);
-    // })();
+    var scrl = this;
+    (function fixBadScroll(){
+        if (window.pageYOffset != 1){
+            scrl.animateTo( -(window.pageYOffset - 50));
+            window.scrollTo(0, 1);
+        }
+        setTimeout(fixBadScroll, 10);
+    })();
 }
 
 frame.Scroller.prototype.handleEvent = function(e) {
@@ -59,7 +59,7 @@ frame.Scroller.prototype.onTouchEnd = function(e) {
     if (this.isDragging()) {
         if (this.shouldStartMomentum()) {
             // This will be shown in part 3.
-            this.doMomentum();
+            //this.doMomentum();
         } else {
             this.snapToBounds();
         }
@@ -80,7 +80,7 @@ frame.Scroller.prototype.animateTo = function(offsetY) {
 // relative to the frame. If the content is outside of the boundaries
 // then simply reposition it to be just within the appropriate boundary.
 frame.Scroller.prototype.snapToBounds = function() {
-    this.animateTo(0);
+    this.animateTo(50);
 }
 
 // Implementation of this method is left as an exercise for the reader.
