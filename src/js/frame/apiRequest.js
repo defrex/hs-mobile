@@ -55,8 +55,7 @@ frame.apiRequest = function(o, clbk, that) {
     var req = new XMLHttpRequest();
     req.open(o.method, o.path);
 
-    if (o.auth) req.setRequestHeader('Authenticate',
-            'Token auth='+frame.store.get('token'));
+    if (o.auth) req.setRequestHeader('Token', frame.store.get('token'));
 
     req.setRequestHeader('Accept', 'application/json');
     req.setRequestHeader('Content-Type', 'application/json');
@@ -66,6 +65,8 @@ frame.apiRequest = function(o, clbk, that) {
         if (req.readyState == 4) {
             if (req.status == 500 && frame.DEBUG){
                 window.document.write(req.responseText);
+            }else if(req.status == 401 || req.status == 403){
+                setTimeout(function(){frame.controller.authReset()}, 0);
             }
             var resp;
             try {
@@ -79,4 +80,3 @@ frame.apiRequest = function(o, clbk, that) {
 
     req.send(o.body);
 };
-

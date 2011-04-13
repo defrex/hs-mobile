@@ -65,10 +65,13 @@ frame.View.prototype.createDom = function(clbk, that) {
 
     if (this.template === null) throw ('no template for view');
 
-    if (!this.actionBar && this.doc.q('#actionbar').visible())
+    if (!this.actionBar && this.doc.q('#actionbar').visible()){
         this.doc.q('#actionbar').hide();
-    else if (this.actionBar && !this.doc.q('#actionbar').visible())
+        new frame.dom.Node(document.documentElement).addClass('no-ab');
+    }else if (this.actionBar && !this.doc.q('#actionbar').visible()){
         this.doc.q('#actionbar').show();
+        new frame.dom.Node(document.documentElement).removeClass('no-ab');
+    }
 
     if (this.abButtons != null)
         for (var i=0, len=this.abButtons.length; i<len; i++){

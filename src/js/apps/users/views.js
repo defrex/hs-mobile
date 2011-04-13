@@ -55,7 +55,7 @@ hs.users.views.Login.prototype.enterDocument = function(){
                 if (status == 201){
                     frame.store.put('email', email);
                     frame.store.put('user', xhr.getResponseHeader('Location'));
-                    frame.store.put('token', resp.token || 'faketoken');
+                    frame.store.put('token', resp.token);
                     frame.controller.goTo('/');
                 }else{
                     frame.warn('TODO: handle login');

@@ -28,7 +28,7 @@ frame.tmpl.ActionBar = function(opt_data, opt_sb) {
  */
 frame.tmpl.ActionBarButton = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<a href="#" class="ab-button button ', soy.$$escapeHtml(opt_data.position), '" id="', soy.$$escapeHtml(opt_data.id), '">', soy.$$escapeHtml(opt_data.text), '</a>');
+  output.append('<a href="#" class="ab-button ', soy.$$escapeHtml(opt_data.position), '" id="', soy.$$escapeHtml(opt_data.id), '">', soy.$$escapeHtml(opt_data.text), '</a>');
   if (!opt_sb) return output.toString();
 };
 
@@ -42,6 +42,6 @@ frame.tmpl.ActionBarButton = function(opt_data, opt_sb) {
 frame.tmpl.Main = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   frame.tmpl.ActionBar(opt_data, output);
-  output.append('<div id="wrapper"><div id="scroller"><div id="main"></div></div></div>');
+  output.append('<div id="wrapper"><div id="scroller"><div id="main" class="clearfix"></div></div></div>');
   if (!opt_sb) return output.toString();
 };

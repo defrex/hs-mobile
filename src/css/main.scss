@@ -1,9 +1,11 @@
 
-$green: #289289;
-$white: #F8FAE9;
-$black: #2C2C2C;
-$grey: #666;
-$blue: #2671A8;
+$white: #F1F1F2;
+$grey: #999;
+$black: #0A0A0A;
+$red: #D31920;
+$green: #009345;
+$blue: #1b75bb;
+$yellow: #333;
 
 $ab_height:50px;
 
@@ -11,13 +13,11 @@ $ab_height:50px;
 @import "mixins";
 
 
-body, html{
-    background-color:$black;
-    background-image: url(../img/background.jpg);
-    background-repeat:repeat;
+html{
+    background-color:#87888B;
 }
 
-body {
+body{
     width:100%;
     margin:0;
     padding:0;
@@ -25,6 +25,10 @@ body {
 
     -webkit-user-select:none;
     -webkit-text-size-adjust:none;
+}
+html.no-ab, .no-ab body{
+    background-image:url(../img/background.jpg);
+    background-color:$black;
 }
 
 #actionbar{
@@ -35,13 +39,10 @@ body {
     width:100%;
     height:$ab_height;
 
-    background-color:$black;
-    @include gradient($black, $black - #222);
-
-    border-color:$black - #222;
-    border-width:1px 0;
-    border-style:solid;
-
+    background-color:#58595b;
+    @include gradient($black + #383838, $black);
+    border-top:1px solid $black + #555;
+    border-bottom:1px solid $black + #666;
 
     #ab_logo{
         position:absolute;
@@ -52,14 +53,25 @@ body {
     }
     .back #ab_logo{left:50%;margin-left:-73px;}
 
+    $ab-button-color: $red - #222;
     .ab-button{
+        display:block;
+        margin:10px 12px 0 0;
+        padding:5px 11px;
+        font-size:12px;
+        background-color: $ab-button-color;
         color: $white;
-        border:1px solid $black;
-        background-color:$green;
-        margin:11px 10px;
 
-        @include gradient($green - #090909, $green - #222);
-        @include box-shadow(0, 1px, 1px, $black + #333);
+        border:1px solid $ab-button-color + #111;
+        @include gradient($ab-button-color + #111, $ab-button-color - #222);
+        @include rounded();
+        @include box-shadow(0, 1px, 2px, #000);
+    }
+    .ab-button:active{
+        border:1px solid $black;
+        @include gradient($ab-button-color + #111, $ab-button-color + #222);
+        @include rounded();
+        @include box-shadow(0, 1px, 1px, $ab-button-color + #444);
     }
     .ab-button.right{float:right;}
     .ab-button.left{float:left;}
@@ -74,12 +86,16 @@ body {
     margin:$ab_height + 2 0 0;
     padding:0;
 
+    @include gradient(#d5d5d6, #87888B);
 
     #scroller {
         width:100%;
         margin:0;
         padding:0;
     }
+}
+.no-ab #wrapper{
+    background-image:none;
 }
 
 #main{
@@ -94,19 +110,22 @@ body {
             width:93%;
             padding:2%;
             margin:2%;
-            background-color:$white;
             display:block;
             font-size:16px;
             @include sans();
-            @include rounded();
+
+            background-color:$white;
+            @include box-shadow(0, 2px, 4px, $black + #666);
 
             input[type=button]{
                 float:right;
             }
 
             #image{
-                max-height:100px;
+                max-height:40px;
                 width:auto;
+                margin:0 0 -7px;
+                padding:0;
             }
 
             label{color:$grey;}
@@ -117,7 +136,7 @@ body {
 
     #login{
         text-align:center;
-        $width: 252px;
+        $width: 253px;
 
         form{
             @include hor-center($width);

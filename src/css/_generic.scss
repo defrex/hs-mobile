@@ -13,20 +13,33 @@ textarea, input[type=text], input[type=email]{
     padding:5px;
     border:none;
     background-color:$white;
-
-    @include rounded(5px);
 }
 
 .placeheld{color:$grey;}
 
 input[type=button], input[type=submit], .button{
-    color: $black;
-    border:1px solid $grey;
-    background-color:$white;
-    padding:5px 10px;
-    font-size:12px;
+    $color:#d5d5d5;
 
-    @include gradient($white - #090909, $white - #222);
+    padding:7px 10px;
+
+    font-size:12px;
+    /*font-weight:bold;*/
+    color:$color - #777;
+    text-shadow: $color + #444 0 1px 2px;
+    text-align:center;
+
+    border:1px solid $color - #181818;
+    background-color:$color;
+    @include box-shadow(0, 1px, 2px, $black);
+    @include gradient($color + #080808, $color - #181818);
     @include rounded();
-    @include box-shadow(0, 1px, 2px, $black + #666);
 }
+
+.clearfix:before, .clearfix:after { 
+    content: "\0020"; 
+    display: block; 
+    height: 0; 
+    overflow: hidden;
+}
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }

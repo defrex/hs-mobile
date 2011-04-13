@@ -52,14 +52,15 @@ hs.listings.views.Add.prototype.enterDocument = function(){
 
     this.placehold();
 
+    frame.log('registering click handler');
     this.doc.q('#take_image').on('click', function(e){
         var v = this;
         frame.log('getting image');
 
         frame.log('nav.cam ' + typeof navigator.camera);
         navigator.camera.getPicture(function(image){
-            frame.log('got image');
             v.doc.q('#image').attr('src', image);
+            v.doc.q('label[for="take_image"]').hide();
             v.imageData = image;
             v.doc.q('#take_image').attr('value', 'Retake');
         }, function(){
