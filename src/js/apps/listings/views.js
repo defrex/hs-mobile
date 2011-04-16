@@ -35,13 +35,11 @@ hs.listings.views.Add.prototype.template = hs.tmpl.listings.Add;
 * define buttons.
 * @type {Object.<string, Array.<string, function()>>}
 **/
-hs.listings.views.Add.prototype.abButtons = [
-    {
-        position: 'right',
-        text: 'Post',
-        id: 'postListing'
-    }
-];
+hs.listings.views.Add.prototype.abButtons = [{
+    position: 'right',
+    text: 'Post',
+    id: 'postListing'
+}];
 
 /**
 * Set up event handlers after the DOM is loaded
@@ -67,7 +65,7 @@ hs.listings.views.Add.prototype.enterDocument = function(){
             frame.log('#fail');
         }, {
             quality: 10,
-            destinationType: Camera.DestinationType.FILE_URI
+            //destinationType: Camera.DestinationType.FILE_URI
         });
     }, this);
 
@@ -103,7 +101,7 @@ hs.listings.views.Add.prototype.submit = function(){
         'photo': this.imageData
     };
     frame.log('submitting');
-    frame.apiRequest({method: 'POST', path: '/api/v1/listing/'},
+    frame.apiRequest({method: 'POST', path: '/api/v1/listing/', data: data},
         function(resp, status){
             frame.log('scs', status, resp);
             if (status == 200){

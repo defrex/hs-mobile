@@ -55,7 +55,8 @@ frame.apiRequest = function(o, clbk, that) {
     var req = new XMLHttpRequest();
     req.open(o.method, o.path);
 
-    if (o.auth) req.setRequestHeader('Token', frame.store.get('token'));
+    if (o.auth) req.setRequestHeader('Authorization', 
+            'Token '+frame.store.get('token'));
 
     req.setRequestHeader('Accept', 'application/json');
     req.setRequestHeader('Content-Type', 'application/json');
@@ -64,7 +65,37 @@ frame.apiRequest = function(o, clbk, that) {
     if (clbk) req.onreadystatechange = function() {
         if (req.readyState == 4) {
             if (req.status == 500 && frame.DEBUG){
-                window.document.write(req.responseText);
+                var erframe = document.createElement('iframe'),
+                    doc = new frame.dom.Node(document);
+                doc.q('body').append(erframe);
+                
+                goog.style.setStyle(erframe, 'position', 'absolute');
+                goog.style.setStyle(erframe, 'top', '5%');
+                goog.style.setStyle(erframe, 'left', '50%');
+                goog.style.setStyle(erframe, 'width', '90%');
+                goog.style.setStyle(erframe, 'height', '90%');
+                goog.style.setStyle(erframe, 'marginLeft', '-45%');
+                goog.style.setStyle(erframe, 'zIndex', '10000');
+                erframe.setAttribute('id', 'errorframe');
+
+                var fDoc = erframe.document;
+                if (erframe.contentDocument)// for moz
+                    fDoc = erframe.contentDocument;
+                fDoc.open();
+                fDoc.writeln(req.responseText);
+                fDoc.close();
+
+                doc.q('body').append('<a href="#" id="errorclose">X</a>');
+                doc.q('#errorclose')
+                    .style('position', 'absolute')
+                    .style('top', '0')
+                    .style('right', '0')
+                    .style('fontSize', '20px')
+                    .style('padding', '5px')
+                    .on('click', function(e){
+                        doc.q('#errorframe').remove();
+                        doc.q('#errorclose').remove();
+                    });
             }else if(req.status == 401 || req.status == 403){
                 setTimeout(function(){frame.controller.authReset()}, 0);
             }
