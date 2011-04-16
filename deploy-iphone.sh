@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DIR="src/native/iphone/"
+DIR="app_iphone/"
 WWW=$DIR"www/"
 
 #python compile.py $@

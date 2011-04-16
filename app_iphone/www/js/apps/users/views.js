@@ -63,7 +63,9 @@ hs.users.views.Login.prototype.enterDocument = function(){
             }, this);
         }
     }, this);
+
     this.doc.q('#fake').on('click', function(){
+        frame.log('faking');
         frame.store.put('email', 'fake@sofake.co');
         frame.store.put('user', '/asd/1/');
         frame.store.put('token', 'faketoken');

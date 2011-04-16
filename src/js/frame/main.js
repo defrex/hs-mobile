@@ -15,6 +15,8 @@ frame.DEBUG = true;
 frame.API_SERVER = '';
 
 frame.log = function() {
+    if (frame.PLATFORM == 'ios')
+        alert(arguments[0]);
     if (frame.DEBUG && console.log != undefined)
         console.log.apply(window.console, arguments);
 };
