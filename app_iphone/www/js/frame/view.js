@@ -73,7 +73,8 @@ frame.View.prototype.createDom = function(clbk, that) {
         new frame.dom.Node(document.documentElement).removeClass('no-ab');
     }
 
-    if (this.abButtons != null)
+    if (this.abButtons != null){
+        this.doc.q('.ab-button').remove();
         for (var i=0, len=this.abButtons.length; i<len; i++){
             var b = frame.tmpl.ActionBarButton(this.abButtons[i]);
             if (this.abButtons[i].position == 'right')
@@ -83,6 +84,7 @@ frame.View.prototype.createDom = function(clbk, that) {
             else
                 throw('invalid action bar button position: '+this.abButtons[i].position);
         }
+    }
 
 
     this.prepContext(function() {

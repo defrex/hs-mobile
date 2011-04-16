@@ -121,7 +121,7 @@ frame.Controller.prototype.clear = function() {
 * @param {string} path Path to go to.
 **/
 frame.Controller.prototype.goTo = function(path) {
-    frame.log('goTo '+path)
+    frame.log('goTo '+path);
     document.location.hash = '#' + path;
 };
 
