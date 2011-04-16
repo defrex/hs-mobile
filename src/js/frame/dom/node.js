@@ -83,7 +83,9 @@ frame.dom.Node.prototype.html = function(html) {
 
 frame.dom.Node.prototype.append = function(html) {
     if (typeof html == 'undefined') throw ('html required');
-    this.each(function(n) {n.innerHTML = n.innerHTML + html});
+    if (typeof html == 'string')
+        html = goog.dom.htmlToDocumentFragment(html);
+    this.each(function(n) {n.appendChild(html)});
     return this;
 };
 

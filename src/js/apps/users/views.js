@@ -49,12 +49,11 @@ hs.users.views.Login.prototype.enterDocument = function(){
             frame.apiRequest({
                 path: '/api/v1/user/',
                 method: 'POST',
-                body: {'email': email},
+                body: {'username': email},
                 auth: false
             }, function(resp, status, xhr){
                 if (status == 201){
                     frame.store.put('email', email);
-                    frame.store.put('user', xhr.getResponseHeader('Location'));
                     frame.store.put('token', resp.token);
                     frame.controller.goTo('/');
                 }else{
