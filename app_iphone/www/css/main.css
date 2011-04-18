@@ -339,6 +339,18 @@ html.no-ab, .no-ab body {
   width: 100%;
   font-size: 16px;
 }
+#main .body {
+  width: 93%;
+  padding: 2%;
+  margin: 2%;
+  display: block;
+  font-size: 16px;
+  font-family: 'Cantarell', arial, sans-serif;
+  background-color: #f1f1f2;
+  -moz-box-shadow: 0 2px 4px #707070;
+  -webkit-box-shadow: 0 2px 4px #707070;
+  box-shadow: 0 2px 4px #707070;
+}
 #main #new_listing {
   width: 100%;
 }

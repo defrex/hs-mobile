@@ -103,6 +103,18 @@ html.no-ab, .no-ab body{
     width:100%;
     font-size:16px;
 
+    .body{
+        width:93%;
+        padding:2%;
+        margin:2%;
+        display:block;
+        font-size:16px;
+        @include sans();
+
+        background-color:$white;
+        @include box-shadow(0, 2px, 4px, $black + #666);
+    }
+
     #new_listing{
         width:100%;
 

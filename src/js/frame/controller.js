@@ -39,6 +39,11 @@ frame.Controller = function(settings) {
 
     this.doc.q('body').append(frame.tmpl.Main());
 
+    // temp: logout on logo click
+    this.doc.q('#ab_logo').on('click', function(){
+        this.goTo('/logout/');
+    }, this);
+
     if (frame.PLATFORM == 'ios') frame.init(function(){
         this.scroller = new frame.Scroller(this.doc.q('#scroller'));
 

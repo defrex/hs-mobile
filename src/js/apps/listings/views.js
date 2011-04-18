@@ -69,7 +69,7 @@ hs.listings.views.Add.prototype.enterDocument = function(){
             navigator.camera.getPicture(withImage, function(){
                 frame.log('navigator.camera #fail');
                 withImage(hs.listings.fakeImage);
-            }, {quality: 10});
+            }, {quality: 50});
         else
             withImage(hs.listings.fakeImage);
     }, this);
@@ -110,7 +110,7 @@ hs.listings.views.Add.prototype.submit = function(){
     frame.apiRequest({method: 'POST', path: '/api/v1/listing/', body: data},
         function(resp, status){
             frame.log('status: '+ status +', resp: '+ resp);
-            if (status == 200){
+            if (status == 201){
                 frame.controller.goTo('/thanks/');
             }
         }, this);

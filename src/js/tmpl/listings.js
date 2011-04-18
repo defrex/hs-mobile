@@ -28,6 +28,6 @@ hs.tmpl.listings.Add = function(opt_data, opt_sb) {
  */
 hs.tmpl.listings.Thanks = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('Thanks!');
+  output.append('<div class="body">Thanks!</div>');
   if (!opt_sb) return output.toString();
 };

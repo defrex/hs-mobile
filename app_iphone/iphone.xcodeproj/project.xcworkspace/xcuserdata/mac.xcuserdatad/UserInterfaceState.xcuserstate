@@ -2203,7 +2203,7 @@
 			</dict>
 		</dict>
 		<string>file://localhost/Users/mac/Code/hs-mobile/app_iphone/iphone.xcodeproj/</string>
-		<real>324843758.74216402</real>
+		<real>324848765.88441598</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -5478,15 +5478,15 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>744</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>745</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>746</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>753</integer>
+					<integer>752</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -6085,7 +6085,7 @@
 				<integer>492</integer>
 			</dict>
 		</dict>
-		<real>324843758.73998201</real>
+		<real>324848765.88213301</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -8968,7 +8968,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>744</integer>
+					<integer>725</integer>
 				</dict>
 			</array>
 		</dict>
@@ -9222,7 +9222,7 @@
 				<integer>741</integer>
 			</dict>
 			<key>NS.time</key>
-			<real>324843753.74021101</real>
+			<real>324848760.88244402</real>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -9233,9 +9233,8 @@
 			<key>$classname</key>
 			<string>NSDate</string>
 		</dict>
-		<string>Today at 2:22 PM</string>
+		<string>Today at 3:46 PM</string>
 		<integer>106</integer>
-		<string>PhoneGapLib</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -9260,14 +9259,14 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>747</integer>
+					<integer>746</integer>
 				</dict>
 			</array>
 			<key>NS.objects</key>
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>748</integer>
+					<integer>747</integer>
 				</dict>
 			</array>
 		</dict>
@@ -9298,22 +9297,22 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>749</integer>
+					<integer>748</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>750</integer>
+					<integer>749</integer>
 				</dict>
 			</array>
 			<key>NS.objects</key>
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>751</integer>
+					<integer>750</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>752</integer>
+					<integer>751</integer>
 				</dict>
 			</array>
 		</dict>
@@ -9331,15 +9330,15 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
+					<integer>753</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>754</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
 					<integer>755</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>756</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>

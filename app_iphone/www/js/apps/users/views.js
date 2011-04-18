@@ -40,26 +40,7 @@ hs.users.views.Login.prototype.enterDocument = function(){
 
     this.doc.q('#login form').on('submit', function(e){
         e.preventDefault();
-        var email = this.doc.q('#email');
-        if (!frame.form.utils.isValidEmail(email.val())){
-            email.alert();
-        }else{
-            var email = email.val();
-            frame.apiRequest({
-                path: '/api/v1/user/',
-                method: 'POST',
-                body: {'username': email},
-                auth: false
-            }, function(resp, status, xhr){
-                if (status == 201){
-                    frame.store.put('email', email);
-                    frame.store.put('token', resp.token);
-                    frame.controller.goTo('/');
-                }else{
-                    frame.warn('TODO: handle login');
-                }
-            }, this);
-        }
+        this.submit();
     }, this);
 };
 
@@ -68,7 +49,27 @@ hs.users.views.Login.prototype.enterDocument = function(){
 * @type {function()}
 **/
 hs.users.views.Login.prototype.submit = function(){
-    frame.log('Submitting');
+    var email = this.doc.q('#email');
+    if (!frame.form.utils.isValidEmail(email.val())){
+        email.alert();
+    }else{
+        var email = email.val();
+        frame.apiRequest({
+            path: '/api/v1/user/',
+            method: 'POST',
+            body: {'username': email},
+            auth: false
+        }, function(resp, status, xhr){
+            if (status == 201){
+                frame.store.put('email', email);
+                frame.store.put('token', resp.token);
+                frame.store.put('userURI', resp.resource_uri);
+                frame.controller.goTo('/');
+            }else{
+                frame.warn('TODO: handle login');
+            }
+        }, this);
+    }
 };
 
 
