@@ -62,6 +62,10 @@ frame.apiRequest = function(o, clbk, that) {
     req.setRequestHeader('Content-Type', 'application/json');
     req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
+    if (typeof o.headers != 'undefined')
+        for (header in o.headers)
+            req.setRequestHeader(header, o.headers[header]);
+
     if (clbk) req.onreadystatechange = function() {
         if (req.readyState == 4) {
             if (req.status == 500 && frame.DEBUG){

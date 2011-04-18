@@ -16,25 +16,32 @@ frame.Scroller = function(element){
     this.startTouchY = 0;
     this.animateTo(0);
     this.doc = new frame.dom.Node(document);
-
-    element.on('touchstart', this.handleEvent, this);
-    element.on('touchmove', this.handleEvent, this);
-    element.on('touchend', this.handleEvent, this);
+    this.enabled = true;
 
     var scrl = this,
         vpHeight = window.innerHeight;
-    (function fixBadScroll(){
-        if (window.pageYOffset != 0){
-            scrl.animateTo( -(window.pageYOffset));
-            window.scrollTo(0, 0);
+    (function fixBadScroll(scroller){
+        if (scroller.enabled){
+            if (window.pageYOffset != 0){
+                scrl.animateTo( -(window.pageYOffset));
+                window.scrollTo(0, 0);
+            }
+            if (window.innerHeight != vpHeight){
+                scrl.snapToBounds();
+            }
         }
-        if (window.innerHeight != vpHeight){
-            scrl.snapToBounds();
-        }
-        setTimeout(fixBadScroll, 10);
-    })();
+        setTimeout(function(){
+            fixBadScroll(scroller);
+        }, 10);
+    })(this);
+}
 
-    this.onNewDom();
+frame.Scroller.prototype.enable = function(){
+    this.enabled = true;
+
+    this.element.on('touchstart', this.handleEvent, this);
+    this.element.on('touchmove', this.handleEvent, this);
+    this.element.on('touchend', this.handleEvent, this);
 }
 
 frame.Scroller.prototype.handleEvent = function(e) {
@@ -106,35 +113,17 @@ frame.Scroller.prototype.shouldStartMomentum = function() {return false;}
 frame.Scroller.prototype.doMomentum = function() {}
 frame.Scroller.prototype.stopMomentum = function() {}
 
-frame.Scroller.prototype.onNewDom = function() {
-    var badElements = this.doc.q('input[type=text], '
-                                +'input[type=email], '
-                                +'input[type=password], '
-                                +'textarea');
-    badElements.each(function(e){
-        var e = new frame.dom.Node(e),
-            id = e.attr('id');
-        
-        if (typeof id == 'undefined'){
-            id = frame.utils.uuid4();
-            e.attr('id', id);
-        }
+frame.Scroller.prototype.disable = function(){
+    this.enabled = false;
 
-        var coverId = id+'_cover';
-        this.doc.q('body').append('<div id="'+coverId+'"></div>');
-        cover = this.doc.q('#'+coverId);
+    this.element.un('touchstart', this.handleEvent);
+    this.element.un('touchmove', this.handleEvent);
+    this.element.un('touchend', this.handleEvent);
+};
 
-        var pos = goog.style.getClientLeftTop(e[0]);
-        cover.style('position', 'absolute');
-        cover.style('top', pos.y);
-        cover.style('left', pos.x);
-
-        goog.style.setSize(cover[0], goog.style.getSize(e[0]));
-        cover.style('zIndex', goog.style.getComputedZIndex(e[0])+1);
-        cover.style('backgroundColor', '#efefef');
-
-        cover.on('click', function(){
-            e.click();
-        }, this);
-    }, this);
+frame.Scroller.prototype.checkForm = function(){
+    if (this.doc.q('textarea, input[type=text], input[type=email], input[type=password]').length)
+        this.disable();
+    else
+        this.enable();
 }

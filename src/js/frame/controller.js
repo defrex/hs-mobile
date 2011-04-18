@@ -3,6 +3,7 @@ goog.provide('frame.Controller');
 goog.provide('frame.start');
 
 goog.require('goog.dom');
+goog.require('goog.array');
 goog.require('goog.testing.stacktrace');
 goog.require('frame.route');
 goog.require('frame.dom.Node');
@@ -25,6 +26,8 @@ frame.Controller = function(settings) {
     **/
     this.viewStack = new Array();
 
+    this.listeners = new Array();
+
     /**
     * DOM helper class. This get passed into and reused by all the views.
     * @type {goog.dom.DomHelper}
@@ -46,13 +49,7 @@ frame.Controller = function(settings) {
 
     if (frame.PLATFORM == 'ios') frame.init(function(){
         this.scroller = new frame.Scroller(this.doc.q('#scroller'));
-
-        // this.doc.q('#actionbar').style('position', 'absolute');
-        // var that = this;
-        // (function moveAB(){
-        //     that.doc.q('#actionbar').style('top', window.pageYOffset+'px');
-        //     setTimeout(moveAB, 100);
-        // })();
+        this.listen(this.scroller.checkForm, this.scroller);
     }, this);
 };
 
@@ -83,7 +80,7 @@ frame.Controller.prototype.startHashChange = function() {
 /** Render the top view **/
 frame.Controller.prototype.renderTop = function() {
     this.viewStack[this.viewStack.length - 1].render(this.doc.q('#main').html('')[0]);
-    if (frame.PLATFORM == 'ios') this.scroller.onNewDom();
+    goog.array.forEach(this.listeners, function(v){v[0].call(v[1]);});
 };
 
 /**
@@ -138,6 +135,11 @@ frame.Controller.prototype.authReset = function() {
     if (this.settings.on403)
         this.settings.on403.call(this);
     else throw('403');
+};
+
+
+frame.Controller.prototype.listen = function(clbk, that) {
+    this.listeners.push([clbk, that]);
 };
 
 /**

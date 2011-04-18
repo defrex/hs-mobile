@@ -48,10 +48,8 @@ hs.listings.views.Add.prototype.abButtons = [{
 hs.listings.views.Add.prototype.enterDocument = function(){
     frame.View.prototype.enterDocument.call(this, Array.prototype.pop.call(arguments));
 
-    //this.editable();
     this.placehold();
 
-    frame.log('registering click handler');
     this.doc.q('#take_image').on('click', function(e){
         var v = this;
         frame.log('getting image');
@@ -77,27 +75,21 @@ hs.listings.views.Add.prototype.enterDocument = function(){
     // fastbutton these focus clicks
     this.doc.q('textarea, input[type=text]').on('click', function(e){
         e.preventDefault();
-        frame.log('bustclick');
         e.target.focus();
     });
 
-    this.doc.q('form').on('submit', function(e){
-        e.preventDefault();
-        this.submit();
-    }, this);
-    this.doc.q('#postListing').on('click', function(e){
-        e.preventDefault();
-        frame.log('postListing');
-        this.submit();
-    }, this);
-
+    this.doc.q('form').on('submit', this.submit, this);
+    this.doc.q('#postListing').on('click', this.submit, this);
 };
 
 /**
 * Submit the form
 * @type {function()}
 **/
-hs.listings.views.Add.prototype.submit = function(){
+hs.listings.views.Add.prototype.submit = function(e){
+    if (e) e.preventDefault();
+    if (this.waiting) return;
+    this.wait();
     var data = {
         'description': this.doc.q('#description').val(),
         'price': this.doc.q('#price').val(),
@@ -110,11 +102,14 @@ hs.listings.views.Add.prototype.submit = function(){
     frame.apiRequest({method: 'POST', path: '/api/v1/listing/', body: data},
         function(resp, status){
             frame.log('status: '+ status +', resp: '+ resp);
-            if (status == 201){
-                frame.controller.goTo('/thanks/');
-            }
+            if (status == 201) frame.controller.goTo('/thanks/');
         }, this);
 };
+
+hs.listings.views.Add.prototype.wait = function(){
+    this.waiting = true;
+    this.doc.q('#postListing').html('<img src="img/spinner.gif" />');
+}
 
 
 
