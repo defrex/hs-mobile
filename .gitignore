@@ -1,4 +1,5 @@
 *.pyc
 .sass-cache
 app*
+app_iphone/www/*
 *.map
