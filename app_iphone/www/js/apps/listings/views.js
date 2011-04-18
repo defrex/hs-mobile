@@ -57,7 +57,8 @@ hs.listings.views.Add.prototype.enterDocument = function(){
 
         frame.log('nav.cam ' + typeof navigator.camera);
         navigator.camera.getPicture(function(image){
-            v.doc.q('#image').attr('src', image);
+            //v.doc.q('#image').attr('src', image);
+            v.doc.q('#image').attr('src', 'data:image/jpeg;base64,'+image);
             v.doc.q('label[for="take_image"]').hide();
             v.imageData = image;
             v.doc.q('#take_image').attr('value', 'Retake');
@@ -101,9 +102,9 @@ hs.listings.views.Add.prototype.submit = function(){
         'photo': this.imageData
     };
     frame.log('submitting');
-    frame.apiRequest({method: 'POST', path: '/api/v1/listing/', data: data},
+    frame.apiRequest({method: 'POST', path: '/api/v1/listing/', body: data},
         function(resp, status){
-            frame.log('scs', status, resp);
+            frame.log('status: '+ status +', resp: '+ resp);
             if (status == 200){
                 frame.controller.goTo('/thanks/');
             }
