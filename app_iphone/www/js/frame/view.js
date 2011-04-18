@@ -174,3 +174,14 @@ frame.View.prototype.placehold = function(){
         }
     }, this);
 };
+
+/**
+* Set up the contenteditable
+* @type {function()}
+**/
+frame.View.prototype.editable = function(clbk){
+    this.doc.q('.editable').each(function(node){
+        node = new frame.dom.Node(node);
+
+    }, this);
+};

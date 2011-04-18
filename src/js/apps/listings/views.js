@@ -3,7 +3,6 @@ goog.provide('hs.listings.views');
 
 goog.require('hs.tmpl.listings');
 goog.require('frame.View');
-goog.require('PhoneGap');
 goog.require('frame.apiRequest');
 
 /** @constructor **/
@@ -48,6 +47,7 @@ hs.listings.views.Add.prototype.abButtons = [{
 hs.listings.views.Add.prototype.enterDocument = function(){
     frame.View.prototype.enterDocument.call(this, Array.prototype.pop.call(arguments));
 
+    //this.editable();
     this.placehold();
 
     frame.log('registering click handler');

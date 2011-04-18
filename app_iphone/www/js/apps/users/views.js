@@ -6,7 +6,6 @@ goog.require('frame.View');
 goog.require('frame.dom.fx');
 goog.require('frame.form.utils');
 goog.require('frame.apiRequest');
-goog.require('PhoneGap');
 
 /** @constructor **/
 hs.users.views.Login = function(){
@@ -40,21 +39,18 @@ hs.users.views.Login.prototype.enterDocument = function(){
     frame.View.prototype.enterDocument.call(this, Array.prototype.pop.call(arguments));
 
     this.doc.q('#login form').on('submit', function(e){
-        frame.log('login submit')
         e.preventDefault();
         var email = this.doc.q('#email');
         if (!frame.form.utils.isValidEmail(email.val())){
             email.alert();
         }else{
             var email = email.val();
-            frame.log('sending ajax request');
             frame.apiRequest({
                 path: '/api/v1/user/',
                 method: 'POST',
                 body: {'username': email},
                 auth: false
             }, function(resp, status, xhr){
-                frame.log('request returned')
                 if (status == 201){
                     frame.store.put('email', email);
                     frame.store.put('token', resp.token);

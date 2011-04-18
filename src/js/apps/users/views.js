@@ -6,7 +6,6 @@ goog.require('frame.View');
 goog.require('frame.dom.fx');
 goog.require('frame.form.utils');
 goog.require('frame.apiRequest');
-goog.require('PhoneGap');
 
 /** @constructor **/
 hs.users.views.Login = function(){
