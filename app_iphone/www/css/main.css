@@ -181,7 +181,7 @@ ul, li {
   clear: both;
 }
 
-textarea, input[type=text], input[type=email] {
+textarea, input[type=text], input[type=email], input[type=password] {
   padding: 5px;
   border: none;
   background-color: #f1f1f2;
@@ -400,7 +400,7 @@ html.no-ab, .no-ab body {
   width: 253px;
   text-align: right;
 }
-#main #login form input[type=email] {
+#main #login form input[type=email], #main #login form input[type=password] {
   width: 100%;
 }
 #main #login form input[type=submit] {
