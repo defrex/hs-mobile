@@ -51,9 +51,12 @@ frame.dom.Node.prototype.alert = function(color, clbk, that) {
     color = frame.dom.fx.toRGB(color || '#ff0000');
     var oldColor = frame.dom.fx.toRGB(this.style('backgroundColor') || '#ffffff');
     this.toColor(color, 100, function(){
-        this.toColor(oldColor, 100, function(){
-            if (clbk) clbk.call(that);
-        }, this)
+        var nd = this;
+        setTimeout(function(){
+            nd.toColor(oldColor, 100, function(){
+                if (clbk) clbk.call(that);
+            }, nd);
+        }, 200);
     }, this)
     return this;
 };

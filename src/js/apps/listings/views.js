@@ -10,6 +10,13 @@ goog.require('hs.listings.fakeImage');
 hs.listings.views.Add = function(){
     frame.View.call(this, Array.prototype.pop.call(arguments));
 
+    var that = this;
+    navigator.geolocation.getCurrentPosition(function(pos){
+        that.location = pos;
+    }, function(){
+        // location error
+        that.location = null;
+    });
 };
 goog.inherits(hs.listings.views.Add, frame.View);
 
@@ -90,26 +97,39 @@ hs.listings.views.Add.prototype.submit = function(e){
     if (e) e.preventDefault();
     if (this.waiting) return;
     this.wait();
-    var data = {
-        'description': this.doc.q('#description').val(),
-        'price': this.doc.q('#price').val(),
-        'latitude': '43.6519',
-        'longtitude': '-79.3736',
-        'photo': this.imageData,
-        'user': frame.store.get('userURI')
-    };
-    frame.log('submitting');
-    frame.apiRequest({method: 'POST', path: '/api/v1/listing/', body: data},
-        function(resp, status){
-            frame.log('status: '+ status +', resp: '+ resp);
-            if (status == 201) frame.controller.goTo('/thanks/');
-        }, this);
+    var view = this;
+    (function haveLocation(){
+        if (typeof view.pos != 'undefined')
+            if (view.pos == null) return
+            else view.post();
+        else
+            setTimeout(haveLocation, 100);
+    })();
 };
 
 hs.listings.views.Add.prototype.wait = function(){
     this.waiting = true;
     this.doc.q('#postListing').html('<img src="img/spinner.gif" />');
-}
+};
+
+hs.listings.views.Add.prototype.post = function(){
+    frame.log('posting');
+    frame.apiRequest({
+        method: 'POST', 
+        path: '/api/v1/listing/', 
+        body: {
+            'description': this.doc.q('#description').val(),
+            'price': this.doc.q('#price').val(),
+            'latitude': this.pos.coords.latitude,
+            'longitude': this.pos.coords.longitude,
+            'photo': this.imageData,
+            'user': frame.store.get('userURI')
+        }
+    }, function(resp, status){
+        frame.log('status: '+ status +', resp: '+ resp);
+        if (status == 201) frame.controller.goTo('/thanks/');
+    }, this);
+};
 
 
 
