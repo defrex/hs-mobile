@@ -10,12 +10,14 @@ goog.require('hs.listings.fakeImage');
 hs.listings.views.Add = function(){
     frame.View.call(this, Array.prototype.pop.call(arguments));
 
-    var that = this;
+    var view = this;
     navigator.geolocation.getCurrentPosition(function(pos){
-        that.location = pos;
+        frame.log('got position');
+        view.location = pos;
     }, function(){
         // location error
-        that.location = null;
+        frame.log('position error');
+        view.location = null;
     });
 };
 goog.inherits(hs.listings.views.Add, frame.View);
@@ -99,10 +101,10 @@ hs.listings.views.Add.prototype.submit = function(e){
     this.wait();
     var view = this;
     (function haveLocation(){
-        if (typeof view.pos != 'undefined')
-            if (view.pos == null) return
+        if (typeof view.location != 'undefined'){
+            if (view.location == null) return
             else view.post();
-        else
+        }else
             setTimeout(haveLocation, 100);
     })();
 };
@@ -120,8 +122,8 @@ hs.listings.views.Add.prototype.post = function(){
         body: {
             'description': this.doc.q('#description').val(),
             'price': this.doc.q('#price').val(),
-            'latitude': this.pos.coords.latitude,
-            'longitude': this.pos.coords.longitude,
+            'latitude': this.location.coords.latitude+'',
+            'longitude': this.location.coords.longitude+'',
             'photo': this.imageData,
             'user': frame.store.get('userURI')
         }
