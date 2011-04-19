@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		044E6E3A134242BF00EE193E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 044E6E39134242BF00EE193E /* icon.png */; };
+		0478709C135E566000E4AA42 /* icon.ios.low.png in Resources */ = {isa = PBXBuildFile; fileRef = 0478709B135E566000E4AA42 /* icon.ios.low.png */; };
+		0478709E135E566C00E4AA42 /* icon.ios.retna.png in Resources */ = {isa = PBXBuildFile; fileRef = 0478709D135E566C00E4AA42 /* icon.ios.retna.png */; };
 		1D3623260D0F684500981E51 /* iphoneAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iphoneAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -52,10 +54,12 @@
 
 /* Begin PBXFileReference section */
 		044E6E39134242BF00EE193E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		0478709B135E566000E4AA42 /* icon.ios.low.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.ios.low.png; sourceTree = "<group>"; };
+		0478709D135E566C00E4AA42 /* icon.ios.retna.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.ios.retna.png; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* iphoneAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphoneAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* iphoneAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iphoneAppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* iphone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iphone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Hipsell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hipsell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -118,7 +122,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* iphone.app */,
+				1D6058910D05DD3D006BFB54 /* Hipsell.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -126,6 +130,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				0478709D135E566C00E4AA42 /* icon.ios.retna.png */,
+				0478709B135E566000E4AA42 /* icon.ios.low.png */,
 				301BF56E109A69640062928A /* www */,
 				301BF52D109A57CC0062928A /* PhoneGapLib.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -233,7 +239,7 @@
 			);
 			name = iphone;
 			productName = iphone;
-			productReference = 1D6058910D05DD3D006BFB54 /* iphone.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Hipsell.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -289,6 +295,8 @@
 				3009C2B2127B897D007F4BC6 /* Default-Landscape.png in Resources */,
 				3009C2B3127B897D007F4BC6 /* Default-Portrait.png in Resources */,
 				044E6E3A134242BF00EE193E /* icon.png in Resources */,
+				0478709C135E566000E4AA42 /* icon.ios.low.png in Resources */,
+				0478709E135E566C00E4AA42 /* icon.ios.retna.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +365,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iphone_Prefix.pch;
 				INFOPLIST_FILE = "iphone-Info.plist";
-				PRODUCT_NAME = iphone;
+				PRODUCT_NAME = Hipsell;
 			};
 			name = Debug;
 		};
@@ -370,7 +378,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iphone_Prefix.pch;
 				INFOPLIST_FILE = "iphone-Info.plist";
-				PRODUCT_NAME = iphone;
+				PRODUCT_NAME = Hipsell;
 			};
 			name = Release;
 		};
