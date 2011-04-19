@@ -2203,7 +2203,7 @@
 			</dict>
 		</dict>
 		<string>file://localhost/Users/mac/Code/hs-mobile/app_iphone/iphone.xcodeproj/</string>
-		<real>324848765.88441598</real>
+		<real>324936937.09089798</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -6085,7 +6085,7 @@
 				<integer>492</integer>
 			</dict>
 		</dict>
-		<real>324848765.88213301</real>
+		<real>324936937.08836699</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -8910,8 +8910,8 @@
 		</dict>
 		<string>IDEDeviceLocation</string>
 		<string>IDEDeviceArchitecture</string>
-		<string>dvtdevice-iphone:8ac62b683c9752202c6a33d63a7ed077da2b6101</string>
-		<string>armv6</string>
+		<string>dvtdevice-iphone:b160236126275f2502c0fe9f301607a8341bb5dc</string>
+		<string>armv7</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -9222,7 +9222,7 @@
 				<integer>741</integer>
 			</dict>
 			<key>NS.time</key>
-			<real>324848760.88244402</real>
+			<real>324854489.83978498</real>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -9233,7 +9233,7 @@
 			<key>$classname</key>
 			<string>NSDate</string>
 		</dict>
-		<string>Today at 3:46 PM</string>
+		<string>Yesterday at 5:21 PM</string>
 		<integer>106</integer>
 		<dict>
 			<key>$class</key>
