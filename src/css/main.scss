@@ -156,7 +156,7 @@ html.no-ab, .no-ab body{
             text-align:right;
 
             input[type=email], input[type=password]{
-                width:100%;
+                width:$width - 10px;
                 font-size:16px;
             }
             input[type=submit]{
