@@ -76,6 +76,19 @@ html.no-ab, .no-ab body{
     }
     .ab-button.right{float:right;}
     .ab-button.left{float:left;}
+
+    $ab-button-color: $blue - #222;
+    #postNew.ab-button{
+        @extend .ab-button;
+        background-color: $ab-button-color;
+        border:1px solid $ab-button-color + #111;
+        @include gradient($ab-button-color + #111, $ab-button-color - #222);
+    }
+    #postNew.ab-button:active{
+        @extend .ab-button:active;
+        @include gradient($ab-button-color + #111, $ab-button-color + #222);
+        @include box-shadow(0, 1px, 1px, $ab-button-color + #444);
+    }
 }
 
 #wrapper{

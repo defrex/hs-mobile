@@ -142,3 +142,16 @@ hs.listings.views.Thanks = function(){
 goog.inherits(hs.listings.views.Thanks, frame.View);
 hs.listings.views.Thanks.prototype.requireAuth = true;
 hs.listings.views.Thanks.prototype.template = hs.tmpl.listings.Thanks;
+hs.listings.views.Thanks.prototype.abButtons = [{
+    position: 'right',
+    text: 'New',
+    id: 'postNew'
+}];
+
+hs.listings.views.Thanks.prototype.enterDocument = function(){
+    frame.View.prototype.enterDocument.call(this, Array.prototype.pop.call(arguments));
+
+    this.doc.q('#postAgain').on('click', function(){
+        frame.controller.goTo('/');
+    });
+};
