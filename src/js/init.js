@@ -7,7 +7,7 @@ goog.require('hs.urls');
 setTimeout(function(){
     frame.start({
         urls: hs.urls,
-        apiServer: '192.168.88.108:8000',
+        apiServer: 'dev.hipsell.com',
         on403: function(){
             this.clear();
             this.goTo('/login/');
