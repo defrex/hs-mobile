@@ -285,7 +285,7 @@ html.no-ab, .no-ab body {
   left: 50%;
   margin-left: -73px;
 }
-#actionbar .ab-button {
+#actionbar .ab-button, #actionbar #postNew.ab-button {
   display: block;
   margin: 10px 12px 0 0;
   padding: 5px 11px;
@@ -302,7 +302,7 @@ html.no-ab, .no-ab body {
   -webkit-box-shadow: 0 1px 2px black;
   box-shadow: 0 1px 2px black;
 }
-#actionbar .ab-button:active {
+#actionbar .ab-button:active, #actionbar #postNew.ab-button:active {
   border: 1px solid #0a0a0a;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#c21111), to(#d32222));
   border-radius: 5px;
@@ -312,11 +312,22 @@ html.no-ab, .no-ab body {
   -webkit-box-shadow: 0 1px 1px #f54444;
   box-shadow: 0 1px 1px #f54444;
 }
-#actionbar .ab-button.right {
+#actionbar .ab-button.right, #actionbar .right#postNew.ab-button {
   float: right;
 }
-#actionbar .ab-button.left {
+#actionbar .ab-button.left, #actionbar .left#postNew.ab-button {
   float: left;
+}
+#actionbar #postNew.ab-button, #actionbar #postNew.ab-button {
+  background-color: #005399;
+  border: 1px solid #1164aa;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#1164aa), to(#003177));
+}
+#actionbar #postNew.ab-button:active, #actionbar #postNew.ab-button:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#1164aa), to(#2275bb));
+  -moz-box-shadow: 0 1px 1px #4497dd;
+  -webkit-box-shadow: 0 1px 1px #4497dd;
+  box-shadow: 0 1px 1px #4497dd;
 }
 
 #wrapper {
@@ -405,7 +416,7 @@ html.no-ab, .no-ab body {
   text-align: right;
 }
 #main #login form input[type=email], #main #login form input[type=password] {
-  width: 100%;
+  width: 243px;
   font-size: 16px;
 }
 #main #login form input[type=submit] {
