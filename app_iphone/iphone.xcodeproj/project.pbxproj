@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		044E6E3A134242BF00EE193E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 044E6E39134242BF00EE193E /* icon.png */; };
 		0478709C135E566000E4AA42 /* icon.ios.low.png in Resources */ = {isa = PBXBuildFile; fileRef = 0478709B135E566000E4AA42 /* icon.ios.low.png */; };
 		0478709E135E566C00E4AA42 /* icon.ios.retna.png in Resources */ = {isa = PBXBuildFile; fileRef = 0478709D135E566C00E4AA42 /* icon.ios.retna.png */; };
+		047870A0135E596600E4AA42 /* icon.ios.low.png in Resources */ = {isa = PBXBuildFile; fileRef = 0478709F135E596500E4AA42 /* icon.ios.low.png */; };
+		047870A2135E597600E4AA42 /* icon.ios.retna.png in Resources */ = {isa = PBXBuildFile; fileRef = 047870A1135E597600E4AA42 /* icon.ios.retna.png */; };
 		1D3623260D0F684500981E51 /* iphoneAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iphoneAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -53,9 +54,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		044E6E39134242BF00EE193E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		0478709B135E566000E4AA42 /* icon.ios.low.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.ios.low.png; sourceTree = "<group>"; };
 		0478709D135E566C00E4AA42 /* icon.ios.retna.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.ios.retna.png; sourceTree = "<group>"; };
+		0478709F135E596500E4AA42 /* icon.ios.low.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.ios.low.png; sourceTree = "<group>"; };
+		047870A1135E597600E4AA42 /* icon.ios.retna.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.ios.retna.png; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* iphoneAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphoneAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* iphoneAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iphoneAppDelegate.m; sourceTree = "<group>"; };
@@ -130,6 +132,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				047870A1135E597600E4AA42 /* icon.ios.retna.png */,
+				0478709F135E596500E4AA42 /* icon.ios.low.png */,
 				0478709D135E566C00E4AA42 /* icon.ios.retna.png */,
 				0478709B135E566000E4AA42 /* icon.ios.low.png */,
 				301BF56E109A69640062928A /* www */,
@@ -189,7 +193,6 @@
 		3009C2AE127B8952007F4BC6 /* icons */ = {
 			isa = PBXGroup;
 			children = (
-				044E6E39134242BF00EE193E /* icon.png */,
 			);
 			name = icons;
 			sourceTree = "<group>";
@@ -294,9 +297,10 @@
 				307D28A2123043360040C0FA /* PhoneGapBuildSettings.xcconfig in Resources */,
 				3009C2B2127B897D007F4BC6 /* Default-Landscape.png in Resources */,
 				3009C2B3127B897D007F4BC6 /* Default-Portrait.png in Resources */,
-				044E6E3A134242BF00EE193E /* icon.png in Resources */,
 				0478709C135E566000E4AA42 /* icon.ios.low.png in Resources */,
 				0478709E135E566C00E4AA42 /* icon.ios.retna.png in Resources */,
+				047870A0135E596600E4AA42 /* icon.ios.low.png in Resources */,
+				047870A2135E597600E4AA42 /* icon.ios.retna.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
