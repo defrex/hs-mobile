@@ -4,7 +4,7 @@ goog.provide('frame.init');
 goog.provide('frame.log');
 
 /** @define {string} Platform constant, filled at compile-time *.*/
-frame.PLATFORM = 'web';
+frame.PLATFORM = 'ios';
 
 /** @define {boolean} Debug mode *.*/
 frame.DEBUG = true;

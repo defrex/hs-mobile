@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		040D39D5135E6E2100DA2CE1 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 040D39D4135E6E2100DA2CE1 /* Default@2x.png */; };
+		040D39D713609B7400DA2CE1 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 040D39D613609B7400DA2CE1 /* Entitlements.plist */; };
 		0478709C135E566000E4AA42 /* icon.ios.low.png in Resources */ = {isa = PBXBuildFile; fileRef = 0478709B135E566000E4AA42 /* icon.ios.low.png */; };
 		0478709E135E566C00E4AA42 /* icon.ios.retna.png in Resources */ = {isa = PBXBuildFile; fileRef = 0478709D135E566C00E4AA42 /* icon.ios.retna.png */; };
 		047870A0135E596600E4AA42 /* icon.ios.low.png in Resources */ = {isa = PBXBuildFile; fileRef = 0478709F135E596500E4AA42 /* icon.ios.low.png */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		040D39D4135E6E2100DA2CE1 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		040D39D613609B7400DA2CE1 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		0478709B135E566000E4AA42 /* icon.ios.low.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.ios.low.png; sourceTree = "<group>"; };
 		0478709D135E566C00E4AA42 /* icon.ios.retna.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.ios.retna.png; sourceTree = "<group>"; };
 		0478709F135E596500E4AA42 /* icon.ios.low.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.ios.low.png; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				040D39D613609B7400DA2CE1 /* Entitlements.plist */,
 				040D39D4135E6E2100DA2CE1 /* Default@2x.png */,
 				047870A1135E597600E4AA42 /* icon.ios.retna.png */,
 				0478709F135E596500E4AA42 /* icon.ios.low.png */,
@@ -305,6 +308,7 @@
 				047870A0135E596600E4AA42 /* icon.ios.low.png in Resources */,
 				047870A2135E597600E4AA42 /* icon.ios.retna.png in Resources */,
 				040D39D5135E6E2100DA2CE1 /* Default@2x.png in Resources */,
+				040D39D713609B7400DA2CE1 /* Entitlements.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +366,41 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		040D39D813609C7F00DA2CE1 /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 307D28A1123043350040C0FA /* PhoneGapBuildSettings.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-Obj-C",
+				);
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "$(PHONEGAPLIB)/Classes/JSON $(PHONEGAPLIB)/Classes";
+			};
+			name = "Ad Hoc";
+		};
+		040D39D913609C7F00DA2CE1 /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 307D28A1123043350040C0FA /* PhoneGapBuildSettings.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = iphone_Prefix.pch;
+				INFOPLIST_FILE = "iphone-Info.plist";
+				PRODUCT_NAME = Hipsell;
+			};
+			name = "Ad Hoc";
+		};
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 307D28A1123043350040C0FA /* PhoneGapBuildSettings.xcconfig */;
@@ -438,6 +477,7 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+				040D39D913609C7F00DA2CE1 /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -447,6 +487,7 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				040D39D813609C7F00DA2CE1 /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
