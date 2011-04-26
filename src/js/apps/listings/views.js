@@ -1,10 +1,11 @@
 
 goog.provide('hs.listings.views');
 
-goog.require('hs.tmpl.listings');
 goog.require('frame.View');
 goog.require('frame.apiRequest');
+goog.require('hs.tmpl.listings');
 goog.require('hs.listings.fakeImage');
+goog.require('hs.ui.ModalSpinner');
 
 /** @constructor **/
 hs.listings.views.Add = function(){
@@ -109,9 +110,13 @@ hs.listings.views.Add.prototype.submit = function(e){
     })();
 };
 
-hs.listings.views.Add.prototype.wait = function(){
-    this.waiting = true;
-    this.doc.q('#postListing').html('<img src="img/spinner.gif" />');
+hs.listings.views.Add.prototype.wait = function(stop){
+    this.waiting = !(stop === false);
+    frame.log('waiting', this.waiting);
+    if (this.waiting && typeof this.spinner == 'undefined')
+        this.spinner = new hs.ui.ModalSpinner().show();
+    else if (!this.waiting && typeof this.spinner != 'undefined')
+        this.spinner.remove();
 };
 
 hs.listings.views.Add.prototype.post = function(){
@@ -129,6 +134,7 @@ hs.listings.views.Add.prototype.post = function(){
         }
     }, function(resp, status){
         frame.log('status: '+ status +', resp: '+ resp);
+        this.wait(false);
         if (status == 201) frame.controller.goTo('/thanks/');
     }, this);
 };

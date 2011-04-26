@@ -15,7 +15,7 @@ goog.require('soy.StringBuilder');
  */
 hs.tmpl.listings.Add = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<form id="new_listing"><div class="form_item"><img id="image" /><label for="take_image">Image:</label><input type="button" id="take_image" value="Take" /></div><textarea class="form_item" id="description" rows="3" placeholder="Description:"></textarea><input class="form_item" type="text" id="price" placeholder="Price:" /></form>');
+  output.append('<form id="new_listing"><div class="form_item"><img id="image" /><label for="take_image" class="placeheld">Image:</label><input type="button" id="take_image" value="Take" /></div><textarea class="form_item" id="description" rows="3" placeholder="Description:"></textarea><input class="form_item" type="text" id="price" placeholder="Price:" /></form>');
   if (!opt_sb) return output.toString();
 };
 

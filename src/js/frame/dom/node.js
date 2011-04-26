@@ -3,6 +3,7 @@ goog.provide('frame.dom.Node');
 
 goog.require('frame.dom.FastClick');
 goog.require('frame.ArrayClass');
+goog.require('frame.support');
 goog.require('goog.dom');
 goog.require('goog.dom.classes');
 goog.require('goog.events');
@@ -57,14 +58,13 @@ frame.dom.Node.prototype.q = function(q) {
 
 frame.dom.Node.prototype.on = function(type, fn, that) {
     this.each(function(n) {
-        if (type != 'click'){
+        if (type != 'click' || !frame.support.touch()){
             goog.events.listen(n, type, fn, false, that || n);
         }else{
             frame.dom.addFastClick(n, fn, that || n);
         }
     });
     return this;
-
 };
 
 frame.dom.Node.prototype.un = function(type, fn) {
