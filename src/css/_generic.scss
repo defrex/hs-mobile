@@ -17,7 +17,13 @@ textarea, input[type=text], input[type=email], input[type=password]{
     @include rounded(0px);
 }
 
-.placeheld, ::-webkit-input-placeholder, :-moz-placeholder{color:$grey;}
+/* mixing placeholder because browser prefixes need thier own declaration */
+@mixin placeholder(){
+    color:$black + #444 !important;
+}
+.placeheld {@include placeholder;}
+::-webkit-input-placeholder {@include placeholder;}
+:-moz-placeholder {@include placeholder;}
 
 input[type=button], input[type=submit], .button{
     $color:#d5d5d5;

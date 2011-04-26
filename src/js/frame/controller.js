@@ -10,6 +10,7 @@ goog.require('frame.dom.Node');
 goog.require('frame.tmpl');
 goog.require('frame.init');
 goog.require('frame.Scroller');
+goog.require('frame.support');
 
 /**
 * One Class to rule them all. Or at lease rule all the Views.
@@ -47,7 +48,7 @@ frame.Controller = function(settings) {
         this.goTo('/logout/');
     }, this);
 
-    if (frame.PLATFORM == 'ios') frame.init(function(){
+    if (!frame.support.fixedPosition()) frame.init(function(){
         this.scroller = new frame.Scroller(this.doc.q('#scroller'));
         this.listen(this.scroller.checkForm, this.scroller);
     }, this);

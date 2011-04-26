@@ -1,0 +1,13 @@
+{namespace hs.tmpl.ui}
+
+/**
+* Renders a modal spinner
+* @param text
+*/
+{template .ModalSpinner}
+<div class="modalbg" style="display:none;"></div>
+<div class="dialog modal" id="modal-spinner" style="display:none;">
+    {$text}<br>
+    <img src="img/spinner_w-on-b.gif" />
+</div>
+{/template}
