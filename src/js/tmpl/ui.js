@@ -15,6 +15,6 @@ goog.require('soy.StringBuilder');
  */
 hs.tmpl.ui.ModalSpinner = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div class="modalbg" style="display:none;"></div><div class="dialog modal" id="modal-spinner" style="display:none;">', soy.$$escapeHtml(opt_data.text), '<br><img src="img/spinner_w-on-b.gif" /></div>');
+  output.append('<!-- <div class="modalbg" style="display:none;"></div> --><div class="dialog modal" id="modal-spinner" style="display:none;"><img src="img/spinner_w-on-b.gif" /><br>', soy.$$escapeHtml(opt_data.text), '</div>');
   if (!opt_sb) return output.toString();
 };

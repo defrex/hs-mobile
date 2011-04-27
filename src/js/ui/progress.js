@@ -18,21 +18,21 @@ hs.ui.ModalSpinner.prototype.render = function(){
 
 hs.ui.ModalSpinner.prototype.show = function(){
     if (!this.rendered) this.render();
-    this.doc.q('.modalbg').show();
+    // this.doc.q('.modalbg').show();
     this.doc.q('#modal-spinner').show();
     return this;
 };
 
 hs.ui.ModalSpinner.prototype.hide = function(){
     if (!this.rendered) return this;
-    this.doc.q('.modalbg').hide();
+    // this.doc.q('.modalbg').hide();
     this.doc.q('#modal-spinner').hide();
     return this;
 };
 
 hs.ui.ModalSpinner.prototype.remove = function(){
     if (!this.rendered) return this;
-    this.doc.q('.modalbg').remove();
+    // this.doc.q('.modalbg').remove();
     this.doc.q('#modal-spinner').remove();
     return this;
 };
