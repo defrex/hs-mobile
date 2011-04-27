@@ -191,8 +191,17 @@ textarea, input[type=text], input[type=email], input[type=password] {
   -webkit-border-radius: 0px;
 }
 
-.placeheld, ::-webkit-input-placeholder, :-moz-placeholder {
-  color: #999999;
+/* mixing placeholder because browser prefixes need thier own declaration */
+.placeheld {
+  color: #4e4e4e !important;
+}
+
+::-webkit-input-placeholder {
+  color: #4e4e4e !important;
+}
+
+:-moz-placeholder {
+  color: #4e4e4e !important;
 }
 
 input[type=button], input[type=submit], .button {
@@ -257,8 +266,8 @@ body {
   -webkit-text-size-adjust: none;
 }
 
-html.no-ab, .no-ab body {
-  background-image: url(../img/background.jpg);
+html, body {
+  background-image: url(../img/bg.png);
   background-color: #0a0a0a;
 }
 
@@ -269,10 +278,13 @@ html.no-ab, .no-ab body {
   z-index: 2;
   width: 100%;
   height: 50px;
-  background-color: #58595b;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#424242), to(#0a0a0a));
+  background-color: #2c2c2c;
+  background-image: url(../img/ab_grad.png);
   border-top: 1px solid #5f5f5f;
-  border-bottom: 1px solid #707070;
+  border-bottom: 1px solid #3d3d3d;
+  -moz-box-shadow: 0 1px 0px #0a0a0a;
+  -webkit-box-shadow: 0 1px 0px #0a0a0a;
+  box-shadow: 0 1px 0px #0a0a0a;
 }
 #actionbar #ab_logo {
   position: absolute;
@@ -338,7 +350,7 @@ html.no-ab, .no-ab body {
   z-index: 1;
   margin: 52px 0 0;
   padding: 0;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#d5d5d6), to(#87888b));
+  /*@include gradient(#d5d5d6, #87888B);*/
 }
 #wrapper #scroller {
   width: 100%;
@@ -382,9 +394,9 @@ html.no-ab, .no-ab body {
   font-size: 16px;
   font-family: 'Cantarell', arial, sans-serif;
   background-color: #f1f1f2;
-  -moz-box-shadow: 0 2px 4px #707070;
-  -webkit-box-shadow: 0 2px 4px #707070;
-  box-shadow: 0 2px 4px #707070;
+  -moz-box-shadow: 0 2px 4px #2c2c2c;
+  -webkit-box-shadow: 0 2px 4px #2c2c2c;
+  box-shadow: 0 2px 4px #2c2c2c;
 }
 #main #new_listing .form_item input[type=button] {
   float: right;
@@ -432,42 +444,33 @@ html.no-ab, .no-ab body {
 
 /** UI **/
 .dialog {
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
   position: absolute;
-  width: 250px;
-  border: 2px solid #009345;
-  background-color: #f1f1f2;
-}
-.dialog .body {
-  padding: 10px;
-}
-.dialog .buttons {
-  border-top: 2px solid #0a0a0a;
-  background-color: #009345;
-  padding: 5px 5px 10px;
-}
-.dialog .buttons .button {
-  display: inline;
-  margin-right: 10px;
-}
-.dialog .buttons .button:last {
-  margin-right: 0;
-}
-.dialog.msg, .dialog.wait, .dialog.toast {
-  padding: 10px;
-  background-color: #0a0a0a;
-  color: #f1f1f2;
-  opacity: .9;
-}
-.dialog.wait {
-  position: absolute;
+  width: 80%;
   left: 50%;
-  margin-left: -125px;
-  top: 50px;
+  margin-left: -40%;
+  margin-top: 10%;
 }
-.dialog.toast {
+
+.modalbg {
   position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.5;
+  background-color: #0a0a0a;
+  z-index: 5;
+}
+
+.modal {
+  z-index: 10;
+  background-color: rgba(10, 10, 10, 0.8);
+  color: #f1f1f2;
+  padding: 2%;
+}
+
+#modal-spinner {
   text-align: center;
+  width: 50%;
+  margin-left: -25%;
 }
