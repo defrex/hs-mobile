@@ -93,6 +93,13 @@ hs.listings.views.Add.prototype.enterDocument = function(){
 hs.listings.views.Add.prototype.submit = function(e){
     if (e) e.preventDefault();
     if (this.waiting) return;
+
+    this.data = {
+        description: this.doc.q('#description').val(),
+        price: this.doc.q('#price').val().replace('$', '')
+    };
+    if (!this.isValid()) return;
+
     this.wait();
     var view = this;
     (function haveLocation(){
@@ -119,8 +126,8 @@ hs.listings.views.Add.prototype.post = function(){
         method: 'POST', 
         path: '/api/v1/listing/', 
         body: {
-            'description': this.doc.q('#description').val(),
-            'price': this.doc.q('#price').val(),
+            'description': this.data.description,
+            'price': this.data.price,
             'latitude': this.location.coords.latitude+'',
             'longitude': this.location.coords.longitude+'',
             'photo': this.imageData,
@@ -131,6 +138,14 @@ hs.listings.views.Add.prototype.post = function(){
         this.wait(false);
         if (status == 201) frame.controller.goTo('/thanks/');
     }, this);
+};
+
+hs.listings.views.Add.prototype.isValid = function(){
+    if (!(/^\d+$/.test(this.data.price))){
+        this.doc.q('#price').alert();
+        return false;
+    }
+    return true;
 };
 
 

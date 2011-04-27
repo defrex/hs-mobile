@@ -47,9 +47,9 @@ html, body{
 
     #ab_logo{
         position:absolute;
-        height:39px;width:auto;
+        height:30px;width:auto;
         top:50%;
-        margin:-19px 0 0 10px;
+        margin:-15px 0 0 10px;
 
     }
     .back #ab_logo{left:50%;margin-left:-73px;}
@@ -118,15 +118,23 @@ html, body{
     font-size:16px;
 
     .body{
-        width:93%;
-        padding:2%;
+        width:91%;
+        padding:3%;
         margin:2%;
         display:block;
         font-size:16px;
+        line-height:20px;
         @include sans();
 
         background-color:$white;
         @include box-shadow(0, 2px, 4px, $black + #666);
+
+        p:first-child {
+            margin-top:0;
+        }
+        p:last-child {
+            margin-bottom:0;
+        }
     }
 
     #new_listing{
