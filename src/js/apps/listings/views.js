@@ -82,12 +82,6 @@ hs.listings.views.Add.prototype.enterDocument = function(){
             withImage(hs.listings.fakeImage);
     }, this);
 
-    // fastbutton these focus clicks
-    this.doc.q('textarea, input[type=text]').on('click', function(e){
-        e.preventDefault();
-        e.target.focus();
-    });
-
     this.doc.q('form').on('submit', this.submit, this);
     this.doc.q('#postListing').on('click', this.submit, this);
 };

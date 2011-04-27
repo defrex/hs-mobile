@@ -48,10 +48,10 @@ frame.Controller = function(settings) {
         this.goTo('/logout/');
     }, this);
 
-    if (!frame.support.fixedPosition()) frame.init(function(){
-        this.scroller = new frame.Scroller(this.doc.q('#scroller'));
-        this.listen(this.scroller.checkForm, this.scroller);
-    }, this);
+    // if (!frame.support.fixedPosition()) frame.init(function(){
+    //     this.scroller = new frame.Scroller(this.doc.q('#scroller'));
+    //     this.listen(this.scroller.checkForm, this.scroller);
+    // }, this);
 };
 
 /** Kicks off the hash change monitoring. **/
